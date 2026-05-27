@@ -5,6 +5,7 @@ client/dist/
 server/dist/
 shared/dist/
 .vite/
+*.tsbuildinfo
 playwright-report/
 test-results/
 coverage/

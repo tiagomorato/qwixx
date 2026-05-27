@@ -13,8 +13,8 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "verbatimModuleSyntax": true,
-    "allowImportingTsExtensions": false
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "files": [],
-  "references": [{ "path": "./shared" }, { "path": "./server" }, { "path": "./client" }]
+  "files": []
 }

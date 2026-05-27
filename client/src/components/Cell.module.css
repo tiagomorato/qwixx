@@ -1,0 +1,58 @@
+.cell {
+  width: var(--qx-cell-size);
+  height: var(--qx-cell-size);
+  min-width: var(--qx-tap-min);
+  min-height: var(--qx-tap-min);
+  border: 2px solid var(--cell-border);
+  border-radius: var(--qx-radius-sm);
+  background: var(--cell-bg);
+  color: var(--cell-fg);
+  font-weight: 500;
+  font-size: var(--qx-font-size, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 90ms ease-out;
+}
+
+.cell:hover:not(:disabled) {
+  transform: scale(1.04);
+}
+
+.cell:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.marked {
+  font-weight: 700;
+  text-decoration: line-through;
+}
+
+.marked::after {
+  content: "✕";
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0.65;
+}
+
+.disabled {
+  opacity: 0.35;
+  filter: grayscale(0.7);
+  cursor: not-allowed;
+  background: var(--qx-surface-muted);
+}
+
+.justChanged {
+  box-shadow: 0 0 0 3px var(--cell-border);
+}
+
+.locked {
+  background: var(--qx-surface-muted);
+  border-style: dashed;
+  color: var(--qx-text);
+}
+
+.lockChip::after {
+  content: "🔒";
+}

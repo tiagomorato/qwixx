@@ -1,3 +1,5 @@
+import type { GameState } from '@qwixx/shared';
+
 export type ApiError = {
   code: 'NOT_FOUND' | 'CONFLICT' | 'INVALID_PAYLOAD' | 'INTERNAL';
   message: string;
@@ -41,5 +43,35 @@ async function request<T>(
 }
 
 export const api = {
-  request,
+  async getCurrent(): Promise<GameState | null> {
+    const res = await request<{ game: GameState | null }>('/api/current');
+    return res.game;
+  },
+
+  async putCurrent(game: GameState): Promise<GameState> {
+    const res = await request<{ game: GameState }>('/api/current', {
+      method: 'PUT',
+      body: JSON.stringify({ game }),
+    });
+    return res.game;
+  },
+
+  async deleteCurrent(): Promise<void> {
+    await request<void>('/api/current', { method: 'DELETE' });
+  },
+
+  async finalizeCurrent(): Promise<GameState> {
+    const res = await request<{ game: GameState }>('/api/current/finalize', { method: 'POST' });
+    return res.game;
+  },
+
+  async getHistory(): Promise<GameState[]> {
+    const res = await request<{ games: GameState[] }>('/api/history');
+    return res.games;
+  },
+
+  async getHistoryById(id: string): Promise<GameState> {
+    const res = await request<{ game: GameState }>(`/api/history/${encodeURIComponent(id)}`);
+    return res.game;
+  },
 };

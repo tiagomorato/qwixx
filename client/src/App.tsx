@@ -1,29 +1,82 @@
 import { useEffect, useState } from 'react';
+import { api } from './api/client.ts';
+import { FinalScoresScreen } from './screens/FinalScoresScreen.tsx';
+import { HomeScreen } from './screens/HomeScreen.tsx';
+import { PlayScreen } from './screens/PlayScreen.tsx';
+import { useGameStore } from './store/gameStore.ts';
+import { startPersistence } from './store/persistence.ts';
 
 export type Screen = 'home' | 'play' | 'final' | 'history';
 
 export function App() {
+  const game = useGameStore((s) => s.game);
+  const hydrate = useGameStore((s) => s.hydrate);
+  const reset = useGameStore((s) => s.reset);
   const [screen, setScreen] = useState<Screen>('home');
+  const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    // Screen routing is owned by App; concrete screen mounts arrive in US1/US3.
-  }, []);
+    let cancelled = false;
+    api
+      .getCurrent()
+      .then((existing) => {
+        if (cancelled) return;
+        if (existing) {
+          hydrate(existing);
+          setScreen(existing.status === 'completed' ? 'final' : 'play');
+        }
+      })
+      .catch((err) => {
+        console.error('[app] failed to load current game', err);
+      })
+      .finally(() => {
+        if (!cancelled) setHydrated(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [hydrate]);
+
+  useEffect(() => startPersistence(), []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    if (!game) {
+      setScreen((cur) => (cur === 'play' || cur === 'final' ? 'home' : cur));
+      return;
+    }
+    if (game.status === 'completed' && screen === 'play') setScreen('final');
+  }, [game, hydrated, screen]);
 
   return (
     <main style={{ padding: 'var(--qx-space-lg)' }}>
-      <h1>Qwixx</h1>
-      <p data-testid="screen-placeholder">Current screen: {screen}</p>
-      <nav style={{ display: 'flex', gap: 'var(--qx-space-sm)' }}>
-        <button type="button" onClick={() => setScreen('home')}>
-          Home
-        </button>
-        <button type="button" onClick={() => setScreen('play')}>
-          Play
-        </button>
-        <button type="button" onClick={() => setScreen('history')}>
-          History
-        </button>
-      </nav>
+      {screen === 'home' ? (
+        <HomeScreen
+          hasCurrentGame={Boolean(game)}
+          onStarted={() => setScreen('play')}
+          onResume={() => setScreen(game?.status === 'completed' ? 'final' : 'play')}
+          onOpenHistory={() => setScreen('history')}
+        />
+      ) : null}
+      {screen === 'play' && game ? <PlayScreen onExitToHome={() => setScreen('home')} /> : null}
+      {screen === 'final' && game ? (
+        <FinalScoresScreen
+          game={game}
+          onPlayAgain={() => {
+            reset();
+            setScreen('home');
+          }}
+        />
+      ) : null}
+      {screen === 'history' ? (
+        <section aria-labelledby="history-title">
+          <h1 id="history-title">History</h1>
+          <p>History view ships with US3.</p>
+          <button type="button" onClick={() => setScreen('home')}>
+            Back to home
+          </button>
+        </section>
+      ) : null}
     </main>
   );
 }

@@ -1,0 +1,46 @@
+.track {
+  display: flex;
+  gap: var(--qx-space-xs);
+  align-items: center;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--qx-text-muted);
+  font-size: var(--qx-font-size-sm, 0.875rem);
+  min-width: 4.5rem;
+}
+
+.cell {
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 2px solid var(--qx-divider);
+  border-radius: var(--qx-radius-sm);
+  background: var(--qx-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--qx-danger);
+}
+
+.filled {
+  border-color: var(--qx-danger);
+  background: rgba(181, 25, 25, 0.1);
+  font-weight: 700;
+}
+
+.button {
+  margin-left: auto;
+  padding: var(--qx-space-xs) var(--qx-space-sm);
+  border: 2px solid var(--qx-danger);
+  border-radius: var(--qx-radius-md);
+  background: transparent;
+  color: var(--qx-danger);
+  font-weight: 600;
+  min-height: var(--qx-tap-min);
+}
+
+.button:disabled {
+  opacity: 0.4;
+}

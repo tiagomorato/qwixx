@@ -1,0 +1,17 @@
+.row {
+  display: flex;
+  gap: var(--qx-space-xs);
+  align-items: center;
+  padding: var(--qx-space-xs) 0;
+}
+
+.label {
+  width: 4rem;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--label-fg);
+  text-align: right;
+  padding-right: var(--qx-space-sm);
+}

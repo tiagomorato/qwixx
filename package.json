@@ -7,7 +7,7 @@
     "dev:server": "bun --watch run server/src/index.ts",
     "dev:client": "bun --filter client run dev",
     "build:client": "bun --filter client run build",
-    "test": "bun test",
+    "test": "bun test shared server",
     "test:e2e": "playwright test",
     "test:perf": "bun test --bench tests/perf",
     "check": "biome check .",

@@ -1,0 +1,23 @@
+.button {
+  padding: var(--qx-space-sm) var(--qx-space-md);
+  border: 2px solid var(--qx-color-yellow-border);
+  border-radius: var(--qx-radius-md);
+  background: var(--qx-color-yellow-bg);
+  color: var(--qx-color-yellow-fg);
+  font-weight: 700;
+  min-height: var(--qx-tap-min);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--qx-space-xs);
+}
+
+.button::before {
+  content: "↶";
+  font-size: 1.2rem;
+}
+
+.button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: grayscale(0.7);
+}

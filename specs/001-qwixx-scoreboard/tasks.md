@@ -134,16 +134,16 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 ### Tests for User Story 2 (write FIRST and ensure they FAIL) ⚠️
 
-- [ ] T064 [P] [US2] Domain unit tests for `undo` (undo a mark; undo a lock — also clears `globalLocks[color]`; undo a penalty; undo on empty log is no-op) in `shared/tests/domain/undo.test.ts`
-- [ ] T065 [P] [US2] Playwright E2E test `tests/e2e/02-undo-mistake.spec.ts` covering mark/lock/penalty undo flows with `@axe-core/playwright` assertion on Play screen with Undo affordance visible
+- [X] T064 [P] [US2] Domain unit tests for `undo` (undo a mark; undo a lock — also clears `globalLocks[color]`; undo a penalty; undo on empty log is no-op) in `shared/tests/domain/undo.test.ts`
+- [X] T065 [P] [US2] Playwright E2E test `tests/e2e/02-undo-mistake.spec.ts` covering mark/lock/penalty undo flows with `@axe-core/playwright` assertion on Play screen with Undo affordance visible
 
 ### Implementation for User Story 2
 
-- [ ] T066 [US2] Implement `undo(game)` (pops last `ActionLogEntry` and inverts it, including `globalLocks` release on lock-undo) in `shared/src/domain/undo.ts` (depends on T043)
-- [ ] T067 [US2] Re-export `undo` from `shared/src/index.ts`
-- [ ] T068 [US2] Add `undo` action to the game store and have it route through the debounced persistence subscriber in `client/src/store/gameStore.ts` (depends on T053, T054)
-- [ ] T069 [P] [US2] Build `UndoButton` component (disabled when `actionLog` empty, non-color disabled cue) in `client/src/components/UndoButton.tsx`
-- [ ] T070 [US2] Mount `UndoButton` in `PlayScreen` and wire to store in `client/src/screens/PlayScreen.tsx` (depends on T068, T069)
+- [X] T066 [US2] Implement `undo(game)` (pops last `ActionLogEntry` and inverts it, including `globalLocks` release on lock-undo) in `shared/src/domain/undo.ts` (depends on T043)
+- [X] T067 [US2] Re-export `undo` from `shared/src/index.ts`
+- [X] T068 [US2] Add `undo` action to the game store and have it route through the debounced persistence subscriber in `client/src/store/gameStore.ts` (depends on T053, T054)
+- [X] T069 [P] [US2] Build `UndoButton` component (disabled when `actionLog` empty, non-color disabled cue) in `client/src/components/UndoButton.tsx`
+- [X] T070 [US2] Mount `UndoButton` in `PlayScreen` and wire to store in `client/src/screens/PlayScreen.tsx` (depends on T068, T069)
 
 **Checkpoint**: User Stories 1 AND 2 both work independently — playable game with reliable single-step undo.
 

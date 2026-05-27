@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Scoreboard } from '../components/Scoreboard.tsx';
+import { UndoButton } from '../components/UndoButton.tsx';
 import { useGameStore } from '../store/gameStore.ts';
 import {
   type PersistenceStatus,
@@ -45,6 +46,7 @@ export function PlayScreen({ onExitToHome }: PlayScreenProps) {
         <span className={styles.statusBar} aria-live="polite">
           {statusLabel(status)}
         </span>
+        <UndoButton />
         <button type="button" className={styles.button} onClick={onExitToHome}>
           Home
         </button>

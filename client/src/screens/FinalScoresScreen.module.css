@@ -1,0 +1,61 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: var(--qx-space-lg);
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.subtitle {
+  color: var(--qx-text-muted);
+  margin: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: var(--qx-space-sm) var(--qx-space-md);
+  border-bottom: 1px solid var(--qx-divider);
+  font-variant-numeric: tabular-nums;
+}
+
+.table th {
+  font-weight: 700;
+  color: var(--qx-text-muted);
+}
+
+.winner {
+  background: rgba(27, 111, 42, 0.08);
+  font-weight: 700;
+}
+
+.crown {
+  color: var(--qx-success);
+  margin-right: var(--qx-space-xs);
+}
+
+.actions {
+  display: flex;
+  gap: var(--qx-space-sm);
+  flex-wrap: wrap;
+}
+
+.primary {
+  padding: var(--qx-space-sm) var(--qx-space-lg);
+  border: 0;
+  border-radius: var(--qx-radius-md);
+  background: var(--qx-color-blue-fg);
+  color: white;
+  font-weight: 700;
+  min-height: var(--qx-tap-min);
+}

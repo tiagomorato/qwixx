@@ -53,23 +53,23 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 **⚠️ CRITICAL**: No user-story work may begin until this phase is complete.
 
-- [ ] T012 [P] Implement constants (`COLORS`, `ASCENDING_COLORS`, `DESCENDING_COLORS`, `MIN_LOCK_MARKS`, `MAX_PENALTIES`, `MAX_HISTORY`, `SCORE` triangular table) in `shared/src/types/constants.ts`
-- [ ] T013 [P] Define `Color`, `CellState`, `RowState` types in `shared/src/types/board.ts`
-- [ ] T014 [P] Define `PlayerState` type in `shared/src/types/player.ts`
-- [ ] T015 [P] Define `ActionLogEntry` union in `shared/src/types/action-log.ts`
-- [ ] T016 [P] Define `GameStatus`, `GameState`, `HistoryFile` types in `shared/src/types/game.ts`
-- [ ] T017 Re-export all types and constants from `shared/src/index.ts` (depends on T012–T016)
-- [ ] T018 [P] Implement atomic write-then-rename helper in `server/src/storage/atomicWrite.ts`
-- [ ] T019 [P] Implement per-file mutex helper in `server/src/storage/mutex.ts`
-- [ ] T020 [P] Implement JSON read/parse helper with missing-file handling in `server/src/storage/jsonRepo.ts`
-- [ ] T021 [P] Implement error envelope + HTTP response helpers (`ok`, `noContent`, `errorJson`) in `server/src/http/respond.ts`
-- [ ] T022 Create `Bun.serve` entry point with empty router (`switch` on `url.pathname` + method) in `server/src/index.ts`
-- [ ] T023 [P] Create design tokens (colors, spacing, typography, state-cue icons/borders) in `client/src/design/tokens.ts`
-- [ ] T024 [P] Create CSS custom-property layer in `client/src/design/tokens.css` exposing tokens to CSS Modules
-- [ ] T025 [P] Create global reset + theme in `client/src/styles/reset.css`
-- [ ] T026 Create React entry point in `client/src/main.tsx` (mounts `<App />`, imports `tokens.css` + `reset.css`)
-- [ ] T027 Create app shell with screen routing scaffold (Home / Play / FinalScores / History placeholders) in `client/src/App.tsx`
-- [ ] T028 [P] Implement typed `fetch` wrapper (handles JSON, error envelope, timeouts) in `client/src/api/client.ts`
+- [X] T012 [P] Implement constants (`COLORS`, `ASCENDING_COLORS`, `DESCENDING_COLORS`, `MIN_LOCK_MARKS`, `MAX_PENALTIES`, `MAX_HISTORY`, `SCORE` triangular table) in `shared/src/types/constants.ts`
+- [X] T013 [P] Define `Color`, `CellState`, `RowState` types in `shared/src/types/board.ts`
+- [X] T014 [P] Define `PlayerState` type in `shared/src/types/player.ts`
+- [X] T015 [P] Define `ActionLogEntry` union in `shared/src/types/action-log.ts`
+- [X] T016 [P] Define `GameStatus`, `GameState`, `HistoryFile` types in `shared/src/types/game.ts`
+- [X] T017 Re-export all types and constants from `shared/src/index.ts` (depends on T012–T016)
+- [X] T018 [P] Implement atomic write-then-rename helper in `server/src/storage/atomicWrite.ts`
+- [X] T019 [P] Implement per-file mutex helper in `server/src/storage/mutex.ts`
+- [X] T020 [P] Implement JSON read/parse helper with missing-file handling in `server/src/storage/jsonRepo.ts`
+- [X] T021 [P] Implement error envelope + HTTP response helpers (`ok`, `noContent`, `errorJson`) in `server/src/http/respond.ts`
+- [X] T022 Create `Bun.serve` entry point with empty router (`switch` on `url.pathname` + method) in `server/src/index.ts`
+- [X] T023 [P] Create design tokens (colors, spacing, typography, state-cue icons/borders) in `client/src/design/tokens.ts`
+- [X] T024 [P] Create CSS custom-property layer in `client/src/design/tokens.css` exposing tokens to CSS Modules
+- [X] T025 [P] Create global reset + theme in `client/src/styles/reset.css`
+- [X] T026 Create React entry point in `client/src/main.tsx` (mounts `<App />`, imports `tokens.css` + `reset.css`)
+- [X] T027 Create app shell with screen routing scaffold (Home / Play / FinalScores / History placeholders) in `client/src/App.tsx`
+- [X] T028 [P] Implement typed `fetch` wrapper (handles JSON, error envelope, timeouts) in `client/src/api/client.ts`
 
 **Checkpoint**: Foundation ready — user story implementation can now proceed.
 

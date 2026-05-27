@@ -1,12 +1,11 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "rootDir": "src",
-    "outDir": "dist",
     "lib": ["ES2022"],
-    "types": ["bun-types"]
+    "types": ["bun"],
+    "paths": {
+      "@qwixx/shared": ["../shared/src/index.ts"]
+    }
   },
-  "include": ["src/**/*.ts", "tests/**/*.ts"],
-  "references": [{ "path": "../shared" }]
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
 }

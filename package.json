@@ -12,7 +12,7 @@
     "test:perf": "bun test --bench tests/perf",
     "check": "biome check .",
     "check:fix": "biome check --write .",
-    "typecheck": "tsc --build --noEmit"
+    "typecheck": "tsc -p shared/tsconfig.json && tsc -p server/tsconfig.json && tsc -p client/tsconfig.json"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",

@@ -1,0 +1,17 @@
+node_modules/
+.bun/
+bun.lockb
+client/dist/
+server/dist/
+shared/dist/
+.vite/
+playwright-report/
+test-results/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.tmp
+*.swp

@@ -1,0 +1,26 @@
+{
+  "name": "qwixx",
+  "private": true,
+  "type": "module",
+  "workspaces": ["shared", "server", "client"],
+  "scripts": {
+    "dev:server": "bun --watch run server/src/index.ts",
+    "dev:client": "bun --filter client run dev",
+    "build:client": "bun --filter client run build",
+    "test": "bun test",
+    "test:e2e": "playwright test",
+    "test:perf": "bun test --bench tests/perf",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "typecheck": "tsc --build --noEmit"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4",
+    "@playwright/test": "1.49.1",
+    "@axe-core/playwright": "4.10.1",
+    "@types/bun": "1.1.14",
+    "@types/react": "18.3.17",
+    "@types/react-dom": "18.3.5",
+    "typescript": "5.7.2"
+  }
+}

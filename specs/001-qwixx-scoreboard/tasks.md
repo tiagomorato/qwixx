@@ -33,17 +33,17 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 **Purpose**: Bun workspace, TypeScript, tooling, and on-disk persistence skeleton.
 
-- [ ] T001 Create top-level directories (`shared/src`, `server/src`, `client/src`, `tests/perf`, `tests/e2e`, `data/`) at repo root
-- [ ] T002 Initialize root `package.json` declaring Bun workspaces `["shared", "server", "client"]` and dev dependencies (Biome, Playwright, `@axe-core/playwright`)
-- [ ] T003 [P] Create root `tsconfig.json` with strict mode and project references to `shared`, `server`, `client`
-- [ ] T004 [P] Create `biome.json` at repo root with project lint + format rules
-- [ ] T005 [P] Create `shared/package.json` and `shared/tsconfig.json` (pure TS library, no runtime deps)
-- [ ] T006 [P] Create `server/package.json` and `server/tsconfig.json` (Bun runtime target, depends on `shared`)
-- [ ] T007 [P] Create `client/package.json`, `client/tsconfig.json`, `client/vite.config.ts`, and `client/index.html` (React 18 + Vite 5 + Zustand 4, depends on `shared`, proxies `/api` → `http://localhost:8787`)
-- [ ] T008 [P] Create `playwright.config.ts` at repo root configured for Chromium, Firefox, and WebKit with baseURL `http://localhost:5173`
-- [ ] T009 [P] Add npm scripts to root `package.json`: `dev:server`, `dev:client`, `test`, `test:e2e`, `test:perf`, `check`, `check:fix`, `typecheck`
-- [ ] T010 Seed `data/history.json` with `{ "version": 1, "games": [] }`
-- [ ] T011 Add repo `.gitignore` entries for `node_modules`, `.bun`, `client/dist`, `.vite`, `playwright-report`, `coverage` (do NOT ignore `data/`)
+- [X] T001 Create top-level directories (`shared/src`, `server/src`, `client/src`, `tests/perf`, `tests/e2e`, `data/`) at repo root
+- [X] T002 Initialize root `package.json` declaring Bun workspaces `["shared", "server", "client"]` and dev dependencies (Biome, Playwright, `@axe-core/playwright`)
+- [X] T003 [P] Create root `tsconfig.json` with strict mode and project references to `shared`, `server`, `client`
+- [X] T004 [P] Create `biome.json` at repo root with project lint + format rules
+- [X] T005 [P] Create `shared/package.json` and `shared/tsconfig.json` (pure TS library, no runtime deps)
+- [X] T006 [P] Create `server/package.json` and `server/tsconfig.json` (Bun runtime target, depends on `shared`)
+- [X] T007 [P] Create `client/package.json`, `client/tsconfig.json`, `client/vite.config.ts`, and `client/index.html` (React 18 + Vite 5 + Zustand 4, depends on `shared`, proxies `/api` → `http://localhost:8787`)
+- [X] T008 [P] Create `playwright.config.ts` at repo root configured for Chromium, Firefox, and WebKit with baseURL `http://localhost:5173`
+- [X] T009 [P] Add npm scripts to root `package.json`: `dev:server`, `dev:client`, `test`, `test:e2e`, `test:perf`, `check`, `check:fix`, `typecheck`
+- [X] T010 Seed `data/history.json` with `{ "version": 1, "games": [] }`
+- [X] T011 Add repo `.gitignore` entries for `node_modules`, `.bun`, `client/dist`, `.vite`, `playwright-report`, `coverage` (do NOT ignore `data/`)
 
 ---
 

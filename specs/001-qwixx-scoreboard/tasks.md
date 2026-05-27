@@ -89,10 +89,10 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 - [X] T032 [P] [US1] Domain unit tests for `mark`, `lock`, `penalty` action functions (state mutation + action-log append) in `shared/tests/domain/actions.test.ts`
 - [X] T033 [P] [US1] Domain unit tests for `gameShouldEnd` and `finalize` (≥2 global locks OR any player at 4 penalties) in `shared/tests/domain/end.test.ts`
 - [X] T034 [P] [US1] Domain unit tests for `winner` (sole + tie cases) in `shared/tests/domain/winner.test.ts`
-- [ ] T035 [P] [US1] Server route tests for `GET /api/current` (null + populated) in `server/tests/routes/current.get.test.ts`
-- [ ] T036 [P] [US1] Server route tests for `PUT /api/current` (create, replace same id, 409 on id mismatch, 400 on invalid payload) in `server/tests/routes/current.put.test.ts`
-- [ ] T037 [P] [US1] Server route tests for `DELETE /api/current` (204 happy path + when no current game) in `server/tests/routes/current.delete.test.ts`
-- [ ] T038 [P] [US1] Server route tests for `POST /api/current/finalize` (moves to history, deletes current, 409 when not ended) in `server/tests/routes/current.finalize.test.ts`
+- [X] T035 [P] [US1] Server route tests for `GET /api/current` (null + populated) in `server/tests/routes/current.get.test.ts`
+- [X] T036 [P] [US1] Server route tests for `PUT /api/current` (create, replace same id, 409 on id mismatch, 400 on invalid payload) in `server/tests/routes/current.put.test.ts`
+- [X] T037 [P] [US1] Server route tests for `DELETE /api/current` (204 happy path + when no current game) in `server/tests/routes/current.delete.test.ts`
+- [X] T038 [P] [US1] Server route tests for `POST /api/current/finalize` (moves to history, deletes current, 409 when not ended) in `server/tests/routes/current.finalize.test.ts`
 - [ ] T039 [P] [US1] Playwright E2E test `tests/e2e/01-play-complete-game.spec.ts` exercising start → marks → lock → penalty → end → final scores → reload-resume, with `@axe-core/playwright` accessibility assertion on Home and Play screens
 
 ### Implementation for User Story 1
@@ -103,12 +103,12 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 - [X] T043 [US1] Implement `mark`, `lock`, `penalty`, `finalize` action functions (append to `actionLog`, set `row.locked` and `globalLocks` for lock, set `status`/`endedAt` for finalize) in `shared/src/domain/actions.ts` (depends on T040, T041)
 - [X] T044 [P] [US1] Implement `winner(game)` returning sole `PlayerState` or array on tie in `shared/src/domain/winner.ts`
 - [X] T045 [US1] Re-export domain functions from `shared/src/index.ts` (depends on T040–T044)
-- [ ] T046 [P] [US1] Implement current-game repository (`readCurrent`, `writeCurrent`, `deleteCurrent`) with atomic write + mutex in `server/src/storage/currentRepo.ts`
-- [ ] T047 [P] [US1] Implement history repository (`readHistory`, `appendCompleted` with `MAX_HISTORY` cap) with atomic write + mutex in `server/src/storage/historyRepo.ts`
-- [ ] T048 [P] [US1] Implement `GameState` validator enforcing data-model invariants in `server/src/validation/gameState.ts`
-- [ ] T049 [US1] Implement `GET /api/current` and `PUT /api/current` and `DELETE /api/current` handlers in `server/src/routes/current.ts` (depends on T046, T048)
-- [ ] T050 [US1] Implement `POST /api/current/finalize` handler (validates `gameShouldEnd`, sets `status`/`endedAt`, prepends to history, deletes current) in `server/src/routes/finalize.ts` (depends on T046, T047)
-- [ ] T051 [US1] Wire `current` and `finalize` routes into the router in `server/src/index.ts` (depends on T022, T049, T050)
+- [X] T046 [P] [US1] Implement current-game repository (`readCurrent`, `writeCurrent`, `deleteCurrent`) with atomic write + mutex in `server/src/storage/currentRepo.ts`
+- [X] T047 [P] [US1] Implement history repository (`readHistory`, `appendCompleted` with `MAX_HISTORY` cap) with atomic write + mutex in `server/src/storage/historyRepo.ts`
+- [X] T048 [P] [US1] Implement `GameState` validator enforcing data-model invariants in `server/src/validation/gameState.ts`
+- [X] T049 [US1] Implement `GET /api/current` and `PUT /api/current` and `DELETE /api/current` handlers in `server/src/routes/current.ts` (depends on T046, T048)
+- [X] T050 [US1] Implement `POST /api/current/finalize` handler (validates `gameShouldEnd`, sets `status`/`endedAt`, prepends to history, deletes current) in `server/src/routes/finalize.ts` (depends on T046, T047)
+- [X] T051 [US1] Wire `current` and `finalize` routes into the router in `server/src/index.ts` (depends on T022, T049, T050)
 - [ ] T052 [P] [US1] Add `getCurrent`, `putCurrent`, `deleteCurrent`, `finalizeCurrent` methods to `client/src/api/client.ts`
 - [ ] T053 [P] [US1] Create Zustand game store with `mark`, `lock`, `penalty`, `finalize` actions and per-player score selectors in `client/src/store/gameStore.ts`
 - [ ] T054 [US1] Add debounced (≤300 ms) `PUT /api/current` persistence subscriber to the game store in `client/src/store/persistence.ts` (depends on T052, T053)

@@ -2,6 +2,19 @@ import { resolve } from 'node:path';
 
 const repoRoot = resolve(import.meta.dir, '..', '..');
 
-export const DATA_DIR = process.env.QWIXX_DATA_DIR ?? resolve(repoRoot, 'data');
-export const CURRENT_PATH = `${DATA_DIR}/current.json`;
-export const HISTORY_PATH = `${DATA_DIR}/history.json`;
+function dataDir(): string {
+  return process.env.QWIXX_DATA_DIR ?? resolve(repoRoot, 'data');
+}
+
+export function currentPath(): string {
+  return `${dataDir()}/current.json`;
+}
+
+export function historyPath(): string {
+  return `${dataDir()}/history.json`;
+}
+
+// Eager-evaluated convenience constants for non-test callers.
+export const DATA_DIR = dataDir();
+export const CURRENT_PATH = currentPath();
+export const HISTORY_PATH = historyPath();

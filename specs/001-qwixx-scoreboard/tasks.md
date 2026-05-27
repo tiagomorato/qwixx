@@ -83,12 +83,12 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 ### Tests for User Story 1 (write FIRST and ensure they FAIL) ⚠️
 
-- [ ] T029 [P] [US1] Domain unit tests for `createGame` (player count 1–6, name trim, invariants) in `shared/tests/domain/createGame.test.ts`
-- [ ] T030 [P] [US1] Domain unit tests for `scoreForRow` + `totalScore` against the triangular `SCORE` table and penalty deduction in `shared/tests/domain/score.test.ts`
-- [ ] T031 [P] [US1] Domain unit tests for `isCellMarkable` and `isRowLockable` (left-of-marked, color globally locked, <5 marks) in `shared/tests/domain/legality.test.ts`
-- [ ] T032 [P] [US1] Domain unit tests for `mark`, `lock`, `penalty` action functions (state mutation + action-log append) in `shared/tests/domain/actions.test.ts`
-- [ ] T033 [P] [US1] Domain unit tests for `gameShouldEnd` and `finalize` (≥2 global locks OR any player at 4 penalties) in `shared/tests/domain/end.test.ts`
-- [ ] T034 [P] [US1] Domain unit tests for `winner` (sole + tie cases) in `shared/tests/domain/winner.test.ts`
+- [X] T029 [P] [US1] Domain unit tests for `createGame` (player count 1–6, name trim, invariants) in `shared/tests/domain/createGame.test.ts`
+- [X] T030 [P] [US1] Domain unit tests for `scoreForRow` + `totalScore` against the triangular `SCORE` table and penalty deduction in `shared/tests/domain/score.test.ts`
+- [X] T031 [P] [US1] Domain unit tests for `isCellMarkable` and `isRowLockable` (left-of-marked, color globally locked, <5 marks) in `shared/tests/domain/legality.test.ts`
+- [X] T032 [P] [US1] Domain unit tests for `mark`, `lock`, `penalty` action functions (state mutation + action-log append) in `shared/tests/domain/actions.test.ts`
+- [X] T033 [P] [US1] Domain unit tests for `gameShouldEnd` and `finalize` (≥2 global locks OR any player at 4 penalties) in `shared/tests/domain/end.test.ts`
+- [X] T034 [P] [US1] Domain unit tests for `winner` (sole + tie cases) in `shared/tests/domain/winner.test.ts`
 - [ ] T035 [P] [US1] Server route tests for `GET /api/current` (null + populated) in `server/tests/routes/current.get.test.ts`
 - [ ] T036 [P] [US1] Server route tests for `PUT /api/current` (create, replace same id, 409 on id mismatch, 400 on invalid payload) in `server/tests/routes/current.put.test.ts`
 - [ ] T037 [P] [US1] Server route tests for `DELETE /api/current` (204 happy path + when no current game) in `server/tests/routes/current.delete.test.ts`
@@ -97,12 +97,12 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 ### Implementation for User Story 1
 
-- [ ] T040 [P] [US1] Implement `scoreForRow` and `totalScore` in `shared/src/domain/score.ts`
-- [ ] T041 [P] [US1] Implement `isCellMarkable`, `isRowLockable`, `gameShouldEnd` in `shared/src/domain/legality.ts`
-- [ ] T042 [P] [US1] Implement `createGame(players)` factory (UUID v4 ids, row initialization per ascending/descending colors) in `shared/src/domain/createGame.ts`
-- [ ] T043 [US1] Implement `mark`, `lock`, `penalty`, `finalize` action functions (append to `actionLog`, set `row.locked` and `globalLocks` for lock, set `status`/`endedAt` for finalize) in `shared/src/domain/actions.ts` (depends on T040, T041)
-- [ ] T044 [P] [US1] Implement `winner(game)` returning sole `PlayerState` or array on tie in `shared/src/domain/winner.ts`
-- [ ] T045 [US1] Re-export domain functions from `shared/src/index.ts` (depends on T040–T044)
+- [X] T040 [P] [US1] Implement `scoreForRow` and `totalScore` in `shared/src/domain/score.ts`
+- [X] T041 [P] [US1] Implement `isCellMarkable`, `isRowLockable`, `gameShouldEnd` in `shared/src/domain/legality.ts`
+- [X] T042 [P] [US1] Implement `createGame(players)` factory (UUID v4 ids, row initialization per ascending/descending colors) in `shared/src/domain/createGame.ts`
+- [X] T043 [US1] Implement `mark`, `lock`, `penalty`, `finalize` action functions (append to `actionLog`, set `row.locked` and `globalLocks` for lock, set `status`/`endedAt` for finalize) in `shared/src/domain/actions.ts` (depends on T040, T041)
+- [X] T044 [P] [US1] Implement `winner(game)` returning sole `PlayerState` or array on tie in `shared/src/domain/winner.ts`
+- [X] T045 [US1] Re-export domain functions from `shared/src/index.ts` (depends on T040–T044)
 - [ ] T046 [P] [US1] Implement current-game repository (`readCurrent`, `writeCurrent`, `deleteCurrent`) with atomic write + mutex in `server/src/storage/currentRepo.ts`
 - [ ] T047 [P] [US1] Implement history repository (`readHistory`, `appendCompleted` with `MAX_HISTORY` cap) with atomic write + mutex in `server/src/storage/historyRepo.ts`
 - [ ] T048 [P] [US1] Implement `GameState` validator enforcing data-model invariants in `server/src/validation/gameState.ts`

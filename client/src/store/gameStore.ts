@@ -9,6 +9,7 @@ import {
   mark as markAction,
   penalty as penaltyAction,
   totalScore,
+  undo as undoAction,
 } from '@qwixx/shared';
 import { create } from 'zustand';
 
@@ -19,6 +20,7 @@ export type GameStoreState = {
   markCell: (playerId: string, color: Color, cellIndex: number) => void;
   lockRow: (playerId: string, color: Color) => void;
   takePenalty: (playerId: string) => void;
+  undo: () => void;
   finalize: () => void;
   reset: () => void;
 };
@@ -44,6 +46,13 @@ export const useGameStore = create<GameStoreState>((set, get) => ({
     if (!game) return;
     const next = penaltyAction(game, playerId);
     set({ game: gameShouldEnd(next) ? finalizeAction(next) : next });
+  },
+  undo: () => {
+    const game = get().game;
+    if (!game) return;
+    if (game.status === 'completed') return;
+    if (game.actionLog.length === 0) return;
+    set({ game: undoAction(game) });
   },
   finalize: () => {
     const game = get().game;

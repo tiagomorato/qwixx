@@ -26,14 +26,14 @@ describe('POST /api/current/finalize', () => {
   });
 
   it('returns 409 when game has not reached an end condition', async () => {
-    const game = createGame([{ name: 'A' }]);
+    const game = createGame([{ name: 'A' }, { name: 'B' }]);
     await putGame(game);
     const res = await dispatch(new Request('http://x/api/current/finalize', { method: 'POST' }));
     expect(res.status).toBe(409);
   });
 
   it('moves a finishable game to history, deletes current, returns it', async () => {
-    const game = createGame([{ name: 'A' }]);
+    const game = createGame([{ name: 'A' }, { name: 'B' }]);
     const ended: GameState = {
       ...game,
       globalLocks: { red: true, yellow: true, green: false, blue: false },

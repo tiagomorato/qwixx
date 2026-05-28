@@ -70,6 +70,36 @@
   min-height: var(--qx-tap-min);
 }
 
+.playerRow input[aria-invalid="true"] {
+  border-color: var(--qx-danger);
+  box-shadow: 0 0 0 2px rgba(181, 25, 25, 0.18);
+}
+
+.rules {
+  border: 1px solid var(--qx-divider);
+  border-radius: var(--qx-radius-md);
+  padding: var(--qx-space-sm) var(--qx-space-md);
+  background: var(--qx-surface);
+}
+
+.rules summary {
+  cursor: pointer;
+  font-weight: 700;
+  padding: var(--qx-space-xs) 0;
+}
+
+.rules ul {
+  margin: var(--qx-space-sm) 0 0;
+  padding-left: var(--qx-space-lg);
+  color: var(--qx-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.rules li + li {
+  margin-top: var(--qx-space-xs);
+}
+
 .error {
   color: var(--qx-danger);
   font-size: 0.875rem;

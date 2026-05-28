@@ -9,7 +9,9 @@ describe('history capping', () => {
     try {
       let n = 0;
       for (let i = 0; i < MAX_HISTORY + 5; i += 1) {
-        const game = createGame([{ name: `P${i}` }], { idGen: () => `id-${++n}` });
+        const game = createGame([{ name: `P${i}` }, { name: `Q${i}` }], {
+          idGen: () => `id-${++n}`,
+        });
         await appendCompleted({
           ...game,
           status: 'completed',

@@ -7,6 +7,7 @@ export type CellProps = {
   marked: boolean;
   disabled: boolean;
   isLockCell?: boolean;
+  lockReady?: boolean;
   ariaLabel: string;
   onSelect: () => void;
 };
@@ -24,6 +25,7 @@ export function Cell({
   marked,
   disabled,
   isLockCell = false,
+  lockReady = false,
   ariaLabel,
   onSelect,
 }: CellProps) {
@@ -31,6 +33,7 @@ export function Cell({
   if (marked) classes.push(styles.marked);
   if (disabled) classes.push(styles.disabled);
   if (isLockCell) classes.push(styles.locked, styles.lockChip);
+  if (isLockCell && lockReady) classes.push(styles.lockReady);
 
   return (
     <button

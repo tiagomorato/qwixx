@@ -16,7 +16,7 @@ describe('GET /api/history/:id', () => {
   });
 
   it('returns 200 with the matching game', async () => {
-    const game = createGame([{ name: 'Z' }]);
+    const game = createGame([{ name: 'Z' }, { name: 'Y' }]);
     const completed = {
       ...game,
       status: 'completed' as const,

@@ -24,12 +24,17 @@
 .total {
   font-variant-numeric: tabular-nums;
   font-weight: 700;
+  font-size: 1.75rem;
   color: var(--qx-text);
   background: var(--qx-surface-muted);
-  padding: var(--qx-space-xs) var(--qx-space-sm);
+  padding: var(--qx-space-xs) var(--qx-space-md);
   border-radius: var(--qx-radius-md);
+  line-height: 1;
+  min-width: 3rem;
+  text-align: right;
 }
 
 .rows {
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
 }

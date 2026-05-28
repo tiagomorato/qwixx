@@ -28,16 +28,16 @@ describe('PUT /api/current', () => {
   });
 
   it('replaces a current game with the same id', async () => {
-    const game = createGame([{ name: 'A' }]);
+    const game = createGame([{ name: 'A' }, { name: 'B' }]);
     await put({ game });
     const res = await put({ game: { ...game, players: [...game.players] } });
     expect(res.status).toBe(200);
   });
 
   it('returns 409 when a different game id is already in progress', async () => {
-    const a = createGame([{ name: 'A' }]);
+    const a = createGame([{ name: 'A' }, { name: 'B' }]);
     await put({ game: a });
-    const b = createGame([{ name: 'B' }]);
+    const b = createGame([{ name: 'C' }, { name: 'D' }]);
     const res = await put({ game: b });
     expect(res.status).toBe(409);
   });

@@ -11,7 +11,7 @@ beforeEach(() => {
 afterEach(() => env.cleanup());
 
 function completed(name: string, idGen: () => string): GameState {
-  const game = createGame([{ name }], { idGen });
+  const game = createGame([{ name }, { name: `${name}-opp` }], { idGen });
   return { ...game, status: 'completed', endedAt: '2026-05-27T18:00:00.000Z' };
 }
 

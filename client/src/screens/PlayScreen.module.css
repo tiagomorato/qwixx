@@ -7,15 +7,31 @@
 }
 
 .toolbar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto auto;
   gap: var(--qx-space-sm);
   align-items: center;
-  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .toolbar {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "title status"
+      "undo history"
+      "home home";
+  }
+  .title {
+    grid-area: title;
+  }
+  .statusBar {
+    grid-area: status;
+    text-align: right;
+  }
 }
 
 .title {
   margin: 0;
-  flex: 1;
   font-size: 1.5rem;
 }
 
@@ -32,18 +48,6 @@
   display: grid;
   gap: var(--qx-space-md);
   grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .boards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1300px) {
-  .boards {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .statusBar {

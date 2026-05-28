@@ -11,6 +11,7 @@ import styles from './PlayScreen.module.css';
 
 export type PlayScreenProps = {
   onExitToHome: () => void;
+  onOpenHistory: () => void;
 };
 
 function statusLabel(s: PersistenceStatus): string {
@@ -26,7 +27,7 @@ function statusLabel(s: PersistenceStatus): string {
   }
 }
 
-export function PlayScreen({ onExitToHome }: PlayScreenProps) {
+export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const game = useGameStore((s) => s.game);
   const markCell = useGameStore((s) => s.markCell);
   const lockRow = useGameStore((s) => s.lockRow);
@@ -47,6 +48,9 @@ export function PlayScreen({ onExitToHome }: PlayScreenProps) {
           {statusLabel(status)}
         </span>
         <UndoButton />
+        <button type="button" className={styles.button} onClick={onOpenHistory}>
+          History
+        </button>
         <button type="button" className={styles.button} onClick={onExitToHome}>
           Home
         </button>

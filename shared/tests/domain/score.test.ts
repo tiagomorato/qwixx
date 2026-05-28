@@ -30,7 +30,7 @@ describe('scoreForRow', () => {
 
 describe('totalScore', () => {
   it('sums row scores and subtracts 5 per penalty', () => {
-    const game = createGame([{ name: 'A' }]);
+    const game = createGame([{ name: 'A' }, { name: 'B' }]);
     const player = game.players[0];
     if (!player) throw new Error('player');
     expect(totalScore(player)).toBe(0);

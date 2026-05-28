@@ -55,4 +55,29 @@
 
 .lockChip::after {
   content: "🔒";
+  font-size: 1.1rem;
+}
+
+.lockReady {
+  background: var(--cell-bg);
+  border-style: solid;
+  border-color: var(--cell-border);
+  box-shadow: 0 0 0 2px var(--cell-border);
+  animation: lockPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes lockPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 2px var(--cell-border);
+  }
+  50% {
+    box-shadow: 0 0 0 4px var(--cell-border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lockReady {
+    animation: none;
+  }
 }

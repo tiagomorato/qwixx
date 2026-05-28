@@ -2,9 +2,9 @@
   display: flex;
   gap: var(--qx-space-xs);
   align-items: center;
-  padding: var(--qx-space-sm) 0;
-  margin-top: var(--qx-space-sm);
-  border-top: 1px solid var(--qx-divider);
+  padding: var(--qx-space-sm) 0 0;
+  margin: var(--qx-space-sm) 0 0;
+  border: 0;
 }
 
 .label {

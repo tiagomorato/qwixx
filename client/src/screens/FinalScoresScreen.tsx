@@ -12,6 +12,7 @@ import styles from './FinalScoresScreen.module.css';
 export type FinalScoresScreenProps = {
   game: GameState;
   onPlayAgain: () => void;
+  onOpenHistory: () => void;
 };
 
 type Row = {
@@ -25,7 +26,7 @@ type Row = {
   isWinner: boolean;
 };
 
-export function FinalScoresScreen({ game, onPlayAgain }: FinalScoresScreenProps) {
+export function FinalScoresScreen({ game, onPlayAgain, onOpenHistory }: FinalScoresScreenProps) {
   const rows = useMemo<Row[]>(() => {
     const { winners } = winner(game);
     const winnerIds = new Set(winners.map((p) => p.id));
@@ -92,6 +93,9 @@ export function FinalScoresScreen({ game, onPlayAgain }: FinalScoresScreenProps)
       <div className={styles.actions}>
         <button type="button" className={styles.primary} onClick={onPlayAgain}>
           Play another game
+        </button>
+        <button type="button" className={styles.secondary} onClick={onOpenHistory}>
+          View history
         </button>
       </div>
     </section>

@@ -13,7 +13,7 @@ describe('finalize', () => {
   });
 
   it('is idempotent on an already-completed game', () => {
-    const game = createGame([{ name: 'A' }], { now });
+    const game = createGame([{ name: 'A' }, { name: 'B' }], { now });
     const once = finalize(game, () => '2026-05-27T14:00:00.000Z');
     const twice = finalize(once, () => '2026-05-27T15:00:00.000Z');
     expect(twice.endedAt).toBe('2026-05-27T14:00:00.000Z');

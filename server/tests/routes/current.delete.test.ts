@@ -15,7 +15,7 @@ describe('DELETE /api/current', () => {
   });
 
   it('clears an existing current game', async () => {
-    const game = createGame([{ name: 'A' }]);
+    const game = createGame([{ name: 'A' }, { name: 'B' }]);
     await dispatch(
       new Request('http://x/api/current', {
         method: 'PUT',

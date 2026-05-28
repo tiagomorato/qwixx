@@ -17,22 +17,23 @@ describe('createGame', () => {
   });
 
   it('trims player names and rejects empty names', () => {
-    const game = createGame([{ name: '  Dee  ' }], { now: fixedNow, idGen: seq });
+    const game = createGame([{ name: '  Dee  ' }, { name: 'Eli' }], { now: fixedNow, idGen: seq });
     expect(game.players[0]?.name).toBe('Dee');
-    expect(() => createGame([{ name: '   ' }])).toThrow();
+    expect(() => createGame([{ name: '   ' }, { name: 'B' }])).toThrow();
   });
 
-  it('enforces 1..6 player count', () => {
+  it('enforces 2..6 player count', () => {
     expect(() => createGame([])).toThrow();
+    expect(() => createGame([{ name: 'Solo' }])).toThrow();
     expect(() => createGame(Array.from({ length: 7 }, (_, i) => ({ name: `P${i}` })))).toThrow();
-    expect(createGame([{ name: 'Solo' }]).players).toHaveLength(1);
+    expect(createGame([{ name: 'A' }, { name: 'B' }]).players).toHaveLength(2);
     expect(
       createGame(Array.from({ length: 6 }, (_, i) => ({ name: `P${i}` }))).players,
     ).toHaveLength(6);
   });
 
   it('initializes red/yellow rows as 2..12 ascending and green/blue as 12..2 descending', () => {
-    const game = createGame([{ name: 'A' }], { now: fixedNow, idGen: seq });
+    const game = createGame([{ name: 'A' }, { name: 'B' }], { now: fixedNow, idGen: seq });
     const player = game.players[0];
     if (!player) throw new Error('missing player');
     const red = player.rows.find((r) => r.color === 'red');
@@ -43,7 +44,7 @@ describe('createGame', () => {
   });
 
   it('starts in-progress with empty action log and no global locks', () => {
-    const game = createGame([{ name: 'A' }], { now: fixedNow, idGen: seq });
+    const game = createGame([{ name: 'A' }, { name: 'B' }], { now: fixedNow, idGen: seq });
     expect(game.status).toBe('in-progress');
     expect(game.endedAt).toBeNull();
     expect(game.startedAt).toBe('2026-05-27T12:00:00.000Z');

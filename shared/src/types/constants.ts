@@ -6,7 +6,7 @@ export const MIN_LOCK_MARKS = 5;
 export const MAX_PENALTIES = 4;
 export const MAX_HISTORY = 10;
 export const MAX_PLAYERS = 6;
-export const MIN_PLAYERS = 1;
+export const MIN_PLAYERS = 2;
 export const CELLS_PER_ROW = 11;
 export const PENALTY_VALUE = 5;
 

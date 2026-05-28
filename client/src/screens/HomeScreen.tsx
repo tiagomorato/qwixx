@@ -1,5 +1,5 @@
 import { MAX_PLAYERS, MIN_PLAYERS, type NewPlayerInput } from '@qwixx/shared';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import { useGameStore } from '../store/gameStore.ts';
 import styles from './HomeScreen.module.css';
 
@@ -11,6 +11,27 @@ export type HomeScreenProps = {
 };
 
 const RANGE = Array.from({ length: MAX_PLAYERS - MIN_PLAYERS + 1 }, (_, i) => i + MIN_PLAYERS);
+const NAMES_STORAGE_KEY = 'qwixx-recent-names';
+
+function loadRecentNames(): string[] {
+  try {
+    const raw = localStorage.getItem(NAMES_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((n): n is string => typeof n === 'string').slice(0, MAX_PLAYERS);
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentNames(names: string[]): void {
+  try {
+    localStorage.setItem(NAMES_STORAGE_KEY, JSON.stringify(names));
+  } catch {
+    /* storage unavailable; ignore */
+  }
+}
 
 export function HomeScreen({
   hasCurrentGame,
@@ -20,10 +41,19 @@ export function HomeScreen({
 }: HomeScreenProps) {
   const startGame = useGameStore((s) => s.startGame);
   const reset = useGameStore((s) => s.reset);
-  const [count, setCount] = useState<number>(2);
-  const [names, setNames] = useState<string[]>(['', '']);
+  const [count, setCount] = useState<number>(MIN_PLAYERS);
+  const [names, setNames] = useState<string[]>(() => Array.from({ length: MIN_PLAYERS }, () => ''));
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [errorIndex, setErrorIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const recent = loadRecentNames();
+    if (recent.length === 0) return;
+    const initialCount = Math.max(MIN_PLAYERS, Math.min(recent.length, MAX_PLAYERS));
+    setCount(initialCount);
+    setNames(Array.from({ length: initialCount }, (_, i) => recent[i] ?? ''));
+  }, []);
 
   function changeCount(n: number): void {
     setCount(n);
@@ -36,11 +66,28 @@ export function HomeScreen({
 
   function startNow(): void {
     const trimmed = names.slice(0, count).map((n) => n.trim());
-    if (trimmed.some((n) => n.length === 0)) {
+    const firstEmpty = trimmed.findIndex((n) => n.length === 0);
+    if (firstEmpty >= 0) {
       setError('Every player needs a non-empty name.');
+      setErrorIndex(firstEmpty);
+      document.getElementById(`player-${firstEmpty}`)?.focus();
       return;
     }
+    const seen = new Map<string, number>();
+    for (let i = 0; i < trimmed.length; i += 1) {
+      const key = (trimmed[i] ?? '').toLowerCase();
+      const prev = seen.get(key);
+      if (prev !== undefined) {
+        setError('Each player needs a unique name.');
+        setErrorIndex(i);
+        document.getElementById(`player-${i}`)?.focus();
+        return;
+      }
+      seen.set(key, i);
+    }
     setError(null);
+    setErrorIndex(null);
+    saveRecentNames(trimmed);
     const players: NewPlayerInput[] = trimmed.map((name) => ({ name }));
     startGame(players);
     onStarted();
@@ -63,6 +110,24 @@ export function HomeScreen({
         </h1>
         <p className={styles.subtitle}>Roll the dice yourself. Track the scoreboard here.</p>
       </header>
+
+      <details className={styles.rules}>
+        <summary>How to play</summary>
+        <ul>
+          <li>On each turn the active player rolls; everyone may mark.</li>
+          <li>
+            Mark cells in each color row strictly left-to-right; numbers to the left of your last
+            mark become unavailable.
+          </li>
+          <li>Lock a row by marking its rightmost cell after at least 5 marks in that row.</li>
+          <li>Penalty: -5 points each. 4 penalties on any player ends the game.</li>
+          <li>Two locked rows also end the game.</li>
+          <li>
+            Score per row: 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, 66, 78 for 1–12 marks (a lock counts
+            as a mark).
+          </li>
+        </ul>
+      </details>
 
       {hasCurrentGame && !showConfirm ? (
         <output className={styles.warning}>
@@ -105,7 +170,7 @@ export function HomeScreen({
         </div>
       ) : null}
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <fieldset>
           <legend>How many players?</legend>
           <div className={styles.count} role="radiogroup" aria-label="Player count">
@@ -133,6 +198,7 @@ export function HomeScreen({
                 type="text"
                 value={names[i] ?? ''}
                 maxLength={32}
+                aria-invalid={errorIndex === i ? true : undefined}
                 onChange={(ev) =>
                   setNames((prev) => {
                     const next = [...prev];
@@ -140,7 +206,6 @@ export function HomeScreen({
                     return next;
                   })
                 }
-                required
               />
             </div>
           ))}

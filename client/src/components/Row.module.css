@@ -1,12 +1,12 @@
 .row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
   gap: var(--qx-space-xs);
   align-items: center;
   padding: var(--qx-space-xs) 0;
 }
 
 .label {
-  width: 4rem;
   text-transform: uppercase;
   font-size: 0.75rem;
   font-weight: 700;
@@ -14,4 +14,20 @@
   color: var(--label-fg);
   text-align: right;
   padding-right: var(--qx-space-sm);
+  white-space: nowrap;
+}
+
+.cells {
+  display: flex;
+  gap: var(--qx-space-xs);
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  /* Scroll-hint shadow: visible when content extends past the right edge */
+  background:
+    linear-gradient(to right, var(--qx-surface), var(--qx-surface)) left center / 1.5rem 100% no-repeat,
+    linear-gradient(to right, var(--qx-surface), transparent) left center / 1.5rem 100% no-repeat,
+    linear-gradient(to left, var(--qx-surface), var(--qx-surface)) right center / 1.5rem 100% no-repeat,
+    linear-gradient(to left, rgba(0, 0, 0, 0.12), transparent) right center / 1.5rem 100% no-repeat;
+  background-attachment: local, scroll, local, scroll;
 }

@@ -59,3 +59,13 @@
   font-weight: 700;
   min-height: var(--qx-tap-min);
 }
+
+.secondary {
+  padding: var(--qx-space-sm) var(--qx-space-lg);
+  border: 2px solid var(--qx-divider);
+  border-radius: var(--qx-radius-md);
+  background: var(--qx-surface);
+  color: var(--qx-text);
+  font-weight: 700;
+  min-height: var(--qx-tap-min);
+}

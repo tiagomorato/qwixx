@@ -69,7 +69,12 @@ export function App() {
           onOpenHistory={() => setScreen('history')}
         />
       ) : null}
-      {screen === 'play' && game ? <PlayScreen onExitToHome={() => setScreen('home')} /> : null}
+      {screen === 'play' && game ? (
+        <PlayScreen
+          onExitToHome={() => setScreen('home')}
+          onOpenHistory={() => setScreen('history')}
+        />
+      ) : null}
       {screen === 'final' && game ? (
         <FinalScoresScreen
           game={game}
@@ -78,6 +83,7 @@ export function App() {
             reset();
             setScreen('home');
           }}
+          onOpenHistory={() => setScreen('history')}
         />
       ) : null}
       {screen === 'history' ? <HistoryScreen onBackToHome={() => setScreen('home')} /> : null}

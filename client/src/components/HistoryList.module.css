@@ -1,0 +1,48 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--qx-space-xs);
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--qx-space-xs);
+  padding: var(--qx-space-sm) var(--qx-space-md);
+  border: 2px solid var(--qx-divider);
+  border-radius: var(--qx-radius-md);
+  background: var(--qx-surface);
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  min-height: var(--qx-tap-min);
+}
+
+.item[aria-current="true"] {
+  border-color: var(--qx-color-blue-border);
+  background: var(--qx-color-blue-bg);
+  color: var(--qx-color-blue-fg);
+}
+
+.date {
+  font-variant-numeric: tabular-nums;
+  color: var(--qx-text-muted);
+  font-size: 0.875rem;
+}
+
+.players {
+  font-weight: 600;
+}
+
+.winner {
+  color: var(--qx-success);
+  font-weight: 700;
+}
+
+.empty {
+  color: var(--qx-text-muted);
+  font-style: italic;
+}

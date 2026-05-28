@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { api } from './api/client.ts';
 import { FinalScoresScreen } from './screens/FinalScoresScreen.tsx';
+import { HistoryScreen } from './screens/HistoryScreen.tsx';
 import { HomeScreen } from './screens/HomeScreen.tsx';
 import { PlayScreen } from './screens/PlayScreen.tsx';
 import { useGameStore } from './store/gameStore.ts';
@@ -68,15 +69,7 @@ export function App() {
           }}
         />
       ) : null}
-      {screen === 'history' ? (
-        <section aria-labelledby="history-title">
-          <h1 id="history-title">History</h1>
-          <p>History view ships with US3.</p>
-          <button type="button" onClick={() => setScreen('home')}>
-            Back to home
-          </button>
-        </section>
-      ) : null}
+      {screen === 'history' ? <HistoryScreen onBackToHome={() => setScreen('home')} /> : null}
     </main>
   );
 }

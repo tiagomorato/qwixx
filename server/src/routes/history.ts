@@ -1,6 +1,6 @@
-import { notFound, ok } from '../http/respond.ts';
+import { noContent, notFound, ok } from '../http/respond.ts';
 import { registerRoute } from '../index.ts';
-import { findHistoryGame, readHistory } from '../storage/historyRepo.ts';
+import { findHistoryGame, readHistory, resetHistory } from '../storage/historyRepo.ts';
 
 async function handleList(): Promise<Response> {
   const history = await readHistory();
@@ -14,9 +14,15 @@ async function handleDetail(_req: Request, params: Record<string, string>): Prom
   return ok({ game });
 }
 
+async function handleReset(): Promise<Response> {
+  await resetHistory();
+  return noContent();
+}
+
 export function registerHistoryRoutes(): void {
   registerRoute('GET', /^\/api\/history$/, () => handleList());
   registerRoute('GET', /^\/api\/history\/(?<id>[^/]+)$/, (req, params) =>
     handleDetail(req, params),
   );
+  registerRoute('DELETE', /^\/api\/history$/, () => handleReset());
 }

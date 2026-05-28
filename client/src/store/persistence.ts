@@ -35,10 +35,16 @@ async function flush(): Promise<void> {
   setStatus('saving');
   try {
     if (target.status === 'completed') {
+      // Sync the full final state to the server before finalizing. Without
+      // this, a previous debounced PUT may have left an incomplete game on
+      // the server (e.g. only 3 of 4 penalties), causing gameShouldEnd to
+      // return false and the finalize to 409.
+      await api.putCurrent(target).catch(() => undefined);
       await api.finalizeCurrent().catch((err) => {
         if (err instanceof ApiCallError && err.code === 'CONFLICT') return;
         throw err;
       });
+      sessionStorage.setItem('qwixx-finalized', JSON.stringify(target));
     } else {
       await api.putCurrent(target);
     }

@@ -3,6 +3,7 @@ import { type Page, expect, test } from '@playwright/test';
 
 async function startTwoPlayerGame(page: Page): Promise<void> {
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
   await page.getByRole('button', { name: '2', exact: true }).click();
   await page.getByLabel('Player 1').fill('Ana');
   await page.getByLabel('Player 2').fill('Beto');

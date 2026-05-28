@@ -27,3 +27,7 @@ export async function findHistoryGame(id: string): Promise<GameState | null> {
   const file = await readHistory();
   return file.games.find((g) => g.id === id) ?? null;
 }
+
+export async function resetHistory(): Promise<void> {
+  await writeJson(historyPath(), { ...EMPTY });
+}

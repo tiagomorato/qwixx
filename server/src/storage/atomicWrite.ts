@@ -1,6 +1,8 @@
-import { rename, unlink } from 'node:fs/promises';
+import { mkdir, rename, unlink } from 'node:fs/promises';
+import { dirname } from 'node:path';
 
 export async function atomicWriteJson(path: string, value: unknown): Promise<void> {
+  await mkdir(dirname(path), { recursive: true });
   const tmp = `${path}.tmp`;
   await Bun.write(tmp, JSON.stringify(value, null, 2));
   try {

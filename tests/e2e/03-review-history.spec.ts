@@ -58,6 +58,7 @@ function makeRows(_kind: string, marks: boolean[] | null) {
 
 test.beforeEach(async ({ request }) => {
   await request.delete('/api/current').catch(() => undefined);
+  await request.delete('/api/history').catch(() => undefined);
 });
 
 test('US3: history list lists completed games and detail view shows scoreboards', async ({
@@ -79,13 +80,16 @@ test('US3: history list lists completed games and detail view shows scoreboards'
   await page.goto('/');
   await page.getByRole('button', { name: 'View history' }).click();
   await expect(page.getByRole('heading', { name: 'History' })).toBeVisible();
-  await expect(page.getByText('Ada vs Boris')).toBeVisible();
+  await expect(page.getByText('Ada vs Boris').first()).toBeVisible();
 
   const a11y = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
   expect(a11y.violations).toEqual([]);
 
   // Drill into the detail
-  await page.getByRole('button', { name: /Ada vs Boris/ }).click();
+  await page
+    .getByRole('button', { name: /Ada vs Boris/ })
+    .first()
+    .click();
   await expect(page.getByRole('region', { name: 'Scoreboard for Ada' })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Scoreboard for Boris' })).toBeVisible();
 

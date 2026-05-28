@@ -25,6 +25,16 @@ export function App() {
         if (existing) {
           hydrate(existing);
           setScreen(existing.status === 'completed' ? 'final' : 'play');
+          return;
+        }
+        const raw = sessionStorage.getItem('qwixx-finalized');
+        if (raw) {
+          try {
+            hydrate(JSON.parse(raw));
+            setScreen('final');
+          } catch {
+            sessionStorage.removeItem('qwixx-finalized');
+          }
         }
       })
       .catch((err) => {
@@ -64,6 +74,7 @@ export function App() {
         <FinalScoresScreen
           game={game}
           onPlayAgain={() => {
+            sessionStorage.removeItem('qwixx-finalized');
             reset();
             setScreen('home');
           }}

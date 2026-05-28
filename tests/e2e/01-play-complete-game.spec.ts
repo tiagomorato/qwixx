@@ -5,6 +5,7 @@ const NAMES = ['Ana', 'Beto', 'Cora'];
 
 async function startGame(page: Page): Promise<void> {
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
   await page.getByRole('button', { name: 'Start new game' }).click();
   // Default count is 2; need to click 3
   await page.getByRole('button', { name: '3', exact: true }).click();
@@ -62,6 +63,7 @@ test('US1: start a 3-player game, mark cells, lock a row, take penalty, see fina
 
   // After reload, game should resume (in final state since it was finalized)
   await page.reload();
+  await page.waitForLoadState('networkidle');
   await expect(page.getByRole('heading', { name: 'Final scores' })).toBeVisible();
 
   // Cleanup
@@ -77,6 +79,7 @@ test('US1: resume an in-progress game after reload', async ({ page, request }) =
   // Wait for debounced save
   await page.waitForTimeout(500);
   await page.reload();
+  await page.waitForLoadState('networkidle');
 
   const resumedBoard = page.getByRole('region', { name: 'Scoreboard for Ana' });
   await expect(resumedBoard).toBeVisible();

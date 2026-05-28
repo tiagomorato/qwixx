@@ -36,8 +36,8 @@ export const TYPOGRAPHY = {
 // Non-color cues (FR-014) — every interactive state has a non-color signal.
 export const STATE_CUES = {
   available: { weight: 400, decoration: 'none' },
-  marked: { weight: 700, decoration: 'line-through', symbol: '✕' },
+  marked: { weight: 700, decoration: 'line-through', symbol: 'x' },
   disabled: { weight: 400, decoration: 'none', opacity: 0.35 },
   justChanged: { weight: 700, ring: true },
-  locked: { symbol: '🔒' },
+  locked: { symbol: 'lock' },
 } as const;

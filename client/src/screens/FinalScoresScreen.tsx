@@ -75,7 +75,7 @@ export function FinalScoresScreen({ game, onPlayAgain, onOpenHistory }: FinalSco
               <td>
                 {row.isWinner ? (
                   <span className={styles.crown} aria-label="winner">
-                    ★
+                    Winner
                   </span>
                 ) : null}
                 {row.player.name}

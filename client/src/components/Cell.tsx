@@ -45,7 +45,35 @@ export function Cell({
       aria-label={ariaLabel}
       onClick={onSelect}
     >
-      {isLockCell ? '🔒' : value}
+      {isLockCell ? (
+        <svg
+          className={styles.lockIcon}
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M7 10V7a5 5 0 0 1 10 0v3"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+          />
+          <rect
+            x="5"
+            y="10"
+            width="14"
+            height="10"
+            rx="2"
+            stroke="currentColor"
+            strokeWidth="2.2"
+            fill="none"
+          />
+        </svg>
+      ) : (
+        value
+      )}
     </button>
   );
 }

@@ -6,7 +6,9 @@
 
 .summary {
   color: var(--qx-text-muted);
-  font-size: 0.875rem;
+  font-family: var(--qx-font-display);
+  font-style: italic;
+  font-size: 1rem;
 }
 
 .boards {
@@ -24,4 +26,5 @@
 .empty {
   color: var(--qx-text-muted);
   font-style: italic;
+  font-family: var(--qx-font-display);
 }

@@ -14,10 +14,14 @@ body,
 
 body {
   font-family: var(--qx-font);
-  background: var(--qx-surface);
+  background: radial-gradient(ellipse at top left, var(--qx-accent-soft), transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(200, 164, 32, 0.08), transparent 60%),
+    var(--qx-surface);
+  background-attachment: fixed;
   color: var(--qx-text);
-  line-height: 1.4;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button {

@@ -9,7 +9,7 @@
     "build:client": "bun --filter client run build",
     "test": "bun test shared server",
     "test:e2e": "playwright test",
-    "test:perf": "bun test --bench tests/perf",
+    "test:perf": "bun test tests/perf",
     "check": "biome check .",
     "check:fix": "biome check --write .",
     "typecheck": "tsc -p shared/tsconfig.json && tsc -p server/tsconfig.json && tsc -p client/tsconfig.json"

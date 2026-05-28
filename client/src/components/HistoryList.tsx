@@ -36,7 +36,7 @@ export function HistoryList({ games, selectedId, onSelect }: HistoryListProps) {
             >
               <span className={styles.date}>{formatDate(game.endedAt)}</span>
               <span className={styles.players}>{game.players.map((p) => p.name).join(' vs ')}</span>
-              <span className={styles.winner}>★ {winnerNames}</span>
+              <span className={styles.winner}>Winner: {winnerNames}</span>
             </button>
           </li>
         );

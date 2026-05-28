@@ -9,15 +9,47 @@
   display: inline-flex;
   align-items: center;
   gap: var(--qx-space-xs);
+  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
+    var(--qx-ease-out), background-color var(--qx-dur-base) var(--qx-ease-out);
 }
 
 .button::before {
-  content: "↶";
+  content: "\21B6";
   font-size: 1.2rem;
+  display: inline-block;
+  transition: transform var(--qx-dur-base) var(--qx-ease-spring);
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--qx-shadow-sm);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: var(--qx-shadow-press);
+}
+
+.button:active:not(:disabled)::before {
+  transform: rotate(-35deg);
 }
 
 .button:disabled {
   opacity: 0.35;
   cursor: not-allowed;
   filter: grayscale(0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button::before {
+    transition: none;
+  }
+  .button:hover:not(:disabled),
+  .button:active:not(:disabled) {
+    transform: none;
+  }
+  .button:active:not(:disabled)::before {
+    transform: none;
+  }
 }

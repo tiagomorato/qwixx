@@ -19,7 +19,7 @@ export function PenaltyTrack({ count, disabled, onTakePenalty }: PenaltyTrackPro
           className={`${styles.cell} ${i < count ? styles.filled : ''}`}
           aria-hidden="true"
         >
-          {i < count ? '✕' : ''}
+          {i < count ? 'x' : ''}
         </span>
       ))}
       <button type="button" className={styles.button} disabled={disabled} onClick={onTakePenalty}>

@@ -157,22 +157,22 @@ description: "Implementation task list for Qwixx Digital Scoreboard"
 
 ### Tests for User Story 3 (write FIRST and ensure they FAIL) ⚠️
 
-- [ ] T071 [P] [US3] Server route tests for `GET /api/history` (empty + populated, capped at 10) in `server/tests/routes/history.list.test.ts`
-- [ ] T072 [P] [US3] Server route tests for `GET /api/history/:id` (404 missing, 200 with game) in `server/tests/routes/history.detail.test.ts`
-- [ ] T073 [P] [US3] Domain unit tests asserting history capping behavior (`appendCompleted` trims to `MAX_HISTORY`, most-recent first) in `shared/tests/domain/history.test.ts`
-- [ ] T074 [P] [US3] Playwright E2E test `tests/e2e/03-review-history.spec.ts` covering list and drill-down with `@axe-core/playwright` assertion on History screen
+- [X] T071 [P] [US3] Server route tests for `GET /api/history` (empty + populated, capped at 10) in `server/tests/routes/history.list.test.ts`
+- [X] T072 [P] [US3] Server route tests for `GET /api/history/:id` (404 missing, 200 with game) in `server/tests/routes/history.detail.test.ts`
+- [X] T073 [P] [US3] Domain unit tests asserting history capping behavior (`appendCompleted` trims to `MAX_HISTORY`, most-recent first) in `server/tests/storage/history-cap.test.ts`
+- [X] T074 [P] [US3] Playwright E2E test `tests/e2e/03-review-history.spec.ts` covering list and drill-down with `@axe-core/playwright` assertion on History screen
 
 ### Implementation for User Story 3
 
-- [ ] T075 [US3] Implement `GET /api/history` and `GET /api/history/:id` handlers in `server/src/routes/history.ts` (depends on T047)
-- [ ] T076 [US3] Wire history routes into the router in `server/src/index.ts` (depends on T051, T075)
-- [ ] T077 [P] [US3] Add `getHistory` and `getHistoryById` methods to `client/src/api/client.ts`
-- [ ] T078 [P] [US3] Create Zustand history store (list + selected detail) in `client/src/store/historyStore.ts`
-- [ ] T079 [P] [US3] Build `HistoryList` component (date, player names, winner, sorted most-recent first) in `client/src/components/HistoryList.tsx`
-- [ ] T080 [P] [US3] Build `HistoryDetail` component (read-only render of all final `Scoreboard`s for a game) in `client/src/components/HistoryDetail.tsx`
-- [ ] T081 [US3] Build `HistoryScreen` composing `HistoryList` + `HistoryDetail` in `client/src/screens/HistoryScreen.tsx` (depends on T079, T080)
-- [ ] T082 [US3] Add "View History" navigation entry from `HomeScreen` and route handling in `client/src/App.tsx` (depends on T059, T081)
-- [ ] T083 [US3] Fetch `getHistory` on `HistoryScreen` mount and hydrate `historyStore` in `client/src/screens/HistoryScreen.tsx` (depends on T077, T078)
+- [X] T075 [US3] Implement `GET /api/history` and `GET /api/history/:id` handlers in `server/src/routes/history.ts` (depends on T047)
+- [X] T076 [US3] Wire history routes into the router in `server/src/index.ts` (depends on T051, T075)
+- [X] T077 [P] [US3] Add `getHistory` and `getHistoryById` methods to `client/src/api/client.ts`
+- [X] T078 [P] [US3] Create Zustand history store (list + selected detail) in `client/src/store/historyStore.ts`
+- [X] T079 [P] [US3] Build `HistoryList` component (date, player names, winner, sorted most-recent first) in `client/src/components/HistoryList.tsx`
+- [X] T080 [P] [US3] Build `HistoryDetail` component (read-only render of all final `Scoreboard`s for a game) in `client/src/components/HistoryDetail.tsx`
+- [X] T081 [US3] Build `HistoryScreen` composing `HistoryList` + `HistoryDetail` in `client/src/screens/HistoryScreen.tsx` (depends on T079, T080)
+- [X] T082 [US3] Add "View History" navigation entry from `HomeScreen` and route handling in `client/src/App.tsx` (depends on T059, T081)
+- [X] T083 [US3] Fetch `getHistory` on `HistoryScreen` mount and hydrate `historyStore` in `client/src/screens/HistoryScreen.tsx` (depends on T077, T078)
 
 **Checkpoint**: All three user stories are independently functional.
 

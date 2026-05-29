@@ -20,6 +20,18 @@ function formatEndedAt(iso: string | null | undefined): string {
   return formatDateTime(iso) ?? 'just now';
 }
 
+function formatDuration(startedAt: string, endedAt: string | null | undefined): string | null {
+  if (!endedAt) return null;
+  const start = new Date(startedAt).getTime();
+  const end = new Date(endedAt).getTime();
+  if (Number.isNaN(start) || Number.isNaN(end) || end < start) return null;
+  const totalSeconds = Math.floor((end - start) / 1000);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${pad(minutes)}:${pad(seconds)}`;
+}
+
 type Row = {
   player: PlayerState;
   redScore: number;
@@ -54,6 +66,8 @@ export function FinalScoresScreen({ game, onPlayAgain, onOpenHistory }: FinalSco
     return computed.sort((a, b) => b.total - a.total);
   }, [game]);
 
+  const duration = formatDuration(game.startedAt, game.endedAt);
+
   return (
     <section className={styles.screen} aria-labelledby="final-title">
       <header>
@@ -61,6 +75,7 @@ export function FinalScoresScreen({ game, onPlayAgain, onOpenHistory }: FinalSco
           Final scores
         </h1>
         <p className={styles.subtitle}>Game finished {formatEndedAt(game.endedAt)}.</p>
+        {duration ? <p className={styles.subtitle}>Game lasted {duration}.</p> : null}
       </header>
       <table className={styles.table}>
         <thead>

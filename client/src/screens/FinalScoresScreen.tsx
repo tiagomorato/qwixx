@@ -2,6 +2,7 @@ import {
   type GameState,
   PENALTY_VALUE,
   type PlayerState,
+  formatDateTime,
   scoreForRow,
   totalScore,
   winner,
@@ -16,17 +17,7 @@ export type FinalScoresScreenProps = {
 };
 
 function formatEndedAt(iso: string | null | undefined): string {
-  if (!iso) return 'just now';
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return iso;
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const dd = pad(date.getDate());
-  const mm = pad(date.getMonth() + 1);
-  const yyyy = date.getFullYear();
-  const hh = pad(date.getHours());
-  const min = pad(date.getMinutes());
-  const ss = pad(date.getSeconds());
-  return `${dd}-${mm}-${yyyy} ${hh}-${min}-${ss}`;
+  return formatDateTime(iso) ?? 'just now';
 }
 
 type Row = {

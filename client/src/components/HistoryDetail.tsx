@@ -1,4 +1,4 @@
-import type { GameState } from '@qwixx/shared';
+import { type GameState, formatDateTime } from '@qwixx/shared';
 import styles from './HistoryDetail.module.css';
 import { Scoreboard } from './Scoreboard.tsx';
 
@@ -12,7 +12,7 @@ export function HistoryDetail({ game }: HistoryDetailProps) {
   if (!game) {
     return <p className={styles.empty}>Select a game from the list to see its boards.</p>;
   }
-  const endedLabel = game.endedAt ? new Date(game.endedAt).toLocaleString() : 'Unknown';
+  const endedLabel = formatDateTime(game.endedAt) ?? 'Unknown';
   return (
     <div className={styles.detail}>
       <p className={styles.summary}>

@@ -17,3 +17,4 @@ export { mark, lock, penalty, finalize } from './domain/actions.ts';
 export { undo } from './domain/undo.ts';
 export { winner } from './domain/winner.ts';
 export type { WinnerResult } from './domain/winner.ts';
+export { formatDateTime } from './format/datetime.ts';

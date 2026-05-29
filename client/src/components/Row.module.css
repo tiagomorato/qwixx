@@ -22,6 +22,15 @@
   gap: var(--qx-space-xs);
   align-items: center;
   overflow-x: auto;
+  /*
+   * The scroll box clips the cell hover transform (scale + translateY +
+   * shadow): overflow-x: auto makes overflow-y compute to auto, clipping the
+   * top/bottom, and the first/last cells' scale is clipped at the left/right
+   * edges. Pad the scroll box on all sides to give the lifted cell room, then
+   * pull it back with a matching negative margin so layout is unchanged.
+   */
+  padding: var(--qx-space-xs);
+  margin: calc(-1 * var(--qx-space-xs));
   scrollbar-width: thin;
   /* Scroll-hint shadow: visible when content extends past the right edge */
   background:

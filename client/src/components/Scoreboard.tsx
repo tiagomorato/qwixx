@@ -6,12 +6,20 @@ import styles from './Scoreboard.module.css';
 export type ScoreboardProps = {
   game: GameState;
   player: PlayerState;
+  showTotal?: boolean;
   onMark: (color: Color, cellIndex: number) => void;
   onLock: (color: Color) => void;
   onPenalty: () => void;
 };
 
-export function Scoreboard({ game, player, onMark, onLock, onPenalty }: ScoreboardProps) {
+export function Scoreboard({
+  game,
+  player,
+  showTotal = true,
+  onMark,
+  onLock,
+  onPenalty,
+}: ScoreboardProps) {
   const total = totalScore(player);
   const completed = game.status === 'completed';
 
@@ -19,8 +27,8 @@ export function Scoreboard({ game, player, onMark, onLock, onPenalty }: Scoreboa
     <section className={styles.board} aria-label={`Scoreboard for ${player.name}`}>
       <header className={styles.header}>
         <h2 className={styles.name}>{player.name}</h2>
-        <span className={styles.total} aria-label={`Total ${total}`}>
-          {total}
+        <span className={styles.total} aria-label={showTotal ? `Total ${total}` : 'Total hidden'}>
+          {showTotal ? total : '–'}
         </span>
       </header>
       <div className={styles.rows}>

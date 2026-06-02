@@ -8,7 +8,7 @@
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto auto;
   gap: var(--qx-space-sm);
   align-items: center;
   padding: var(--qx-space-md) var(--qx-space-lg);
@@ -23,8 +23,8 @@
     grid-template-columns: 1fr auto;
     grid-template-areas:
       "title status"
-      "undo history"
-      "home home";
+      "undo toggle"
+      "history home";
   }
   .title {
     grid-area: title;

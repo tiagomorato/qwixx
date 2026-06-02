@@ -33,6 +33,7 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const lockRow = useGameStore((s) => s.lockRow);
   const takePenalty = useGameStore((s) => s.takePenalty);
   const [status, setStatus] = useState<PersistenceStatus>(getPersistenceStatus());
+  const [showTotals, setShowTotals] = useState(true);
 
   useEffect(() => onPersistenceStatusChange(setStatus), []);
 
@@ -48,6 +49,14 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
           {statusLabel(status)}
         </span>
         <UndoButton />
+        <button
+          type="button"
+          className={styles.button}
+          aria-pressed={!showTotals}
+          onClick={() => setShowTotals((v) => !v)}
+        >
+          {showTotals ? 'Hide points' : 'Show points'}
+        </button>
         <button type="button" className={styles.button} onClick={onOpenHistory}>
           History
         </button>
@@ -61,6 +70,7 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
             key={player.id}
             game={game}
             player={player}
+            showTotal={showTotals}
             onMark={(color, cellIndex) => markCell(player.id, color, cellIndex)}
             onLock={(color) => lockRow(player.id, color)}
             onPenalty={() => takePenalty(player.id)}

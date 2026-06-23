@@ -38,7 +38,9 @@ export function isCellMarkable(
 
 export function isRowLockable(game: GameState, playerId: string, color: Color): boolean {
   if (game.status === 'completed') return false;
-  if (game.globalLocks[color]) return false;
+  // A color being globally locked by another player does not block this player
+  // from also closing it: once someone closes a color, every other qualifying
+  // player may close it too (right after, in the same round).
   const player = findPlayer(game, playerId);
   const row = findRow(player, color);
   if (row.locked) return false;

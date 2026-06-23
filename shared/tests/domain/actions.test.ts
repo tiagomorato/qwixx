@@ -61,6 +61,33 @@ describe('lock', () => {
     if (!p) throw new Error();
     expect(() => lock(game, p.id, 'red', now)).toThrow();
   });
+
+  it('lets a second player close a color already closed by another player', () => {
+    let game = fresh();
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    for (let i = 0; i < 5; i += 1) game = mark(game, a.id, 'red', i, now);
+    for (let i = 0; i < 5; i += 1) game = mark(game, b.id, 'red', i, now);
+    game = lock(game, a.id, 'red', now);
+    // B can still close red right after A did.
+    const after = lock(game, b.id, 'red', now);
+    const aRow = after.players.find((pl) => pl.id === a.id)?.rows.find((r) => r.color === 'red');
+    const bRow = after.players.find((pl) => pl.id === b.id)?.rows.find((r) => r.color === 'red');
+    expect(aRow?.locked).toBe(true);
+    expect(bRow?.locked).toBe(true);
+    expect(after.globalLocks.red).toBe(true);
+    expect(after.actionLog.filter((e) => e.kind === 'lock')).toHaveLength(2);
+  });
+
+  it('throws if the same player tries to close a row they already closed', () => {
+    let game = fresh();
+    const p = game.players[0];
+    if (!p) throw new Error();
+    for (let i = 0; i < 5; i += 1) game = mark(game, p.id, 'red', i, now);
+    const locked = lock(game, p.id, 'red', now);
+    expect(() => lock(locked, p.id, 'red', now)).toThrow();
+  });
 });
 
 describe('penalty', () => {

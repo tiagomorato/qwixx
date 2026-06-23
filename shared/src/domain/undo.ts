@@ -38,7 +38,9 @@ export function undo(game: GameState): GameState {
     }));
   }
 
-  // lock: clear the rightmost cell mark, unlock the row, release the global lock.
+  // lock: clear the rightmost cell mark and unlock this player's row. Only
+  // release the global lock if no other player still has that color closed,
+  // since multiple players can close the same color.
   const cleared = mapPlayer({ ...game, actionLog: trimmedLog }, last.playerId, (p) => ({
     ...p,
     rows: p.rows.map((r) =>
@@ -51,8 +53,11 @@ export function undo(game: GameState): GameState {
         : r,
     ),
   }));
+  const stillLockedByOther = cleared.players.some((p) =>
+    p.rows.some((r) => r.color === last.color && r.locked),
+  );
   return {
     ...cleared,
-    globalLocks: { ...cleared.globalLocks, [last.color]: false },
+    globalLocks: { ...cleared.globalLocks, [last.color]: stillLockedByOther },
   };
 }

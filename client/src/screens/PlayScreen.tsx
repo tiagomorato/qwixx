@@ -1,3 +1,4 @@
+import { gameShouldEnd } from '@qwixx/shared';
 import { useEffect, useState } from 'react';
 import { Scoreboard } from '../components/Scoreboard.tsx';
 import { UndoButton } from '../components/UndoButton.tsx';
@@ -32,12 +33,15 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const markCell = useGameStore((s) => s.markCell);
   const lockRow = useGameStore((s) => s.lockRow);
   const takePenalty = useGameStore((s) => s.takePenalty);
+  const finalize = useGameStore((s) => s.finalize);
   const [status, setStatus] = useState<PersistenceStatus>(getPersistenceStatus());
   const [showTotals, setShowTotals] = useState(true);
 
   useEffect(() => onPersistenceStatusChange(setStatus), []);
 
   if (!game) return null;
+
+  const canEnd = gameShouldEnd(game);
 
   return (
     <section className={styles.play} aria-labelledby="play-title">
@@ -64,6 +68,14 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
           Home
         </button>
       </header>
+      {canEnd ? (
+        <output className={styles.endBar}>
+          <span className={styles.endMessage}>An end condition has been met.</span>
+          <button type="button" className={styles.endButton} onClick={finalize}>
+            End game
+          </button>
+        </output>
+      ) : null}
       <div className={styles.boards}>
         {game.players.map((player) => (
           <Scoreboard

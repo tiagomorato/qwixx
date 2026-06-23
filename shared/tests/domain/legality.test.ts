@@ -76,16 +76,34 @@ describe('isRowLockable', () => {
     expect(isRowLockable(ready, p.id, 'red')).toBe(true);
   });
 
-  it('returns false when the color is globally locked', () => {
+  it('still returns true when another player has globally locked the color', () => {
     const game = fresh();
-    const p = game.players[0];
-    if (!p) throw new Error();
-    const ready = with5Marks(game, p.id);
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    // Player A closes red; player B has 5 marks and should still be able to close it too.
+    const ready = with5Marks(with5Marks(game, a.id), b.id);
     const lockedColor: GameState = {
       ...ready,
       globalLocks: { ...ready.globalLocks, red: true },
     };
-    expect(isRowLockable(lockedColor, p.id, 'red')).toBe(false);
+    expect(isRowLockable(lockedColor, b.id, 'red')).toBe(true);
+  });
+
+  it('returns false when the player has already locked the row', () => {
+    const game = fresh();
+    const p = game.players[0];
+    if (!p) throw new Error();
+    const ready = with5Marks(game, p.id);
+    const lockedRow: GameState = {
+      ...ready,
+      players: ready.players.map((pl) =>
+        pl.id === p.id
+          ? { ...pl, rows: pl.rows.map((r) => (r.color === 'red' ? { ...r, locked: true } : r)) }
+          : pl,
+      ),
+    };
+    expect(isRowLockable(lockedRow, p.id, 'red')).toBe(false);
   });
 });
 

@@ -55,6 +55,25 @@ describe('undo', () => {
     for (let i = 0; i < 5; i += 1) expect(row?.cells[i]?.marked).toBe(true);
   });
 
+  it('keeps the global lock when another player still has the color closed', () => {
+    let game = fresh();
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    for (let i = 0; i < 5; i += 1) game = mark(game, a.id, 'red', i, now);
+    for (let i = 0; i < 5; i += 1) game = mark(game, b.id, 'red', i, now);
+    game = lock(game, a.id, 'red', now);
+    game = lock(game, b.id, 'red', now);
+    expect(game.globalLocks.red).toBe(true);
+    // Undo B's lock: A still has red closed, so it stays globally locked.
+    const reverted = undo(game);
+    expect(reverted.globalLocks.red).toBe(true);
+    const aRow = reverted.players.find((pl) => pl.id === a.id)?.rows.find((r) => r.color === 'red');
+    const bRow = reverted.players.find((pl) => pl.id === b.id)?.rows.find((r) => r.color === 'red');
+    expect(aRow?.locked).toBe(true);
+    expect(bRow?.locked).toBe(false);
+  });
+
   it('only reverses one entry', () => {
     let game = fresh();
     const p = game.players[0];

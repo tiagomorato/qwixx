@@ -4,7 +4,6 @@ import {
   type NewPlayerInput,
   createGame,
   finalize as finalizeAction,
-  gameShouldEnd,
   lock as lockAction,
   mark as markAction,
   penalty as penaltyAction,
@@ -32,20 +31,19 @@ export const useGameStore = create<GameStoreState>((set, get) => ({
   markCell: (playerId, color, cellIndex) => {
     const game = get().game;
     if (!game) return;
-    const next = markAction(game, playerId, color, cellIndex);
-    set({ game: gameShouldEnd(next) ? finalizeAction(next) : next });
+    // The game is no longer auto-finalized when an end condition is reached;
+    // the player ends it manually via the "End game" button (see PlayScreen).
+    set({ game: markAction(game, playerId, color, cellIndex) });
   },
   lockRow: (playerId, color) => {
     const game = get().game;
     if (!game) return;
-    const next = lockAction(game, playerId, color);
-    set({ game: gameShouldEnd(next) ? finalizeAction(next) : next });
+    set({ game: lockAction(game, playerId, color) });
   },
   takePenalty: (playerId) => {
     const game = get().game;
     if (!game) return;
-    const next = penaltyAction(game, playerId);
-    set({ game: gameShouldEnd(next) ? finalizeAction(next) : next });
+    set({ game: penaltyAction(game, playerId) });
   },
   undo: () => {
     const game = get().game;

@@ -55,6 +55,11 @@ test('US1: start a 3-player game, mark cells, lock a row, take penalty, see fina
     await anaBoard.getByRole('button', { name: 'Take Penalty' }).click();
   }
 
+  // The game does not auto-finalize; an "End game" button appears instead.
+  const endGame = page.getByRole('button', { name: 'End game' });
+  await expect(endGame).toBeVisible();
+  await endGame.click();
+
   // Game should transition to final scores screen
   await expect(page.getByRole('heading', { name: 'Final scores' })).toBeVisible();
 

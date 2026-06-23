@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { mark } from '../../src/domain/actions.ts';
+import { lock, mark } from '../../src/domain/actions.ts';
 import { createGame } from '../../src/domain/createGame.ts';
 import { gameShouldEnd, isCellMarkable, isRowLockable } from '../../src/domain/legality.ts';
 import type { GameState } from '../../src/types/game.ts';
@@ -76,18 +76,41 @@ describe('isRowLockable', () => {
     expect(isRowLockable(ready, p.id, 'red')).toBe(true);
   });
 
-  it('still returns true when another player has globally locked the color', () => {
+  it('still returns true right after another player closes the color', () => {
     const game = fresh();
     const a = game.players[0];
     const b = game.players[1];
     if (!a || !b) throw new Error();
-    // Player A closes red; player B has 5 marks and should still be able to close it too.
+    // Player A closes red; player B has 5 marks and has not acted since, so B
+    // still gets their one-time chance to close it too.
     const ready = with5Marks(with5Marks(game, a.id), b.id);
-    const lockedColor: GameState = {
-      ...ready,
-      globalLocks: { ...ready.globalLocks, red: true },
-    };
-    expect(isRowLockable(lockedColor, b.id, 'red')).toBe(true);
+    const closed = lock(ready, a.id, 'red', now);
+    expect(closed.globalLocks.red).toBe(true);
+    expect(isRowLockable(closed, b.id, 'red')).toBe(true);
+  });
+
+  it('grays out the color once the player acts on something else', () => {
+    const game = fresh();
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    const ready = with5Marks(with5Marks(game, a.id), b.id);
+    const closed = lock(ready, a.id, 'red', now);
+    // B passes up the chance and ticks a different color instead.
+    const afterOtherMark = mark(closed, b.id, 'yellow', 0, now);
+    expect(isRowLockable(afterOtherMark, b.id, 'red')).toBe(false);
+  });
+
+  it('keeps each player’s chance independent', () => {
+    const game = createGame([{ name: 'A' }, { name: 'B' }, { name: 'C' }], { now, idGen: id });
+    const [a, b, c] = game.players;
+    if (!a || !b || !c) throw new Error();
+    let g = with5Marks(with5Marks(with5Marks(game, a.id), b.id), c.id);
+    g = lock(g, a.id, 'red', now);
+    // B acts elsewhere and loses the chance; C has not acted and keeps it.
+    g = mark(g, b.id, 'yellow', 0, now);
+    expect(isRowLockable(g, b.id, 'red')).toBe(false);
+    expect(isRowLockable(g, c.id, 'red')).toBe(true);
   });
 
   it('returns false when the player has already locked the row', () => {

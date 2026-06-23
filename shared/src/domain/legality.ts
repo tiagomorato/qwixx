@@ -38,19 +38,41 @@ export function isCellMarkable(
 
 export function isRowLockable(game: GameState, playerId: string, color: Color): boolean {
   if (game.status === 'completed') return false;
-  // A color being globally locked by another player does not block this player
-  // from also closing it: once someone closes a color, every other qualifying
-  // player may close it too (right after, in the same round).
   const player = findPlayer(game, playerId);
   const row = findRow(player, color);
   if (row.locked) return false;
   const markCount = row.cells.filter((c) => c.marked).length;
-  const rightmost = row.cells[row.cells.length - 1];
-  if (!rightmost) return false;
-  if (rightmost.marked) {
-    return markCount >= MIN_LOCK_MARKS;
+  if (markCount < MIN_LOCK_MARKS) return false;
+  // Once another player closes a color, this player keeps a one-time chance to
+  // also close it — but only until their very next scoring action. The moment
+  // they do anything else (mark a cell, take a penalty, lock another color) the
+  // window is gone and the color is grayed out for them.
+  if (game.globalLocks[color]) {
+    return hasOpenLockOpportunity(game, playerId, color);
   }
-  return markCount >= MIN_LOCK_MARKS;
+  return true;
+}
+
+/**
+ * True when another player has closed `color` and `playerId` has not yet taken
+ * any scoring action since that close — i.e. their single chance to also close
+ * the color is still open. Derived from the action log so it survives undo.
+ */
+function hasOpenLockOpportunity(game: GameState, playerId: string, color: Color): boolean {
+  const log = game.actionLog;
+  let lockIndex = -1;
+  for (let i = 0; i < log.length; i += 1) {
+    const entry = log[i];
+    if (entry?.kind === 'lock' && entry.color === color && entry.playerId !== playerId) {
+      lockIndex = i;
+      break;
+    }
+  }
+  if (lockIndex === -1) return false;
+  for (let i = lockIndex + 1; i < log.length; i += 1) {
+    if (log[i]?.playerId === playerId) return false;
+  }
+  return true;
 }
 
 export function gameShouldEnd(game: GameState): boolean {

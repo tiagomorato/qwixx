@@ -1,11 +1,13 @@
 <!-- SPECKIT START -->
-Active plan: [specs/001-qwixx-scoreboard/plan.md](specs/001-qwixx-scoreboard/plan.md)
+Active plan: [specs/002-manual-score-entry/plan.md](specs/002-manual-score-entry/plan.md)
 
 Related artifacts:
-- Spec: [specs/001-qwixx-scoreboard/spec.md](specs/001-qwixx-scoreboard/spec.md)
-- Research: [specs/001-qwixx-scoreboard/research.md](specs/001-qwixx-scoreboard/research.md)
-- Data model: [specs/001-qwixx-scoreboard/data-model.md](specs/001-qwixx-scoreboard/data-model.md)
-- API contract: [specs/001-qwixx-scoreboard/contracts/api.md](specs/001-qwixx-scoreboard/contracts/api.md)
-- Quickstart: [specs/001-qwixx-scoreboard/quickstart.md](specs/001-qwixx-scoreboard/quickstart.md)
+- Spec: [specs/002-manual-score-entry/spec.md](specs/002-manual-score-entry/spec.md)
+- Research: [specs/002-manual-score-entry/research.md](specs/002-manual-score-entry/research.md)
+- Data model: [specs/002-manual-score-entry/data-model.md](specs/002-manual-score-entry/data-model.md)
+- Contract delta: [specs/002-manual-score-entry/contracts/manual-scores.md](specs/002-manual-score-entry/contracts/manual-scores.md)
+- Quickstart: [specs/002-manual-score-entry/quickstart.md](specs/002-manual-score-entry/quickstart.md)
 - Constitution: [.specify/memory/constitution.md](.specify/memory/constitution.md)
+
+Foundation feature (001 — Qwixx scoreboard): [specs/001-qwixx-scoreboard/plan.md](specs/001-qwixx-scoreboard/plan.md)
 <!-- SPECKIT END -->

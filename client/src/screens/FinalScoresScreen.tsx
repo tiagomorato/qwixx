@@ -3,6 +3,7 @@ import {
   PENALTY_VALUE,
   type PlayerState,
   formatDateTime,
+  formatElapsed,
   scoreForRow,
   totalScore,
   winner,
@@ -18,18 +19,6 @@ export type FinalScoresScreenProps = {
 
 function formatEndedAt(iso: string | null | undefined): string {
   return formatDateTime(iso) ?? 'just now';
-}
-
-function formatDuration(startedAt: string, endedAt: string | null | undefined): string | null {
-  if (!endedAt) return null;
-  const start = new Date(startedAt).getTime();
-  const end = new Date(endedAt).getTime();
-  if (Number.isNaN(start) || Number.isNaN(end) || end < start) return null;
-  const totalSeconds = Math.floor((end - start) / 1000);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${pad(minutes)}:${pad(seconds)}`;
 }
 
 type Row = {
@@ -66,7 +55,7 @@ export function FinalScoresScreen({ game, onPlayAgain, onOpenHistory }: FinalSco
     return computed.sort((a, b) => b.total - a.total);
   }, [game]);
 
-  const duration = formatDuration(game.startedAt, game.endedAt);
+  const duration = formatElapsed(game.startedAt, game.endedAt);
 
   return (
     <section className={styles.screen} aria-labelledby="final-title">

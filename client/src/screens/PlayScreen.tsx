@@ -1,4 +1,4 @@
-import { gameShouldEnd } from '@qwixx/shared';
+import { formatElapsed, gameShouldEnd } from '@qwixx/shared';
 import { useEffect, useState } from 'react';
 import { Scoreboard } from '../components/Scoreboard.tsx';
 import { UndoButton } from '../components/UndoButton.tsx';
@@ -14,6 +14,16 @@ export type PlayScreenProps = {
   onExitToHome: () => void;
   onOpenHistory: () => void;
 };
+
+/** Re-renders the caller roughly every `intervalMs`, returning the current epoch time. */
+function useNow(intervalMs: number): number {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), intervalMs);
+    return () => clearInterval(id);
+  }, [intervalMs]);
+  return now;
+}
 
 function statusLabel(s: PersistenceStatus): string {
   switch (s) {
@@ -36,12 +46,14 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const finalize = useGameStore((s) => s.finalize);
   const [status, setStatus] = useState<PersistenceStatus>(getPersistenceStatus());
   const [showTotals, setShowTotals] = useState(true);
+  const now = useNow(1000);
 
   useEffect(() => onPersistenceStatusChange(setStatus), []);
 
   if (!game) return null;
 
   const canEnd = gameShouldEnd(game);
+  const elapsed = formatElapsed(game.startedAt, new Date(now).toISOString());
 
   return (
     <section className={styles.play} aria-labelledby="play-title">
@@ -49,6 +61,11 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
         <h1 id="play-title" className={styles.title}>
           Qwixx — game in progress
         </h1>
+        {elapsed ? (
+          <span className={styles.clock} aria-label={`Elapsed time ${elapsed}`}>
+            {elapsed}
+          </span>
+        ) : null}
         <span className={styles.statusBar} aria-live="polite">
           {statusLabel(status)}
         </span>

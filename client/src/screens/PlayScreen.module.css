@@ -8,7 +8,7 @@
 
 .toolbar {
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto auto auto;
   gap: var(--qx-space-sm);
   align-items: center;
   padding: var(--qx-space-md) var(--qx-space-lg);
@@ -22,16 +22,20 @@
   .toolbar {
     grid-template-columns: 1fr auto;
     grid-template-areas:
-      "title status"
+      "title clock"
+      "status status"
       "undo toggle"
       "history home";
   }
   .title {
     grid-area: title;
   }
+  .clock {
+    grid-area: clock;
+    justify-self: end;
+  }
   .statusBar {
     grid-area: status;
-    text-align: right;
   }
 }
 
@@ -129,6 +133,15 @@
   font-size: 0.875rem;
   color: var(--qx-text-muted);
   font-weight: 500;
+}
+
+.clock {
+  font-family: var(--qx-font-display);
+  font-weight: 700;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--qx-text);
+  letter-spacing: 0.02em;
 }
 
 @media (prefers-reduced-motion: reduce) {

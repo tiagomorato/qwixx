@@ -18,3 +18,4 @@ export { undo } from './domain/undo.ts';
 export { winner } from './domain/winner.ts';
 export type { WinnerResult } from './domain/winner.ts';
 export { formatDateTime } from './format/datetime.ts';
+export { formatElapsed } from './format/duration.ts';

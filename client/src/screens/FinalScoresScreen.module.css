@@ -20,7 +20,7 @@
   color: var(--qx-text-muted);
   margin: var(--qx-space-xs) 0 0;
   font-family: var(--qx-font-display);
-  font-style: italic;
+  font-weight: 900;
   font-size: 1.0625rem;
 }
 

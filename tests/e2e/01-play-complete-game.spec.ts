@@ -13,7 +13,7 @@ async function startGame(page: Page): Promise<void> {
     await page.getByLabel(`Player ${i + 1}`).fill(NAMES[i] ?? '');
   }
   await page.getByRole('button', { name: 'Start new game' }).click();
-  await expect(page.getByRole('heading', { name: 'Qwixx — game in progress' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Qwixx', exact: true })).toBeVisible();
 }
 
 test.beforeEach(async ({ request }) => {
@@ -47,12 +47,12 @@ test('US1: start a 3-player game, mark cells, lock a row, take penalty, see fina
 
   // Take a penalty for Beto (-5 each)
   const betoBoard = page.getByRole('region', { name: 'Scoreboard for Beto' });
-  await betoBoard.getByRole('button', { name: 'Take Penalty' }).click();
+  await betoBoard.getByRole('button', { name: 'Take penalty' }).click();
   await expect(betoBoard.getByLabel('Total -5')).toBeVisible();
 
   // Drive an end condition: Ana takes 4 penalties total
   for (let i = 0; i < 4; i += 1) {
-    await anaBoard.getByRole('button', { name: 'Take Penalty' }).click();
+    await anaBoard.getByRole('button', { name: 'Take penalty' }).click();
   }
 
   // The game does not auto-finalize; an "End game" button appears instead.

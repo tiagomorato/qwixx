@@ -52,6 +52,36 @@ describe('isCellMarkable', () => {
     if (!p) throw new Error();
     expect(isCellMarkable(game, p.id, 'red', 99)).toBe(false);
   });
+
+  it('lets a player mark any remaining cell of a color another player just closed', () => {
+    const game = fresh();
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    // A and B both have 5 marks (cells 0-4); A closes red. B's one-time window is
+    // open, so B can still mark a remaining cell — not only close the color.
+    let g = game;
+    for (let i = 0; i < 5; i += 1) g = mark(g, a.id, 'red', i, now);
+    for (let i = 0; i < 5; i += 1) g = mark(g, b.id, 'red', i, now);
+    const closed = lock(g, a.id, 'red', now);
+    expect(closed.globalLocks.red).toBe(true);
+    expect(isCellMarkable(closed, b.id, 'red', 5)).toBe(true);
+    // Left-to-right ordering still applies within the open window.
+    expect(isCellMarkable(closed, b.id, 'red', 0)).toBe(false);
+  });
+
+  it('grays out a closed color once the player acts on something else', () => {
+    const game = fresh();
+    const a = game.players[0];
+    const b = game.players[1];
+    if (!a || !b) throw new Error();
+    let g = game;
+    for (let i = 0; i < 5; i += 1) g = mark(g, a.id, 'red', i, now);
+    for (let i = 0; i < 5; i += 1) g = mark(g, b.id, 'red', i, now);
+    const closed = lock(g, a.id, 'red', now);
+    const afterOtherMark = mark(closed, b.id, 'yellow', 0, now);
+    expect(isCellMarkable(afterOtherMark, b.id, 'red', 5)).toBe(false);
+  });
 });
 
 describe('isRowLockable', () => {

@@ -22,7 +22,11 @@ export function isCellMarkable(
   cellIndex: number,
 ): boolean {
   if (game.status === 'completed') return false;
-  if (game.globalLocks[color]) return false;
+  // Once a color is globally locked, the only player who may still mark a cell
+  // in it is one whose one-time "lock the same color" window is still open. They
+  // can mark any remaining markable cell (subject to the normal left-to-right
+  // ordering below), not just close it. See hasOpenLockOpportunity / issue #10.
+  if (game.globalLocks[color] && !hasOpenLockOpportunity(game, playerId, color)) return false;
   const player = findPlayer(game, playerId);
   const row = findRow(player, color);
   const cell = row.cells[cellIndex];

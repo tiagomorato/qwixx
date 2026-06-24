@@ -59,7 +59,7 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
     <section className={styles.play} aria-labelledby="play-title">
       <header className={styles.toolbar}>
         <h1 id="play-title" className={styles.title}>
-          Qwixx — game in progress
+          Qwixx
         </h1>
         {elapsed ? (
           <span className={styles.clock} aria-label={`Elapsed time ${elapsed}`}>

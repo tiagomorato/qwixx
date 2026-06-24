@@ -63,6 +63,17 @@
   flex-direction: column;
 }
 
+.blueLine {
+  display: flex;
+  align-items: center;
+  gap: var(--qx-space-sm);
+}
+
+.blueRow {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
 @keyframes boardIn {
   from {
     opacity: 0;

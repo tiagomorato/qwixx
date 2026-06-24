@@ -32,22 +32,26 @@ export function Scoreboard({
         </span>
       </header>
       <div className={styles.rows}>
-        {player.rows.map((row) => (
-          <Row
-            key={row.color}
-            game={game}
-            playerId={player.id}
-            row={row}
-            onMark={onMark}
-            onLock={onLock}
-          />
-        ))}
+        {player.rows.map((row) => {
+          const rowEl = (
+            <Row game={game} playerId={player.id} row={row} onMark={onMark} onLock={onLock} />
+          );
+          // The blue row shares its line with the penalty boxes, sitting to its right.
+          if (row.color === 'blue') {
+            return (
+              <div key={row.color} className={styles.blueLine}>
+                <div className={styles.blueRow}>{rowEl}</div>
+                <PenaltyTrack
+                  count={player.penalties}
+                  disabled={completed || player.penalties >= 4}
+                  onTakePenalty={onPenalty}
+                />
+              </div>
+            );
+          }
+          return <div key={row.color}>{rowEl}</div>;
+        })}
       </div>
-      <PenaltyTrack
-        count={player.penalties}
-        disabled={completed || player.penalties >= 4}
-        onTakePenalty={onPenalty}
-      />
     </section>
   );
 }

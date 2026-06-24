@@ -8,7 +8,7 @@ async function startTwoPlayerGame(page: Page): Promise<void> {
   await page.getByLabel('Player 1').fill('Ana');
   await page.getByLabel('Player 2').fill('Beto');
   await page.getByRole('button', { name: 'Start new game' }).click();
-  await expect(page.getByRole('heading', { name: 'Qwixx — game in progress' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Qwixx', exact: true })).toBeVisible();
 }
 
 test.beforeEach(async ({ request }) => {
@@ -33,7 +33,7 @@ test('US2: undo most recent mark', async ({ page, request }) => {
 test('US2: undo a penalty', async ({ page, request }) => {
   await startTwoPlayerGame(page);
   const ana = page.getByRole('region', { name: 'Scoreboard for Ana' });
-  await ana.getByRole('button', { name: 'Take Penalty' }).click();
+  await ana.getByRole('button', { name: 'Take penalty' }).click();
   await expect(ana.getByLabel('Total -5')).toBeVisible();
   await page.getByRole('button', { name: 'Undo last action' }).click();
   await expect(ana.getByLabel('Total 0')).toBeVisible();

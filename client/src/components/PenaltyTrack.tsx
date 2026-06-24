@@ -9,22 +9,34 @@ export type PenaltyTrackProps = {
 
 export function PenaltyTrack({ count, disabled, onTakePenalty }: PenaltyTrackProps) {
   return (
-    <fieldset className={styles.track}>
-      <legend className={styles.label}>
+    <div
+      className={styles.track}
+      // biome-ignore lint/a11y/useSemanticElements: a fieldset/legend would break the inline flex layout that keeps the boxes on the blue row's line; div+role=group preserves it
+      role="group"
+      aria-label={`Penalties: ${count} of ${MAX_PENALTIES}`}
+    >
+      <span className={styles.label} aria-hidden="true">
         Penalties: {count} of {MAX_PENALTIES}
-      </legend>
-      {Array.from({ length: MAX_PENALTIES }, (_, i) => (
-        <span
-          key={i}
-          className={`${styles.cell} ${i < count ? styles.filled : ''}`}
-          aria-hidden="true"
-        >
-          {i < count ? 'x' : ''}
-        </span>
-      ))}
-      <button type="button" className={styles.button} disabled={disabled} onClick={onTakePenalty}>
-        Take Penalty
-      </button>
-    </fieldset>
+      </span>
+      <div className={styles.cells}>
+        {Array.from({ length: MAX_PENALTIES }, (_, i) => {
+          const filled = i < count;
+          const isNext = i === count;
+          return (
+            <button
+              key={i}
+              type="button"
+              className={`${styles.cell} ${filled ? styles.filled : ''}`}
+              disabled={disabled || !isNext}
+              aria-pressed={filled}
+              aria-label={filled ? `Penalty ${i + 1} taken` : isNext ? 'Take penalty' : 'Penalty'}
+              onClick={onTakePenalty}
+            >
+              {filled ? 'x' : ''}
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }

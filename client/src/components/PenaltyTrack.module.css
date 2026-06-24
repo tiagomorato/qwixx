@@ -1,10 +1,9 @@
 .track {
   display: flex;
+  flex-direction: column;
   gap: var(--qx-space-xs);
   align-items: center;
-  padding: var(--qx-space-sm) 0 0;
-  margin: var(--qx-space-sm) 0 0;
-  border: 0;
+  flex: none;
 }
 
 .label {
@@ -13,59 +12,57 @@
   font-size: var(--qx-font-size-sm, 0.75rem);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  min-width: 4.5rem;
+  white-space: nowrap;
+}
+
+.cells {
+  display: flex;
+  gap: var(--qx-space-xs);
+  align-items: center;
 }
 
 .cell {
-  width: 1.6rem;
-  height: 1.6rem;
+  width: var(--qx-cell-size);
+  height: var(--qx-cell-size);
+  min-width: var(--qx-tap-min);
+  min-height: var(--qx-tap-min);
+  padding: 0;
   border: 2px solid var(--qx-divider);
-  border-radius: var(--qx-radius-sm);
+  border-radius: var(--qx-radius-md);
   background: var(--qx-surface);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--qx-font-display);
   font-weight: 900;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   color: var(--qx-danger);
-  transition: background-color var(--qx-dur-base) var(--qx-ease-out), border-color
-    var(--qx-dur-base) var(--qx-ease-out), transform var(--qx-dur-base) var(--qx-ease-spring);
+  cursor: pointer;
+  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
+    var(--qx-ease-out), background-color var(--qx-dur-base) var(--qx-ease-out), border-color
+    var(--qx-dur-base) var(--qx-ease-out);
+}
+
+.cell:hover:not(:disabled) {
+  border-color: var(--qx-danger);
+  background: rgba(181, 25, 25, 0.08);
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: var(--qx-shadow-sm);
+}
+
+.cell:active:not(:disabled) {
+  transform: translateY(1px) scale(0.94);
+  box-shadow: var(--qx-shadow-press);
+}
+
+.cell:disabled {
+  cursor: default;
 }
 
 .filled {
   border-color: var(--qx-danger);
   background: rgba(181, 25, 25, 0.14);
-  font-weight: 900;
   animation: penaltyPop 320ms var(--qx-ease-spring);
-}
-
-.button {
-  margin-left: auto;
-  padding: var(--qx-space-xs) var(--qx-space-md);
-  border: 2px solid var(--qx-danger);
-  border-radius: var(--qx-radius-md);
-  background: transparent;
-  color: var(--qx-danger);
-  font-weight: 700;
-  min-height: var(--qx-tap-min);
-  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
-    var(--qx-ease-out), background-color var(--qx-dur-base) var(--qx-ease-out);
-}
-
-.button:hover:not(:disabled) {
-  background: rgba(181, 25, 25, 0.08);
-  transform: translateY(-1px);
-  box-shadow: var(--qx-shadow-sm);
-}
-
-.button:active:not(:disabled) {
-  transform: translateY(1px) scale(0.97);
-  box-shadow: var(--qx-shadow-press);
-}
-
-.button:disabled {
-  opacity: 0.4;
 }
 
 @keyframes penaltyPop {
@@ -82,13 +79,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .filled,
-  .button,
   .cell {
     transition: none;
     animation: none;
   }
-  .button:hover:not(:disabled),
-  .button:active:not(:disabled) {
+  .cell:hover:not(:disabled),
+  .cell:active:not(:disabled) {
     transform: none;
   }
 }

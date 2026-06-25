@@ -1,5 +1,5 @@
 <!-- SPECKIT START -->
-Active plan: [specs/002-manual-score-entry/plan.md](specs/002-manual-score-entry/plan.md)
+Most recent feature — manual per-color score entry (merged into `001-qwixx-scoreboard-web-app`, the single working branch): [specs/002-manual-score-entry/plan.md](specs/002-manual-score-entry/plan.md)
 
 Related artifacts:
 - Spec: [specs/002-manual-score-entry/spec.md](specs/002-manual-score-entry/spec.md)
@@ -10,4 +10,6 @@ Related artifacts:
 - Constitution: [.specify/memory/constitution.md](.specify/memory/constitution.md)
 
 Foundation feature (001 — Qwixx scoreboard): [specs/001-qwixx-scoreboard/plan.md](specs/001-qwixx-scoreboard/plan.md)
+
+All feature work now lives on the single branch `001-qwixx-scoreboard-web-app` (the GitHub default); other branches have been consolidated and removed.
 <!-- SPECKIT END -->

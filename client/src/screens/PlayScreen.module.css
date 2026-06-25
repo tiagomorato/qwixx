@@ -129,6 +129,17 @@
   grid-template-columns: 1fr;
 }
 
+/* On large displays, lay the boards out side by side. Guarded by min-width so
+   the minmax floor can never force horizontal overflow on small screens. */
+@media (min-width: 1200px) {
+  .play {
+    max-width: 1480px;
+  }
+  .boards {
+    grid-template-columns: repeat(auto-fit, minmax(560px, 1fr));
+  }
+}
+
 .statusBar {
   font-size: 0.9rem;
   color: var(--qx-text-muted);

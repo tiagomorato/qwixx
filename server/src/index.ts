@@ -35,6 +35,8 @@ export async function dispatch(req: Request): Promise<Response> {
 
 if (import.meta.main) {
   await import('./routes/register.ts');
-  Bun.serve({ port: PORT, fetch: dispatch });
+  // idleTimeout is raised to Bun's max so long-lived SSE connections
+  // (GET /api/current/stream) aren't closed; heartbeats keep them warm.
+  Bun.serve({ port: PORT, idleTimeout: 255, fetch: dispatch });
   console.log(`[server] listening on http://localhost:${PORT}`);
 }

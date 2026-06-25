@@ -1,12 +1,18 @@
 import type { GameState } from '@qwixx/shared';
 import { errorJson, noContent, ok } from '../http/respond.ts';
 import { registerRoute } from '../index.ts';
+import { broadcastCurrent, subscribe } from '../realtime/hub.ts';
 import { deleteCurrent, readCurrent, writeCurrent } from '../storage/currentRepo.ts';
 import { validateGameState } from '../validation/gameState.ts';
 
 async function handleGet(): Promise<Response> {
   const game = await readCurrent();
   return ok({ game });
+}
+
+async function handleStream(): Promise<Response> {
+  const game = await readCurrent();
+  return subscribe(game);
 }
 
 async function handlePut(req: Request): Promise<Response> {
@@ -33,16 +39,19 @@ async function handlePut(req: Request): Promise<Response> {
     return errorJson('INVALID_PAYLOAD', 'new current game must have status=in-progress');
   }
   await writeCurrent(game);
+  broadcastCurrent(game);
   return ok({ game });
 }
 
 async function handleDelete(): Promise<Response> {
   await deleteCurrent();
+  broadcastCurrent(null);
   return noContent();
 }
 
 export function registerCurrentRoutes(): void {
   registerRoute('GET', /^\/api\/current$/, () => handleGet());
+  registerRoute('GET', /^\/api\/current\/stream$/, () => handleStream());
   registerRoute('PUT', /^\/api\/current$/, (req) => handlePut(req));
   registerRoute('DELETE', /^\/api\/current$/, () => handleDelete());
 }

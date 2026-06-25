@@ -1,15 +1,15 @@
 .cell {
-  width: var(--qx-cell-size);
-  height: var(--qx-cell-size);
-  min-width: var(--qx-tap-min);
-  min-height: var(--qx-tap-min);
-  border: 2px solid var(--cell-border);
-  border-radius: var(--qx-radius-md);
-  background: var(--cell-bg);
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1;
+  border: 1.5px solid var(--qx-cell-border-neutral);
+  border-radius: var(--qx-radius-cell);
+  background: var(--qx-surface-card);
   color: var(--cell-fg);
+  font-family: var(--qx-font);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  font-size: var(--qx-font-size, 1rem);
+  font-size: clamp(0.7rem, 1.5vw, 0.92rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,92 +19,59 @@
 }
 
 .cell:hover:not(:disabled) {
-  transform: translateY(-1px) scale(1.04);
+  transform: translateY(-1px) scale(1.06);
   box-shadow: var(--qx-shadow-sm);
 }
 
 .cell:active:not(:disabled) {
-  transform: translateY(1px) scale(0.94);
+  transform: translateY(1px) scale(0.93);
   box-shadow: var(--qx-shadow-press);
 }
 
-.marked {
-  font-weight: 700;
-  text-decoration: line-through;
-}
-
-.marked::after {
-  content: "x";
+/* The ✕ that replaces a number when its cell is crossed off. */
+.markX {
   position: absolute;
   font-family: var(--qx-font-display);
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1;
-  opacity: 0.7;
+  color: var(--cell-border);
 }
 
 .disabled {
-  opacity: 0.32;
-  filter: grayscale(0.75);
+  opacity: 0.4;
   cursor: not-allowed;
-  background: var(--qx-surface-muted);
 }
 
-.justChanged {
-  box-shadow: 0 0 0 3px var(--cell-border);
-  animation: markPop 280ms var(--qx-ease-spring);
+/* Lock cell (last column of each row). */
+.lockCell {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px dashed var(--cell-border);
+  color: var(--cell-border);
 }
 
-.locked {
-  background: var(--qx-surface-muted);
-  border-style: dashed;
-  color: var(--qx-text);
+.lockX {
+  font-family: var(--qx-font-display);
+  font-weight: 900;
+  font-size: 1.2rem;
+  line-height: 1;
+  color: var(--cell-border);
 }
 
 .lockIcon {
   color: var(--cell-border);
-  transition: transform var(--qx-dur-base) var(--qx-ease-spring);
 }
 
-.lockReady .lockIcon {
-  transform: scale(1.1);
-}
-
-.lockReady {
-  background: var(--cell-bg);
-  border-style: solid;
-  border-color: var(--cell-border);
-  box-shadow: 0 0 0 2px var(--cell-border);
-  animation: lockPulse 1.6s ease-in-out infinite;
-}
-
-@keyframes lockPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 2px var(--cell-border);
-  }
-  50% {
-    box-shadow: 0 0 0 5px var(--cell-border);
-  }
-}
-
-@keyframes markPop {
-  0% {
-    transform: scale(1);
-  }
-  45% {
-    transform: scale(1.18) rotate(-3deg);
-  }
-  100% {
-    transform: scale(1) rotate(0);
-  }
+/* "Ready to lock" focus ring — drawn just outside the lock cell. */
+.ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 2.5px currentColor;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lockReady,
-  .justChanged {
-    animation: none;
-  }
   .cell {
     transition: none;
   }

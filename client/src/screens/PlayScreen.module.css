@@ -7,54 +7,54 @@
 }
 
 .toolbar {
-  display: grid;
-  grid-template-columns: 1fr auto auto auto auto auto auto;
-  gap: var(--qx-space-sm);
+  display: flex;
   align-items: center;
-  padding: var(--qx-space-md) var(--qx-space-lg);
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 14px 18px;
   background: var(--qx-surface);
   border: 1px solid var(--qx-divider);
   border-radius: var(--qx-radius-lg);
   box-shadow: var(--qx-shadow-sm);
 }
 
-@media (max-width: 600px) {
-  .toolbar {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "title clock"
-      "status status"
-      "undo toggle"
-      "history home";
-  }
-  .title {
-    grid-area: title;
-  }
-  .clock {
-    grid-area: clock;
-    justify-self: end;
-  }
-  .statusBar {
-    grid-area: status;
-  }
-}
-
 .title {
   margin: 0;
   font-family: var(--qx-font-display);
-  font-weight: 700;
-  font-size: 1.5rem;
+  font-weight: 900;
+  font-size: 1.6rem;
   letter-spacing: -0.01em;
 }
 
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dots > span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: auto;
+}
+
 .button {
-  padding: var(--qx-space-sm) var(--qx-space-md);
-  border: 2px solid var(--qx-divider);
-  border-radius: var(--qx-radius-md);
-  background: var(--qx-surface);
+  padding: 8px 14px;
+  border: 1.5px solid var(--qx-divider);
+  border-radius: var(--qx-radius-btn);
+  background: var(--qx-surface-card);
   color: var(--qx-text);
-  min-height: var(--qx-tap-min);
+  min-height: 38px;
   font-weight: 600;
+  font-size: 0.88rem;
   transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
     var(--qx-ease-out), border-color var(--qx-dur-base) var(--qx-ease-out), color var(--qx-dur-base)
     var(--qx-ease-out);
@@ -130,7 +130,7 @@
 }
 
 .statusBar {
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   color: var(--qx-text-muted);
   font-weight: 500;
 }
@@ -138,10 +138,9 @@
 .clock {
   font-family: var(--qx-font-display);
   font-weight: 700;
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   font-variant-numeric: tabular-nums;
   color: var(--qx-text);
-  letter-spacing: 0.02em;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -21,37 +21,40 @@ export function Row({ game, playerId, row, onMark, onLock }: RowProps) {
       // biome-ignore lint/a11y/useSemanticElements: fieldset/legend renders the legend outside grid flow and clipped the label; div+role=group preserves the layout
       role="group"
       aria-label={`${color} row`}
-      style={{ '--label-fg': `var(--qx-color-${color}-fg)` } as React.CSSProperties}
+      style={
+        {
+          '--row-tint': `var(--qx-color-${color}-bg)`,
+          '--label-fg': `var(--qx-color-${color}-fg)`,
+        } as React.CSSProperties
+      }
     >
       <span className={styles.label} aria-hidden="true">
         {color}
       </span>
-      <div className={styles.cells}>
-        {cells.map((cell, idx) => {
-          const markable = isCellMarkable(game, playerId, color, idx);
-          return (
-            <Cell
-              key={`${color}-${cell.value}`}
-              value={cell.value}
-              color={color}
-              marked={cell.marked}
-              disabled={!markable && !cell.marked}
-              ariaLabel={`${color} ${cell.value}${cell.marked ? ' marked' : ''}`}
-              onSelect={() => onMark(color, idx)}
-            />
-          );
-        })}
-        <Cell
-          value={0}
-          color={color}
-          marked={locked}
-          disabled={!lockable && !locked}
-          isLockCell
-          lockReady={lockable && !locked}
-          ariaLabel={`Lock ${color} row${locked ? ' (locked)' : ''}`}
-          onSelect={() => onLock(color)}
-        />
-      </div>
+      {cells.map((cell, idx) => {
+        const markable = isCellMarkable(game, playerId, color, idx);
+        return (
+          <Cell
+            key={`${color}-${cell.value}`}
+            value={cell.value}
+            color={color}
+            marked={cell.marked}
+            disabled={!markable && !cell.marked}
+            ariaLabel={`${color} ${cell.value}${cell.marked ? ' marked' : ''}`}
+            onSelect={() => onMark(color, idx)}
+          />
+        );
+      })}
+      <Cell
+        value={0}
+        color={color}
+        marked={locked}
+        disabled={!lockable && !locked}
+        isLockCell
+        lockReady={lockable && !locked}
+        ariaLabel={`Lock ${color} row${locked ? ' (locked)' : ''}`}
+        onSelect={() => onLock(color)}
+      />
     </div>
   );
 }

@@ -1,28 +1,22 @@
 .button {
-  padding: var(--qx-space-sm) var(--qx-space-md);
-  border: 2px solid var(--qx-color-yellow-border);
-  border-radius: var(--qx-radius-md);
-  background: var(--qx-color-yellow-bg);
-  color: var(--qx-color-yellow-fg);
-  font-weight: 700;
-  min-height: var(--qx-tap-min);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--qx-space-xs);
+  padding: 8px 14px;
+  border: 1.5px solid var(--qx-divider);
+  border-radius: var(--qx-radius-btn);
+  background: var(--qx-surface-card);
+  color: var(--qx-text);
+  min-height: 38px;
+  font-weight: 600;
+  font-size: 0.88rem;
   transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
-    var(--qx-ease-out), background-color var(--qx-dur-base) var(--qx-ease-out);
-}
-
-.button::before {
-  content: "\21B6";
-  font-size: 1.2rem;
-  display: inline-block;
-  transition: transform var(--qx-dur-base) var(--qx-ease-spring);
+    var(--qx-ease-out), border-color var(--qx-dur-base) var(--qx-ease-out), color var(--qx-dur-base)
+    var(--qx-ease-out);
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: var(--qx-shadow-sm);
+  border-color: var(--qx-accent);
+  color: var(--qx-accent);
 }
 
 .button:active:not(:disabled) {
@@ -30,26 +24,17 @@
   box-shadow: var(--qx-shadow-press);
 }
 
-.button:active:not(:disabled)::before {
-  transform: rotate(-35deg);
-}
-
 .button:disabled {
   opacity: 0.35;
   cursor: not-allowed;
-  filter: grayscale(0.7);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .button,
-  .button::before {
+  .button {
     transition: none;
   }
   .button:hover:not(:disabled),
   .button:active:not(:disabled) {
-    transform: none;
-  }
-  .button:active:not(:disabled)::before {
     transform: none;
   }
 }

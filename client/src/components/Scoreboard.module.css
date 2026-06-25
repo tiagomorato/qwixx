@@ -1,11 +1,10 @@
 .board {
   border: 1px solid var(--qx-divider);
   border-radius: var(--qx-radius-lg);
-  padding: var(--qx-space-lg);
-  background: var(--qx-surface);
+  padding: 18px 18px 16px;
+  background: var(--qx-surface-card);
   display: flex;
   flex-direction: column;
-  gap: var(--qx-space-md);
   min-width: 0;
   box-shadow: var(--qx-shadow-sm);
   position: relative;
@@ -19,7 +18,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 4px;
   background: linear-gradient(
     90deg,
     var(--qx-color-red-border),
@@ -33,45 +32,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--qx-space-sm);
+  gap: 10px;
 }
 
 .name {
   font-family: var(--qx-font-display);
-  font-size: var(--qx-font-size, 1.5rem);
-  font-weight: 700;
+  font-size: 1.45rem;
+  font-weight: 900;
   letter-spacing: -0.01em;
+}
+
+.score {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
 }
 
 .total {
   font-family: var(--qx-font-display);
   font-variant-numeric: tabular-nums;
   font-weight: 900;
-  font-size: 1.875rem;
+  font-size: 1.9rem;
   color: var(--qx-text);
   background: var(--qx-surface-muted);
-  padding: var(--qx-space-xs) var(--qx-space-md);
-  border-radius: var(--qx-radius-md);
+  padding: 3px 12px;
+  border-radius: var(--qx-radius-btn);
   line-height: 1;
-  min-width: 3.25rem;
   text-align: right;
   transition: background-color var(--qx-dur-base) var(--qx-ease-out);
+}
+
+.pts {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--qx-text-muted);
 }
 
 .rows {
   display: flex;
   flex-direction: column;
-}
-
-.blueLine {
-  display: flex;
-  align-items: center;
-  gap: var(--qx-space-sm);
-}
-
-.blueRow {
-  flex: 1 1 0;
-  min-width: 0;
+  gap: 6px;
+  margin-top: 14px;
 }
 
 @keyframes boardIn {

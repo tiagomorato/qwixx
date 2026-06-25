@@ -25,6 +25,37 @@ function useNow(intervalMs: number): number {
   return now;
 }
 
+/**
+ * Drives the browser Fullscreen API. Hiding the browser/OS chrome to give the
+ * boards the whole screen requires a user gesture, so `toggle` must be called
+ * from an event handler. `supported` is false where the API is unavailable
+ * (notably iOS Safari, which only allows fullscreen on <video>); callers should
+ * hide the control there and rely on "Add to Home Screen" instead.
+ */
+function useFullscreen(): { supported: boolean; active: boolean; toggle: () => void } {
+  const supported =
+    typeof document !== 'undefined' && document.documentElement.requestFullscreen != null;
+  const [active, setActive] = useState(
+    () => typeof document !== 'undefined' && document.fullscreenElement != null,
+  );
+
+  useEffect(() => {
+    const onChange = () => setActive(document.fullscreenElement != null);
+    document.addEventListener('fullscreenchange', onChange);
+    return () => document.removeEventListener('fullscreenchange', onChange);
+  }, []);
+
+  const toggle = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
+  };
+
+  return { supported, active, toggle };
+}
+
 function statusLabel(s: PersistenceStatus): string {
   switch (s) {
     case 'idle':
@@ -46,6 +77,7 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const finalize = useGameStore((s) => s.finalize);
   const [status, setStatus] = useState<PersistenceStatus>(getPersistenceStatus());
   const [showTotals, setShowTotals] = useState(true);
+  const fullscreen = useFullscreen();
   const now = useNow(1000);
 
   useEffect(() => onPersistenceStatusChange(setStatus), []);
@@ -77,6 +109,16 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
             </span>
           ) : null}
           <UndoButton />
+          {fullscreen.supported ? (
+            <button
+              type="button"
+              className={styles.button}
+              aria-pressed={fullscreen.active}
+              onClick={fullscreen.toggle}
+            >
+              {fullscreen.active ? 'Exit full screen' : 'Full screen'}
+            </button>
+          ) : null}
           <button
             type="button"
             className={styles.button}

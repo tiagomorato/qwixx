@@ -3,11 +3,6 @@ import { useEffect, useState } from 'react';
 import { Scoreboard } from '../components/Scoreboard.tsx';
 import { UndoButton } from '../components/UndoButton.tsx';
 import { useGameStore } from '../store/gameStore.ts';
-import {
-  type PersistenceStatus,
-  getPersistenceStatus,
-  onPersistenceStatusChange,
-} from '../store/persistence.ts';
 import styles from './PlayScreen.module.css';
 
 export type PlayScreenProps = {
@@ -56,31 +51,15 @@ function useFullscreen(): { supported: boolean; active: boolean; toggle: () => v
   return { supported, active, toggle };
 }
 
-function statusLabel(s: PersistenceStatus): string {
-  switch (s) {
-    case 'idle':
-      return 'Ready';
-    case 'saving':
-      return 'Saving…';
-    case 'saved':
-      return 'Saved';
-    case 'offline':
-      return 'Saved locally; sync unavailable';
-  }
-}
-
 export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const game = useGameStore((s) => s.game);
   const markCell = useGameStore((s) => s.markCell);
   const lockRow = useGameStore((s) => s.lockRow);
   const takePenalty = useGameStore((s) => s.takePenalty);
   const finalize = useGameStore((s) => s.finalize);
-  const [status, setStatus] = useState<PersistenceStatus>(getPersistenceStatus());
   const [showTotals, setShowTotals] = useState(true);
   const fullscreen = useFullscreen();
   const now = useNow(1000);
-
-  useEffect(() => onPersistenceStatusChange(setStatus), []);
 
   if (!game) return null;
 
@@ -98,9 +77,6 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
           <span style={{ background: 'var(--qx-color-yellow-border)' }} />
           <span style={{ background: 'var(--qx-color-green-border)' }} />
           <span style={{ background: 'var(--qx-color-blue-border)' }} />
-        </span>
-        <span className={styles.statusBar} aria-live="polite">
-          {statusLabel(status)}
         </span>
         <div className={styles.actions}>
           {elapsed ? (

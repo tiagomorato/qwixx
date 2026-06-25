@@ -140,12 +140,6 @@
   }
 }
 
-.statusBar {
-  font-size: 0.9rem;
-  color: var(--qx-text-muted);
-  font-weight: 500;
-}
-
 .clock {
   font-family: var(--qx-font-display);
   font-weight: 700;
@@ -169,7 +163,6 @@
   }
   .title,
   .dots,
-  .statusBar,
   .clock,
   .actions,
   .button {

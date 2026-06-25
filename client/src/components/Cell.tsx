@@ -30,10 +30,8 @@ export function Cell({
   onSelect,
 }: CellProps) {
   const classes = [styles.cell];
-  if (marked) classes.push(styles.marked);
+  if (isLockCell) classes.push(styles.lockCell);
   if (disabled) classes.push(styles.disabled);
-  if (isLockCell) classes.push(styles.locked, styles.lockChip);
-  if (isLockCell && lockReady) classes.push(styles.lockReady);
 
   return (
     <button
@@ -46,31 +44,44 @@ export function Cell({
       onClick={onSelect}
     >
       {isLockCell ? (
-        <svg
-          className={styles.lockIcon}
-          viewBox="0 0 24 24"
-          width="20"
-          height="20"
-          fill="none"
-          aria-hidden="true"
-        >
-          <path
-            d="M7 10V7a5 5 0 0 1 10 0v3"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-          />
-          <rect
-            x="5"
-            y="10"
-            width="14"
-            height="10"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            fill="none"
-          />
-        </svg>
+        marked ? (
+          <span className={styles.lockX} aria-hidden="true">
+            ✕
+          </span>
+        ) : (
+          <>
+            <svg
+              className={styles.lockIcon}
+              viewBox="0 0 24 24"
+              width="15"
+              height="15"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M7 10V7a5 5 0 0 1 10 0v3"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              />
+              <rect
+                x="5"
+                y="10"
+                width="14"
+                height="10"
+                rx="2"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                fill="none"
+              />
+            </svg>
+            {lockReady ? <span className={styles.ring} aria-hidden="true" /> : null}
+          </>
+        )
+      ) : marked ? (
+        <span className={styles.markX} aria-hidden="true">
+          ✕
+        </span>
       ) : (
         value
       )}

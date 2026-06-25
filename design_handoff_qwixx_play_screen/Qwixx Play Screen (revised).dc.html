@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,900&family=Inter+Tight:wght@400;500;600;700&display=swap">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;background:#fbfaf7;-webkit-font-smoothing:antialiased;}
+button{font:inherit;color:inherit;cursor:pointer;}
+button:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(67,56,202,0.28);}
+@keyframes qxLockPulse{0%,100%{box-shadow:0 0 0 2.5px currentColor;}50%{box-shadow:0 0 0 6px currentColor;}}
+@keyframes qxFade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important;}}
+</style>
+</helmet>
+<div style="min-height:100%;padding:24px;background:#fbfaf7;font-family:'Inter Tight',system-ui,sans-serif;color:#1a1a1c;">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;background:#fbfaf7;border:1px solid #e2dfd6;border-radius:16px;box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);margin-bottom:20px;">
+      <h1 style="margin:0;font-family:Fraunces,serif;font-weight:900;font-size:1.6rem;letter-spacing:-0.01em;color:#1a1a1c;">Qwixx</h1>
+      <div style="display:flex;gap:5px;align-items:center;">
+        <span style="width:9px;height:9px;border-radius:50%;background:#c23232;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#c8a420;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#3b8d3f;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#2e6cc2;"></span>
+      </div>
+      <span style="color:#5a5a62;font-size:0.9rem;font-weight:500;">Lena to roll · round 4</span>
+      <span style="margin-left:auto;font-family:Fraunces,serif;font-weight:700;font-size:1.1rem;font-variant-numeric:tabular-nums;color:#1a1a1c;">14:08</span>
+      <button type="button" style="padding:8px 14px;border:1.5px solid #e2dfd6;border-radius:9px;background:#fff;color:#1a1a1c;font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-size:0.88rem;min-height:38px;" style-hover="border-color:#4338ca;color:#4338ca;">Undo</button>
+      <button type="button" style="padding:8px 14px;border:1.5px solid #e2dfd6;border-radius:9px;background:#fff;color:#1a1a1c;font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-size:0.88rem;min-height:38px;" style-hover="border-color:#4338ca;color:#4338ca;">History</button>
+      <button type="button" style="padding:8px 14px;border:1.5px solid #e2dfd6;border-radius:9px;background:#fff;color:#1a1a1c;font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-size:0.88rem;min-height:38px;" style-hover="border-color:#4338ca;color:#4338ca;">Home</button>
+    </div>
+
+    <div style="{{ boardsStyle }}">
+      <sc-for list="{{ players }}" as="p" hint-placeholder-count="2">
+        <div style="position:relative;overflow:hidden;background:#fff;border:1px solid #e2dfd6;border-radius:16px;padding:18px 18px 16px;box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);animation:qxFade 320ms cubic-bezier(.22,1,.36,1) both;">
+          <div style="position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#c23232,#c8a420 33%,#3b8d3f 66%,#2e6cc2);"></div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <h2 style="margin:0;font-family:Fraunces,serif;font-weight:900;font-size:1.45rem;letter-spacing:-0.01em;color:#1a1a1c;">{{ p.name }}</h2>
+            <div style="display:flex;align-items:baseline;gap:6px;">
+              <span style="font-family:Fraunces,serif;font-weight:900;font-size:1.9rem;font-variant-numeric:tabular-nums;background:#f1eee7;padding:3px 12px;border-radius:9px;color:#1a1a1c;line-height:1;">{{ p.total }}</span>
+              <span style="font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#5a5a62;">pts</span>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:14px;">
+
+            <div role="group" aria-label="red row" style="display:grid;grid-template-columns:2.4rem repeat(12,minmax(0,1fr));gap:5px;align-items:center;padding:7px 9px;border-radius:11px;background:#fde2e2;">
+              <span style="font-size:0.64rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:#8a1414;text-align:center;">red</span>
+              <sc-for list="{{ p.redCells }}" as="c" hint-placeholder-count="11">
+                <button type="button" aria-label="{{ c.ariaLabel }}" aria-pressed="{{ c.marked }}" onClick="{{ c.onSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:#fff;border:1.5px solid rgba(20,20,30,0.08);font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:clamp(0.7rem,1.5vw,0.92rem);position:relative;color:#8a1414;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms cubic-bezier(.22,1,.36,1);" style-hover="transform:translateY(-1px) scale(1.06);box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);" style-active="transform:translateY(1px) scale(0.93);box-shadow:inset 0 2px 4px rgba(20,20,30,.12);">
+                  <sc-if value="{{ c.unmarked }}" hint-placeholder-val="{{ true }}"><span>{{ c.value }}</span></sc-if>
+                  <sc-if value="{{ c.marked }}"><span style="position:absolute;font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;line-height:1;color:#c23232;">✕</span></sc-if>
+                </button>
+              </sc-for>
+              <button type="button" aria-label="{{ p.redLockAria }}" onClick="{{ p.redLockSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:rgba(255,255,255,0.5);border:1.5px dashed #c23232;color:#c23232;position:relative;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms;" style-hover="transform:translateY(-1px) scale(1.06);" style-active="transform:translateY(1px) scale(0.93);">
+                <sc-if value="{{ p.redNotLocked }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2.2"></rect></svg></sc-if>
+                <sc-if value="{{ p.redReady }}"><span style="{{ ringStyle }}"></span></sc-if>
+                <sc-if value="{{ p.redLocked }}"><span style="font-family:Fraunces,serif;font-weight:900;font-size:1.2rem;color:#c23232;">✕</span></sc-if>
+              </button>
+            </div>
+
+            <div role="group" aria-label="yellow row" style="display:grid;grid-template-columns:2.4rem repeat(12,minmax(0,1fr));gap:5px;align-items:center;padding:7px 9px;border-radius:11px;background:#fdf4c8;">
+              <span style="font-size:0.64rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:#7a5a07;text-align:center;">yellow</span>
+              <sc-for list="{{ p.yellowCells }}" as="c" hint-placeholder-count="11">
+                <button type="button" aria-label="{{ c.ariaLabel }}" aria-pressed="{{ c.marked }}" onClick="{{ c.onSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:#fff;border:1.5px solid rgba(20,20,30,0.08);font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:clamp(0.7rem,1.5vw,0.92rem);position:relative;color:#7a5a07;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms cubic-bezier(.22,1,.36,1);" style-hover="transform:translateY(-1px) scale(1.06);box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);" style-active="transform:translateY(1px) scale(0.93);box-shadow:inset 0 2px 4px rgba(20,20,30,.12);">
+                  <sc-if value="{{ c.unmarked }}" hint-placeholder-val="{{ true }}"><span>{{ c.value }}</span></sc-if>
+                  <sc-if value="{{ c.marked }}"><span style="position:absolute;font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;line-height:1;color:#c8a420;">✕</span></sc-if>
+                </button>
+              </sc-for>
+              <button type="button" aria-label="{{ p.yellowLockAria }}" onClick="{{ p.yellowLockSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:rgba(255,255,255,0.5);border:1.5px dashed #c8a420;color:#c8a420;position:relative;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms;" style-hover="transform:translateY(-1px) scale(1.06);" style-active="transform:translateY(1px) scale(0.93);">
+                <sc-if value="{{ p.yellowNotLocked }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2.2"></rect></svg></sc-if>
+                <sc-if value="{{ p.yellowReady }}"><span style="{{ ringStyle }}"></span></sc-if>
+                <sc-if value="{{ p.yellowLocked }}"><span style="font-family:Fraunces,serif;font-weight:900;font-size:1.2rem;color:#c8a420;">✕</span></sc-if>
+              </button>
+            </div>
+
+            <div role="group" aria-label="green row" style="display:grid;grid-template-columns:2.4rem repeat(12,minmax(0,1fr));gap:5px;align-items:center;padding:7px 9px;border-radius:11px;background:#d8f1d0;">
+              <span style="font-size:0.64rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:#16511f;text-align:center;">green</span>
+              <sc-for list="{{ p.greenCells }}" as="c" hint-placeholder-count="11">
+                <button type="button" aria-label="{{ c.ariaLabel }}" aria-pressed="{{ c.marked }}" onClick="{{ c.onSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:#fff;border:1.5px solid rgba(20,20,30,0.08);font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:clamp(0.7rem,1.5vw,0.92rem);position:relative;color:#16511f;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms cubic-bezier(.22,1,.36,1);" style-hover="transform:translateY(-1px) scale(1.06);box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);" style-active="transform:translateY(1px) scale(0.93);box-shadow:inset 0 2px 4px rgba(20,20,30,.12);">
+                  <sc-if value="{{ c.unmarked }}" hint-placeholder-val="{{ true }}"><span>{{ c.value }}</span></sc-if>
+                  <sc-if value="{{ c.marked }}"><span style="position:absolute;font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;line-height:1;color:#3b8d3f;">✕</span></sc-if>
+                </button>
+              </sc-for>
+              <button type="button" aria-label="{{ p.greenLockAria }}" onClick="{{ p.greenLockSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:rgba(255,255,255,0.5);border:1.5px dashed #3b8d3f;color:#3b8d3f;position:relative;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms;" style-hover="transform:translateY(-1px) scale(1.06);" style-active="transform:translateY(1px) scale(0.93);">
+                <sc-if value="{{ p.greenNotLocked }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2.2"></rect></svg></sc-if>
+                <sc-if value="{{ p.greenReady }}"><span style="{{ ringStyle }}"></span></sc-if>
+                <sc-if value="{{ p.greenLocked }}"><span style="font-family:Fraunces,serif;font-weight:900;font-size:1.2rem;color:#3b8d3f;">✕</span></sc-if>
+              </button>
+            </div>
+
+            <div role="group" aria-label="blue row" style="display:grid;grid-template-columns:2.4rem repeat(12,minmax(0,1fr));gap:5px;align-items:center;padding:7px 9px;border-radius:11px;background:#d6e4f6;">
+              <span style="font-size:0.64rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;color:#16345c;text-align:center;">blue</span>
+              <sc-for list="{{ p.blueCells }}" as="c" hint-placeholder-count="11">
+                <button type="button" aria-label="{{ c.ariaLabel }}" aria-pressed="{{ c.marked }}" onClick="{{ c.onSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:#fff;border:1.5px solid rgba(20,20,30,0.08);font-family:'Inter Tight',system-ui,sans-serif;font-weight:600;font-variant-numeric:tabular-nums;font-size:clamp(0.7rem,1.5vw,0.92rem);position:relative;color:#16345c;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms cubic-bezier(.22,1,.36,1);" style-hover="transform:translateY(-1px) scale(1.06);box-shadow:0 1px 2px rgba(20,20,30,.06),0 2px 6px rgba(20,20,30,.05);" style-active="transform:translateY(1px) scale(0.93);box-shadow:inset 0 2px 4px rgba(20,20,30,.12);">
+                  <sc-if value="{{ c.unmarked }}" hint-placeholder-val="{{ true }}"><span>{{ c.value }}</span></sc-if>
+                  <sc-if value="{{ c.marked }}"><span style="position:absolute;font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;line-height:1;color:#2e6cc2;">✕</span></sc-if>
+                </button>
+              </sc-for>
+              <button type="button" aria-label="{{ p.blueLockAria }}" onClick="{{ p.blueLockSelect }}" style="display:flex;align-items:center;justify-content:center;aspect-ratio:1;min-width:0;border-radius:7px;background:rgba(255,255,255,0.5);border:1.5px dashed #2e6cc2;color:#2e6cc2;position:relative;transition:transform 120ms cubic-bezier(.22,1,.36,1),box-shadow 120ms;" style-hover="transform:translateY(-1px) scale(1.06);" style-active="transform:translateY(1px) scale(0.93);">
+                <sc-if value="{{ p.blueNotLocked }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" aria-hidden="true"><path d="M7 10V7a5 5 0 0 1 10 0v3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"></path><rect x="5" y="10" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2.2"></rect></svg></sc-if>
+                <sc-if value="{{ p.blueReady }}"><span style="{{ ringStyle }}"></span></sc-if>
+                <sc-if value="{{ p.blueLocked }}"><span style="font-family:Fraunces,serif;font-weight:900;font-size:1.2rem;color:#2e6cc2;">✕</span></sc-if>
+              </button>
+            </div>
+
+          </div>
+
+          <div style="display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #e2dfd6;">
+            <span style="font-size:0.64rem;font-weight:800;letter-spacing:0.05em;text-transform:uppercase;color:#5a5a62;">Penalties</span>
+            <sc-for list="{{ p.penalties }}" as="pen" hint-placeholder-count="4">
+              <button type="button" aria-label="penalty" onClick="{{ pen.onSelect }}" style="width:28px;height:28px;border-radius:7px;border:1.5px solid #e2dfd6;background:#fff;display:flex;align-items:center;justify-content:center;position:relative;transition:transform 120ms cubic-bezier(.22,1,.36,1);" style-hover="transform:scale(1.08);border-color:#b51919;" style-active="transform:scale(0.92);">
+                <sc-if value="{{ pen.filled }}"><span style="font-family:Fraunces,serif;font-weight:900;font-size:1.05rem;color:#b51919;">✕</span></sc-if>
+              </button>
+            </sc-for>
+            <span style="margin-left:auto;font-size:0.8rem;font-weight:600;color:#b51919;font-variant-numeric:tabular-nums;">−{{ p.penaltyScore }}</span>
+          </div>
+
+        </div>
+      </sc-for>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: {&quot;width&quot;: 1240, &quot;height&quot;: 760},
+  &quot;boardLayout&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;side-by-side&quot;, &quot;stacked&quot;], &quot;default&quot;: &quot;side-by-side&quot;, &quot;tsType&quot;: &quot;'side-by-side' | 'stacked'&quot;},
+  &quot;lockCue&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;calm&quot;, &quot;pulse&quot;], &quot;default&quot;: &quot;calm&quot;, &quot;tsType&quot;: &quot;'calm' | 'pulse'&quot;}
+}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const mk=(n)=>Array.from({length:11},(_,i)=>i<n);
+    this.state={
+      players:[
+        {name:'Tiago', marks:{red:mk(5),yellow:mk(3),green:mk(2),blue:mk(0)}, locked:{red:false,yellow:false,green:false,blue:false}, penalties:1},
+        {name:'Lena',  marks:{red:mk(3),yellow:mk(6),green:mk(6),blue:mk(2)}, locked:{red:false,yellow:false,green:true,blue:false}, penalties:0},
+      ],
+    };
+  }
+  toggle(pi,color,idx){
+    this.setState((s)=>({players:s.players.map((p,i)=>{
+      if(i!==pi) return p;
+      const arr=p.marks[color].slice(); arr[idx]=!arr[idx];
+      return {...p, marks:{...p.marks,[color]:arr}};
+    })}));
+  }
+  toggleLock(pi,color){
+    this.setState((s)=>({players:s.players.map((p,i)=> i!==pi?p:{...p, locked:{...p.locked,[color]:!p.locked[color]}})}));
+  }
+  togglePenalty(pi,i){
+    this.setState((s)=>({players:s.players.map((p,k)=> k!==pi?p:{...p, penalties: p.penalties===i+1 ? i : i+1})}));
+  }
+  renderVals(){
+    const layout=this.props.boardLayout||'side-by-side';
+    const boardsStyle='display:grid;gap:20px;'+(layout==='stacked'?'grid-template-columns:1fr;':'grid-template-columns:repeat(auto-fit,minmax(440px,1fr));');
+    const cue=this.props.lockCue||'calm';
+    const ringStyle='position:absolute;inset:-3px;border-radius:10px;box-shadow:0 0 0 2.5px currentColor;'+(cue==='pulse'?'animation:qxLockPulse 1.6s ease-in-out infinite;':'');
+    const ascending=[2,3,4,5,6,7,8,9,10,11,12];
+    const descending=[12,11,10,9,8,7,6,5,4,3,2];
+    const tri=(m)=>m*(m+1)/2;
+    const players=this.state.players.map((pl,pi)=>{
+      const build=(color)=>{
+        const vals=(color==='red'||color==='yellow')?ascending:descending;
+        const marks=pl.marks[color];
+        const cells=vals.map((v,idx)=>({
+          key:color+'-'+v, value:v, marked:marks[idx], unmarked:!marks[idx],
+          ariaLabel:color+' '+v+(marks[idx]?' marked':''),
+          onSelect:()=>this.toggle(pi,color,idx),
+        }));
+        const count=marks.filter(Boolean).length;
+        const locked=pl.locked[color];
+        const ready=count>=5 && !locked;
+        return {cells, count, locked, notLocked:!locked, ready,
+          lockSelect:()=>this.toggleLock(pi,color),
+          lockAria:'Lock '+color+' row'+(locked?' (locked)':(ready?' (ready)':''))};
+      };
+      const red=build('red'), yellow=build('yellow'), green=build('green'), blue=build('blue');
+      const sub=tri(red.count+(red.locked?1:0))+tri(yellow.count+(yellow.locked?1:0))+tri(green.count+(green.locked?1:0))+tri(blue.count+(blue.locked?1:0));
+      const penaltyScore=pl.penalties*5;
+      const penalties=[0,1,2,3].map((i)=>({filled:i<pl.penalties, onSelect:()=>this.togglePenalty(pi,i)}));
+      return {
+        name:pl.name, total:sub-penaltyScore, penaltyScore, penalties,
+        redCells:red.cells, yellowCells:yellow.cells, greenCells:green.cells, blueCells:blue.cells,
+        redLocked:red.locked, yellowLocked:yellow.locked, greenLocked:green.locked, blueLocked:blue.locked,
+        redNotLocked:red.notLocked, yellowNotLocked:yellow.notLocked, greenNotLocked:green.notLocked, blueNotLocked:blue.notLocked,
+        redReady:red.ready, yellowReady:yellow.ready, greenReady:green.ready, blueReady:blue.ready,
+        redLockSelect:red.lockSelect, yellowLockSelect:yellow.lockSelect, greenLockSelect:green.lockSelect, blueLockSelect:blue.lockSelect,
+        redLockAria:red.lockAria, yellowLockAria:yellow.lockAria, greenLockAria:green.lockAria, blueLockAria:blue.lockAria,
+      };
+    });
+    return {players, boardsStyle, ringStyle};
+  }
+}
+</script>
+</body>
+</html>

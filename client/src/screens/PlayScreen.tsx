@@ -61,29 +61,37 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
         <h1 id="play-title" className={styles.title}>
           Qwixx
         </h1>
-        {elapsed ? (
-          <span className={styles.clock} aria-label={`Elapsed time ${elapsed}`}>
-            {elapsed}
-          </span>
-        ) : null}
+        <span className={styles.dots} aria-hidden="true">
+          <span style={{ background: 'var(--qx-color-red-border)' }} />
+          <span style={{ background: 'var(--qx-color-yellow-border)' }} />
+          <span style={{ background: 'var(--qx-color-green-border)' }} />
+          <span style={{ background: 'var(--qx-color-blue-border)' }} />
+        </span>
         <span className={styles.statusBar} aria-live="polite">
           {statusLabel(status)}
         </span>
-        <UndoButton />
-        <button
-          type="button"
-          className={styles.button}
-          aria-pressed={!showTotals}
-          onClick={() => setShowTotals((v) => !v)}
-        >
-          {showTotals ? 'Hide points' : 'Show points'}
-        </button>
-        <button type="button" className={styles.button} onClick={onOpenHistory}>
-          History
-        </button>
-        <button type="button" className={styles.button} onClick={onExitToHome}>
-          Home
-        </button>
+        <div className={styles.actions}>
+          {elapsed ? (
+            <span className={styles.clock} aria-label={`Elapsed time ${elapsed}`}>
+              {elapsed}
+            </span>
+          ) : null}
+          <UndoButton />
+          <button
+            type="button"
+            className={styles.button}
+            aria-pressed={!showTotals}
+            onClick={() => setShowTotals((v) => !v)}
+          >
+            {showTotals ? 'Hide points' : 'Show points'}
+          </button>
+          <button type="button" className={styles.button} onClick={onOpenHistory}>
+            History
+          </button>
+          <button type="button" className={styles.button} onClick={onExitToHome}>
+            Home
+          </button>
+        </div>
       </header>
       {canEnd ? (
         <output className={styles.endBar}>

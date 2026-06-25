@@ -154,6 +154,30 @@
   color: var(--qx-text);
 }
 
+/* On narrow screens keep the whole toolbar on a single line; let it scroll
+   horizontally instead of wrapping the actions onto extra rows. */
+@media (max-width: 720px) {
+  .toolbar {
+    flex-wrap: nowrap;
+    gap: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .actions {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+  .title,
+  .dots,
+  .statusBar,
+  .clock,
+  .actions,
+  .button {
+    flex: none;
+    white-space: nowrap;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .button {
     transition: none;

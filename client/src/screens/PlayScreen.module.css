@@ -72,6 +72,37 @@
   box-shadow: var(--qx-shadow-press);
 }
 
+/* "Next player" — a primary-accent action so it stands out from the neutral
+   toolbar buttons as the main turn control. */
+.nextButton {
+  padding: 8px 14px;
+  border: 1.5px solid var(--qx-accent);
+  border-radius: var(--qx-radius-btn);
+  background: var(--qx-accent);
+  color: #fff;
+  min-height: 38px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
+    var(--qx-ease-out), background var(--qx-dur-base) var(--qx-ease-out);
+}
+
+.nextButton:hover:not(:disabled) {
+  background: var(--qx-accent-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--qx-shadow-sm);
+}
+
+.nextButton:active:not(:disabled) {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: var(--qx-shadow-press);
+}
+
+.nextButton:disabled {
+  opacity: 0.5;
+}
+
 .endBar {
   display: flex;
   flex-wrap: wrap;
@@ -127,6 +158,24 @@
   display: grid;
   gap: var(--qx-space-lg);
   grid-template-columns: 1fr;
+  /* Per-cell height consumed by Cell.module.css. Adapts to player count below so
+     boards stay legible and tappable even at the 6-player maximum. */
+  --qx-cell-h: 38px;
+}
+
+/* With many players the page gets long; tighten the inter-board gap so more
+   boards fit without scrolling, while keeping each cell's tap target intact. */
+.boards[data-players="5"],
+.boards[data-players="6"] {
+  gap: var(--qx-space-md);
+}
+
+/* On phones, hold every number cell at the minimum tap target (44px) regardless
+   of player count so boards stay comfortably tappable at the 6-player max. */
+@media (max-width: 540px) {
+  .boards {
+    --qx-cell-h: var(--qx-tap-min);
+  }
 }
 
 /* On large displays, lay the boards out side by side. Guarded by min-width so
@@ -197,11 +246,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .button {
+  .button,
+  .nextButton {
     transition: none;
   }
   .button:hover:not(:disabled),
-  .button:active:not(:disabled) {
+  .button:active:not(:disabled),
+  .nextButton:hover:not(:disabled),
+  .nextButton:active:not(:disabled) {
     transform: none;
   }
 }

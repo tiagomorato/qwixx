@@ -3,7 +3,9 @@
 .cell {
   flex: 1 1 0;
   min-width: 0;
-  height: 38px;
+  /* Height is driven by the board's density variable (set per player-count in
+     PlayScreen.module.css); falls back to 38px outside a board context. */
+  height: var(--qx-cell-h, 38px);
   border: none;
   border-radius: 9px;
   background: var(--qx-surface-card);
@@ -27,10 +29,13 @@
   box-shadow: var(--qx-shadow-press);
 }
 
-/* Crossed off: no tile, just a bold ✕ in the row's strong colour. */
+/* Crossed off: no tile, just a bold ✕ in the row's strong colour. Distinguished
+   from a disabled cell by the ✕ glyph (vs a dimmed number) and full opacity, so
+   the two states never rely on colour alone — holds in both light and dark. */
 .marked {
   background: transparent;
   box-shadow: none;
+  opacity: 1;
 }
 
 /* The ✕ that replaces a number when its cell is crossed off. */

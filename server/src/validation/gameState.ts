@@ -93,5 +93,17 @@ export function validateGameState(value: unknown): ValidationError[] {
   if (!Array.isArray(game.actionLog)) {
     pushErr(errs, 'actionLog', 'must be an array');
   }
+  // activePlayerId is optional (backward compatibility). When present it must be
+  // a non-empty string that matches one of the players' ids.
+  if (game.activePlayerId !== undefined) {
+    if (!isString(game.activePlayerId)) {
+      pushErr(errs, 'activePlayerId', 'must be a non-empty string');
+    } else if (
+      Array.isArray(game.players) &&
+      !game.players.some((p) => p?.id === game.activePlayerId)
+    ) {
+      pushErr(errs, 'activePlayerId', 'must match a player id');
+    }
+  }
   return errs;
 }

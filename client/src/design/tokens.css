@@ -70,8 +70,13 @@
   }
 }
 
+/* Dark palette. Light values live in :root above; these override them in two
+   cases: (1) the OS prefers dark and the user has made no explicit choice, and
+   (2) the user explicitly picked dark via the theme toggle ([data-theme='dark']).
+   The :not([data-theme='light']) guard on the media query lets an explicit
+   "light" choice win even under an OS dark preference. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --qx-surface: #14141a;
     --qx-surface-muted: #1f1f27;
     --qx-surface-card: #1b1b22;
@@ -85,4 +90,36 @@
     --qx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
     --qx-shadow-elev: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.45);
   }
+}
+
+:root[data-theme="dark"] {
+  --qx-surface: #14141a;
+  --qx-surface-muted: #1f1f27;
+  --qx-surface-card: #1b1b22;
+  --qx-cell-border-neutral: rgba(255, 255, 255, 0.12);
+  --qx-text: #f4f4f6;
+  --qx-text-muted: #b0b0b6;
+  --qx-divider: #2e2e36;
+  --qx-accent: #818cf8;
+  --qx-accent-strong: #a5b4fc;
+  --qx-accent-soft: rgba(129, 140, 248, 0.18);
+  --qx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --qx-shadow-elev: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.45);
+}
+
+/* Explicit light choice: re-assert the light defaults so they override the
+   dark media query even when the OS prefers dark. */
+:root[data-theme="light"] {
+  --qx-surface: #fbfaf7;
+  --qx-surface-muted: #f1eee7;
+  --qx-surface-card: #fff;
+  --qx-cell-border-neutral: rgba(20, 20, 30, 0.08);
+  --qx-text: #1a1a1c;
+  --qx-text-muted: #5a5a62;
+  --qx-divider: #e2dfd6;
+  --qx-accent: #4338ca;
+  --qx-accent-strong: #312e81;
+  --qx-accent-soft: rgba(67, 56, 202, 0.12);
+  --qx-shadow-sm: 0 1px 2px rgba(20, 20, 30, 0.06), 0 2px 6px rgba(20, 20, 30, 0.05);
+  --qx-shadow-elev: 0 2px 4px rgba(20, 20, 30, 0.06), 0 12px 28px rgba(20, 20, 30, 0.08);
 }

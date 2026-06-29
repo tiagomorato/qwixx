@@ -47,6 +47,31 @@
   border-color: var(--qx-danger);
 }
 
+/* Armed (awaiting the confirming second tap): pulsing danger outline + a "?". */
+.armed {
+  border-color: var(--qx-danger);
+  background: var(--qx-danger);
+  animation: armPulse 900ms var(--qx-ease-out) infinite;
+}
+
+.q {
+  font-family: var(--qx-font-display);
+  font-weight: 900;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: #fff;
+}
+
+@keyframes armPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 var(--qx-accent-soft);
+  }
+  50% {
+    box-shadow: 0 0 0 4px var(--qx-accent-soft);
+  }
+}
+
 .x {
   font-family: var(--qx-font-display);
   font-weight: 900;
@@ -70,5 +95,8 @@
   .cell:hover:not(:disabled),
   .cell:active:not(:disabled) {
     transform: none;
+  }
+  .armed {
+    animation: none;
   }
 }

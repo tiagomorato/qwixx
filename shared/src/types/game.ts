@@ -12,6 +12,12 @@ export type GameState = {
   players: PlayerState[];
   globalLocks: Record<Color, boolean>;
   actionLog: ActionLogEntry[];
+  /**
+   * Id of the player whose turn it is. Optional for backward compatibility with
+   * games persisted before turn tracking existed; such games are normalised to
+   * `players[0].id` on read. Synced across devices via the existing live-sync.
+   */
+  activePlayerId?: string | undefined;
 };
 
 export type HistoryFile = {

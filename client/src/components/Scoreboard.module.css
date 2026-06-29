@@ -28,6 +28,28 @@
   );
 }
 
+/* Active player's board. Distinguished by more than colour alone: an accent
+   ring + elevated shadow + the textual "● Turn" badge in the header. */
+.active {
+  border-color: var(--qx-accent);
+  box-shadow: 0 0 0 2px var(--qx-accent), var(--qx-shadow-elev);
+}
+
+.turnBadge {
+  display: inline-block;
+  margin-left: var(--qx-space-sm);
+  padding: 2px 8px;
+  vertical-align: middle;
+  background: var(--qx-accent);
+  color: #fff;
+  font-family: var(--qx-font);
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--qx-radius-pill);
+}
+
 .header {
   display: flex;
   justify-content: space-between;

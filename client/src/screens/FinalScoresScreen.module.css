@@ -16,6 +16,15 @@
   line-height: 1;
 }
 
+.celebrate {
+  margin: var(--qx-space-sm) 0 0;
+  font-family: var(--qx-font-display);
+  font-weight: 900;
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  color: var(--qx-accent);
+  line-height: 1.1;
+}
+
 .subtitle {
   color: var(--qx-text-muted);
   margin: var(--qx-space-xs) 0 0;

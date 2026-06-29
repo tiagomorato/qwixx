@@ -1,4 +1,4 @@
-import type { GameState } from '@qwixx/shared';
+import type { ActionLogEntry, GameState } from '@qwixx/shared';
 import { ApiCallError, api } from '../api/client.ts';
 import { useGameStore } from './gameStore.ts';
 
@@ -112,6 +112,56 @@ export function applyRemoteGame(game: GameState | null): void {
   if (sig(game) === lastSentSig) return;
   lastRemote = game;
   useGameStore.getState().hydrate(game);
+}
+
+// --- Undo notice ----------------------------------------------------------
+// A transient, human-readable description of the most-recently-undone action.
+// Derived (not synced) by noticing that the action log shrank by exactly its
+// last entry between two states — works for both a local undo and a remote one
+// arriving over SSE, since both flow through the store.
+
+export type UndoNotice = { message: string };
+type UndoListener = (notice: UndoNotice) => void;
+const undoListeners = new Set<UndoListener>();
+
+export function onUndoNotice(l: UndoListener): () => void {
+  undoListeners.add(l);
+  return () => undoListeners.delete(l);
+}
+
+function describeUndo(entry: ActionLogEntry, game: GameState): string {
+  const name = game.players.find((p) => p.id === entry.playerId)?.name ?? 'a player';
+  switch (entry.kind) {
+    case 'mark':
+      return `Undid ${name}'s ${entry.color} mark`;
+    case 'lock':
+      return `Undid ${name}'s ${entry.color} lock`;
+    case 'penalty':
+      return `Undid ${name}'s penalty`;
+  }
+}
+
+function detectUndo(prev: GameState | null, next: GameState | null): UndoNotice | null {
+  if (!prev || !next) return null;
+  const pl = prev.actionLog;
+  const nl = next.actionLog;
+  if (nl.length !== pl.length - 1) return null;
+  // Confirm the new log is exactly the old one minus its last entry.
+  if (JSON.stringify(nl) !== JSON.stringify(pl.slice(0, -1))) return null;
+  const removed = pl[pl.length - 1];
+  if (!removed) return null;
+  return { message: describeUndo(removed, prev) };
+}
+
+// Dedicated subscription (separate from persistence so it sees every change,
+// including remote echoes that the persistence subscriber skips).
+export function startUndoNotices(): () => void {
+  return useGameStore.subscribe((state, prev) => {
+    if (state.game === prev.game) return;
+    const notice = detectUndo(prev.game, state.game);
+    if (!notice) return;
+    for (const l of undoListeners) l(notice);
+  });
 }
 
 // Subscribe to live current-game updates over Server-Sent Events. The browser's

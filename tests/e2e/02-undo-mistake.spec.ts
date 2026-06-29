@@ -33,7 +33,9 @@ test('US2: undo most recent mark', async ({ page, request }) => {
 test('US2: undo a penalty', async ({ page, request }) => {
   await startTwoPlayerGame(page);
   const ana = page.getByRole('region', { name: 'Scoreboard for Ana' });
+  // Penalties are guarded: arm then confirm.
   await ana.getByRole('button', { name: 'Take penalty' }).click();
+  await ana.getByRole('button', { name: 'Confirm penalty −5' }).click();
   await expect(ana.getByLabel('Total -5')).toBeVisible();
   await page.getByRole('button', { name: 'Undo last action' }).click();
   await expect(ana.getByLabel('Total 0')).toBeVisible();

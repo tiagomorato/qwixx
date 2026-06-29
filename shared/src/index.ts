@@ -14,6 +14,7 @@ export type { CreateGameOptions, NewPlayerInput } from './domain/createGame.ts';
 export { scoreForRow, totalScore } from './domain/score.ts';
 export { isCellMarkable, isRowLockable, gameShouldEnd } from './domain/legality.ts';
 export { mark, lock, penalty, finalize } from './domain/actions.ts';
+export { advanceTurn } from './domain/turn.ts';
 export { undo } from './domain/undo.ts';
 export { winner } from './domain/winner.ts';
 export type { WinnerResult } from './domain/winner.ts';

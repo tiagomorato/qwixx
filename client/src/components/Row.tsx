@@ -1,4 +1,10 @@
-import { type Color, type RowState, isCellMarkable, isRowLockable } from '@qwixx/shared';
+import {
+  type Color,
+  type RowState,
+  isCellMarkable,
+  isRowLockable,
+  scoreForRow,
+} from '@qwixx/shared';
 import type { GameState } from '@qwixx/shared';
 import { Cell } from './Cell.tsx';
 import styles from './Row.module.css';
@@ -7,13 +13,16 @@ export type RowProps = {
   game: GameState;
   playerId: string;
   row: RowState;
+  /** Show this row's running point value. Follows the grand-total toggle. */
+  showScore?: boolean;
   onMark: (color: Color, cellIndex: number) => void;
   onLock: (color: Color) => void;
 };
 
-export function Row({ game, playerId, row, onMark, onLock }: RowProps) {
+export function Row({ game, playerId, row, showScore = true, onMark, onLock }: RowProps) {
   const { color, cells, locked } = row;
   const lockable = isRowLockable(game, playerId, color);
+  const rowScore = scoreForRow(row);
 
   return (
     <div
@@ -56,6 +65,11 @@ export function Row({ game, playerId, row, onMark, onLock }: RowProps) {
         ariaLabel={`Lock ${color} row${locked ? ' (locked)' : ''}`}
         onSelect={() => onLock(color)}
       />
+      {showScore ? (
+        <span className={styles.score} aria-label={`${color} row score ${rowScore}`}>
+          {rowScore}
+        </span>
+      ) : null}
     </div>
   );
 }

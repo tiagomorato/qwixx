@@ -31,7 +31,7 @@ description: "Task list for UI/UX Enhancements"
 
 **Purpose**: Project structure prep for new client utility modules
 
-- [ ] T001 Create `client/src/lib/` directory for the new platform-API wrapper modules (`haptics.ts`, `theme.ts`) per plan.md Project Structure
+- [X] T001 Create `client/src/lib/` directory for the new platform-API wrapper modules (`haptics.ts`, `theme.ts`) per plan.md Project Structure
 
 ---
 
@@ -41,8 +41,8 @@ description: "Task list for UI/UX Enhancements"
 
 **⚠️ CRITICAL**: The `Toast` primitive is consumed by US5 (undo notice) and US6 (share confirmation); build it before those stories.
 
-- [ ] T002 [P] Create transient `Toast` component with `role="status"` / `aria-live="polite"` and auto-dismiss in `client/src/components/Toast.tsx`
-- [ ] T003 [P] Add Toast styling (transient/animated, reduced-motion-aware) in `client/src/components/Toast.module.css`
+- [X] T002 [P] Create transient `Toast` component with `role="status"` / `aria-live="polite"` and auto-dismiss in `client/src/components/Toast.tsx`
+- [X] T003 [P] Add Toast styling (transient/animated, reduced-motion-aware) in `client/src/components/Toast.module.css`
 
 **Checkpoint**: Foundation ready — user stories can now proceed (in parallel if staffed).
 
@@ -56,13 +56,13 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 1 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T004 [P] [US1] Playwright integration test for per-row scores (marks update row value; lock adds bonus; Hide/Show points hides/shows row scores with the grand total) in `tests/e2e/04-per-row-scores.spec.ts`
+- [X] T004 [P] [US1] Playwright integration test for per-row scores (marks update row value; lock adds bonus; Hide/Show points hides/shows row scores with the grand total) in `tests/e2e/04-per-row-scores.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Render each row's current value in `client/src/components/Row.tsx` using `scoreForRow(row)` from `shared`, gated on the existing `showTotal` visibility prop (FR-001, FR-002)
-- [ ] T006 [US1] Add per-row score styling (aligned to the row, no layout shift) in `client/src/components/Row.module.css`
-- [ ] T007 [US1] Ensure `client/src/components/Scoreboard.tsx` threads the `showTotal` flag down to `Row` so per-row scores follow the grand-total visibility toggle
+- [X] T005 [US1] Render each row's current value in `client/src/components/Row.tsx` using `scoreForRow(row)` from `shared`, gated on the existing `showTotal` visibility prop (FR-001, FR-002)
+- [X] T006 [US1] Add per-row score styling (aligned to the row, no layout shift) in `client/src/components/Row.module.css`
+- [X] T007 [US1] Ensure `client/src/components/Scoreboard.tsx` threads the `showTotal` flag down to `Row` so per-row scores follow the grand-total visibility toggle
 
 **Checkpoint**: US1 fully functional and independently testable — MVP candidate.
 
@@ -76,20 +76,20 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 2 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T008 [P] [US2] Unit tests for `advanceTurn` (wrap last→first, single-player no-op-safe, `completed` game returns unchanged, missing/unknown `activePlayerId` normalises to `players[0]`) in `shared/tests/domain/turn.test.ts`
-- [ ] T009 [P] [US2] Extend server validation tests: `activePlayerId` round-trips on PUT, unknown id → `INVALID_PAYLOAD` (path `activePlayerId`), absent field accepted in `server/tests/routes/current.put.test.ts`
-- [ ] T010 [P] [US2] Playwright two-context (two-device) e2e: advancing the turn on one context updates the active highlight on the other in `tests/e2e/05-turn-sync.spec.ts`
+- [X] T008 [P] [US2] Unit tests for `advanceTurn` (wrap last→first, single-player no-op-safe, `completed` game returns unchanged, missing/unknown `activePlayerId` normalises to `players[0]`) in `shared/tests/domain/turn.test.ts`
+- [X] T009 [P] [US2] Extend server validation tests: `activePlayerId` round-trips on PUT, unknown id → `INVALID_PAYLOAD` (path `activePlayerId`), absent field accepted in `server/tests/routes/current.put.test.ts`
+- [X] T010 [P] [US2] Playwright two-context (two-device) e2e: advancing the turn on one context updates the active highlight on the other in `tests/e2e/05-turn-sync.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T011 [US2] Add optional `activePlayerId: string` field to `GameState` in `shared/src/types/game.ts` (data-model.md)
-- [ ] T012 [US2] Initialise `activePlayerId = players[0].id` in `shared/src/domain/createGame.ts`
-- [ ] T013 [US2] Create pure immutable `advanceTurn(game): GameState` (next by `position`, wrap last→first, no-op on `completed`, defensive normalise of missing/unknown id; does NOT append to `actionLog`) in `shared/src/domain/turn.ts`
-- [ ] T014 [US2] Export `advanceTurn` from `shared/src/index.ts`
-- [ ] T015 [US2] Validate `activePlayerId` in `server/src/validation/gameState.ts` (optional; when present must be non-empty and match a `players[i].id`; not required on completed games) per contracts/turn-state.md
-- [ ] T016 [US2] Add an `advanceTurn` action to `client/src/store/gameStore.ts` and normalise a missing/unknown `activePlayerId` to `players[0].id` on load (rides the existing debounced PUT → SSE sync, FR-005)
-- [ ] T017 [US2] Add active-player highlight to `client/src/components/Scoreboard.tsx` + `Scoreboard.module.css` (distinguishable by more than colour alone)
-- [ ] T018 [US2] Add the "Next player" control and turn-highlight wiring to `client/src/screens/PlayScreen.tsx` + `PlayScreen.module.css`
+- [X] T011 [US2] Add optional `activePlayerId: string` field to `GameState` in `shared/src/types/game.ts` (data-model.md)
+- [X] T012 [US2] Initialise `activePlayerId = players[0].id` in `shared/src/domain/createGame.ts`
+- [X] T013 [US2] Create pure immutable `advanceTurn(game): GameState` (next by `position`, wrap last→first, no-op on `completed`, defensive normalise of missing/unknown id; does NOT append to `actionLog`) in `shared/src/domain/turn.ts`
+- [X] T014 [US2] Export `advanceTurn` from `shared/src/index.ts`
+- [X] T015 [US2] Validate `activePlayerId` in `server/src/validation/gameState.ts` (optional; when present must be non-empty and match a `players[i].id`; not required on completed games) per contracts/turn-state.md
+- [X] T016 [US2] Add an `advanceTurn` action to `client/src/store/gameStore.ts` and normalise a missing/unknown `activePlayerId` to `players[0].id` on load (rides the existing debounced PUT → SSE sync, FR-005)
+- [X] T017 [US2] Add active-player highlight to `client/src/components/Scoreboard.tsx` + `Scoreboard.module.css` (distinguishable by more than colour alone)
+- [X] T018 [US2] Add the "Next player" control and turn-highlight wiring to `client/src/screens/PlayScreen.tsx` + `PlayScreen.module.css`
 
 **Checkpoint**: US1 and US2 both work independently.
 
@@ -103,12 +103,12 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 3 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T019 [P] [US3] Playwright integration test asserting mark/lock/penalty complete with no error when `navigator.vibrate` is absent, and a stubbed `navigator.vibrate` is called only on state-changing taps (not on disabled cells) in `tests/e2e/06-haptics.spec.ts`
+- [X] T019 [P] [US3] Playwright integration test asserting mark/lock/penalty complete with no error when `navigator.vibrate` is absent, and a stubbed `navigator.vibrate` is called only on state-changing taps (not on disabled cells) in `tests/e2e/06-haptics.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T020 [P] [US3] Create `pulse()` wrapper guarding `navigator.vibrate(<short ms>)` with a feature check (silent no-op when unsupported) in `client/src/lib/haptics.ts`
-- [ ] T021 [US3] Call `pulse()` from the success branch of `markCell`, `lockRow`, and `takePenalty` in `client/src/store/gameStore.ts` (fire only after a real state change; never on remote/SSE updates) per FR-006
+- [X] T020 [P] [US3] Create `pulse()` wrapper guarding `navigator.vibrate(<short ms>)` with a feature check (silent no-op when unsupported) in `client/src/lib/haptics.ts`
+- [X] T021 [US3] Call `pulse()` from the success branch of `markCell`, `lockRow`, and `takePenalty` in `client/src/store/gameStore.ts` (fire only after a real state change; never on remote/SSE updates) per FR-006
 
 **Checkpoint**: US3 adds tactile feedback without affecting other stories.
 
@@ -122,15 +122,15 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 4 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T022 [P] [US4] Playwright + axe test: selecting a theme changes appearance immediately and overrides system; reload persists the choice; System follows the media query; toggle passes axe a11y in `tests/e2e/07-theme-toggle.spec.ts`
+- [X] T022 [P] [US4] Playwright + axe test: selecting a theme changes appearance immediately and overrides system; reload persists the choice; System follows the media query; toggle passes axe a11y in `tests/e2e/07-theme-toggle.spec.ts`
 
 ### Implementation for User Story 4
 
-- [ ] T023 [P] [US4] Create theme module managing `'light' | 'dark' | 'system'` in `localStorage` key `qwixx-theme` (default `system`), applied via `document.documentElement.dataset.theme`, with load/apply/persist helpers in `client/src/lib/theme.ts`
-- [ ] T024 [US4] Refactor `client/src/design/tokens.css`: keep light defaults in `:root`, apply dark tokens for both `@media (prefers-color-scheme: dark)` (when no explicit choice) and `:root[data-theme='dark']`, add a `:root[data-theme='light']` reset (FR-007)
-- [ ] T025 [US4] Apply the persisted theme before first paint in `client/src/main.tsx` (synchronous read+apply to avoid a flash)
-- [ ] T026 [US4] Create `ThemeToggle` component (light/dark/system selector) in `client/src/components/ThemeToggle.tsx`
-- [ ] T027 [US4] Mount `ThemeToggle` in the play/home UI (e.g. `client/src/screens/PlayScreen.tsx` toolbar) using existing button patterns and design tokens
+- [X] T023 [P] [US4] Create theme module managing `'light' | 'dark' | 'system'` in `localStorage` key `qwixx-theme` (default `system`), applied via `document.documentElement.dataset.theme`, with load/apply/persist helpers in `client/src/lib/theme.ts`
+- [X] T024 [US4] Refactor `client/src/design/tokens.css`: keep light defaults in `:root`, apply dark tokens for both `@media (prefers-color-scheme: dark)` (when no explicit choice) and `:root[data-theme='dark']`, add a `:root[data-theme='light']` reset (FR-007)
+- [X] T025 [US4] Apply the persisted theme before first paint in `client/src/main.tsx` (synchronous read+apply to avoid a flash)
+- [X] T026 [US4] Create `ThemeToggle` component (light/dark/system selector) in `client/src/components/ThemeToggle.tsx`
+- [X] T027 [US4] Mount `ThemeToggle` in the play/home UI (e.g. `client/src/screens/PlayScreen.tsx` toolbar) using existing button patterns and design tokens
 
 **Checkpoint**: US4 theme control works and persists per-device.
 
@@ -144,14 +144,14 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 5 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T028 [P] [US5] Playwright integration test: a single tap on the penalty does NOT apply −5 (SC-004); a second deliberate tap applies it; tapping elsewhere/timeout disarms in `tests/e2e/08-penalty-guard.spec.ts`
-- [ ] T029 [P] [US5] Playwright two-context e2e: an undo on one device shows a matching undo-notice toast (action + player name) on both in `tests/e2e/09-undo-notice.spec.ts`
+- [X] T028 [P] [US5] Playwright integration test: a single tap on the penalty does NOT apply −5 (SC-004); a second deliberate tap applies it; tapping elsewhere/timeout disarms in `tests/e2e/08-penalty-guard.spec.ts`
+- [X] T029 [P] [US5] Playwright two-context e2e: an undo on one device shows a matching undo-notice toast (action + player name) on both in `tests/e2e/09-undo-notice.spec.ts`
 
 ### Implementation for User Story 5
 
-- [ ] T030 [P] [US5] Add per-board arm/confirm state to the penalty flow (first tap arms "Confirm −5?", second tap applies via existing `takePenalty`, tapping elsewhere or a short timeout disarms) in `client/src/components/PenaltyTrack.tsx` (+ `client/src/components/PenaltyTrack.module.css`) and `client/src/components/Scoreboard.tsx` (FR-009)
-- [ ] T031 [P] [US5] Derive an Undo Notice by detecting that `actionLog` shrank by its last entry across a state change (local or SSE), resolving `kind`/`playerId`(→name)/`color`/`cellIndex` into a message in `client/src/store/persistence.ts` (FR-010)
-- [ ] T032 [US5] Surface the undo notice via the `Toast` component on `client/src/screens/PlayScreen.tsx` (auto-dismiss; reconstructed independently on each device, no new synced field)
+- [X] T030 [P] [US5] Add per-board arm/confirm state to the penalty flow (first tap arms "Confirm −5?", second tap applies via existing `takePenalty`, tapping elsewhere or a short timeout disarms) in `client/src/components/PenaltyTrack.tsx` (+ `client/src/components/PenaltyTrack.module.css`) and `client/src/components/Scoreboard.tsx` (FR-009)
+- [X] T031 [P] [US5] Derive an Undo Notice by detecting that `actionLog` shrank by its last entry across a state change (local or SSE), resolving `kind`/`playerId`(→name)/`color`/`cellIndex` into a message in `client/src/store/persistence.ts` (FR-010)
+- [X] T032 [US5] Surface the undo notice via the `Toast` component on `client/src/screens/PlayScreen.tsx` (auto-dismiss; reconstructed independently on each device, no new synced field)
 
 **Checkpoint**: US5 protects penalties and explains undos across devices.
 
@@ -165,13 +165,13 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 6 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T033 [P] [US6] Playwright integration test: final screen celebrates the winner (and presents a multi-way tie as co-winners); Share copies a readable summary when native share is absent; Rematch opens Home pre-filled with the same names (no retyping, SC-006) in `tests/e2e/10-wrapup-rematch.spec.ts`
+- [X] T033 [P] [US6] Playwright integration test: final screen celebrates the winner (and presents a multi-way tie as co-winners); Share copies a readable summary when native share is absent; Rematch opens Home pre-filled with the same names (no retyping, SC-006) in `tests/e2e/10-wrapup-rematch.spec.ts`
 
 ### Implementation for User Story 6
 
-- [ ] T034 [US6] Strengthen winner/tie celebration using `winner(game)` (all co-winners, `topScore`) in `client/src/screens/FinalScoresScreen.tsx` + `FinalScoresScreen.module.css` (FR-011)
-- [ ] T035 [US6] Add a Share action building a plain-text summary (players + totals + winner line), calling `navigator.share({ text })` when available and falling back to `navigator.clipboard.writeText` + a `Toast` confirmation, in `client/src/screens/FinalScoresScreen.tsx` (FR-012)
-- [ ] T036 [US6] Add a Rematch action that seeds the existing `qwixx-recent-names` localStorage key with the finished game's player names and routes to Home in `client/src/screens/FinalScoresScreen.tsx` (FR-013); verify `client/src/screens/HomeScreen.tsx` pre-populates from that key on mount
+- [X] T034 [US6] Strengthen winner/tie celebration using `winner(game)` (all co-winners, `topScore`) in `client/src/screens/FinalScoresScreen.tsx` + `FinalScoresScreen.module.css` (FR-011)
+- [X] T035 [US6] Add a Share action building a plain-text summary (players + totals + winner line), calling `navigator.share({ text })` when available and falling back to `navigator.clipboard.writeText` + a `Toast` confirmation, in `client/src/screens/FinalScoresScreen.tsx` (FR-012)
+- [X] T036 [US6] Add a Rematch action that seeds the existing `qwixx-recent-names` localStorage key with the finished game's player names and routes to Home in `client/src/screens/FinalScoresScreen.tsx` (FR-013); verify `client/src/screens/HomeScreen.tsx` pre-populates from that key on mount
 
 **Checkpoint**: US6 closes the end-of-game loop and speeds repeat play.
 
@@ -185,14 +185,14 @@ description: "Task list for UI/UX Enhancements"
 
 ### Tests for User Story 7 ⚠️ (write first, ensure they FAIL)
 
-- [ ] T037 [P] [US7] Playwright test at a 375px viewport with 6 players asserting cells remain ≥`--qx-tap-min` (44px) and content is not clipped (SC-007) in `tests/e2e/11-layout-density.spec.ts`
-- [ ] T038 [P] [US7] Perf test asserting mark→repaint stays within the interaction budget at 6 players (max layout density) in `tests/perf/layout.bench.test.ts`
+- [X] T037 [P] [US7] Playwright test at a 375px viewport with 6 players asserting cells remain ≥`--qx-tap-min` (44px) and content is not clipped (SC-007) in `tests/e2e/11-layout-density.spec.ts`
+- [X] T038 [P] [US7] Perf test asserting mark→repaint stays within the interaction budget at 6 players (max layout density) in `tests/perf/layout.bench.test.ts`
 
 ### Implementation for User Story 7
 
-- [ ] T039 [P] [US7] Adapt board density to player count while preserving the `--qx-tap-min` tappable target at 6 players in `client/src/screens/PlayScreen.module.css` (FR-014)
-- [ ] T040 [P] [US7] Extend `@media (prefers-reduced-motion: reduce)` coverage across board/toast/transition animations (suppress non-essential motion, keep state changes perceivable) in `client/src/components/Cell.module.css`, `client/src/components/Toast.module.css`, and `client/src/screens/PlayScreen.module.css` (FR-015)
-- [ ] T041 [P] [US7] Ensure marked and disabled cell states are distinguishable by more than colour (glyph + opacity/tile) in both themes in `client/src/components/Cell.module.css` (FR-016)
+- [X] T039 [P] [US7] Adapt board density to player count while preserving the `--qx-tap-min` tappable target at 6 players in `client/src/screens/PlayScreen.module.css` (FR-014)
+- [X] T040 [P] [US7] Extend `@media (prefers-reduced-motion: reduce)` coverage across board/toast/transition animations (suppress non-essential motion, keep state changes perceivable) in `client/src/components/Cell.module.css`, `client/src/components/Toast.module.css`, and `client/src/screens/PlayScreen.module.css` (FR-015)
+- [X] T041 [P] [US7] Ensure marked and disabled cell states are distinguishable by more than colour (glyph + opacity/tile) in both themes in `client/src/components/Cell.module.css` (FR-016)
 
 **Checkpoint**: All seven user stories are independently functional.
 
@@ -202,10 +202,10 @@ description: "Task list for UI/UX Enhancements"
 
 **Purpose**: Validation and quality gates across all stories
 
-- [ ] T042 [P] Run `bun test shared server` (domain + server validation incl. `advanceTurn` and `activePlayerId`)
-- [ ] T043 [P] Run `bun run test:e2e` (Playwright incl. two-context sync + axe a11y) and `bun run test:perf`
-- [ ] T044 [P] Run `bun run check && bun run typecheck` (Biome + tsc across the three project references)
-- [ ] T045 Execute the manual quickstart.md verification for all seven stories (incl. backward compatibility of a pre-existing current game with no `activePlayerId`)
+- [X] T042 [P] Run `bun test shared server` (domain + server validation incl. `advanceTurn` and `activePlayerId`)
+- [~] T043 [P] Run `bun run test:e2e` (Playwright incl. two-context sync + axe a11y) and `bun run test:perf` — perf suite PASSES; the 8 Playwright specs are authored & registered, but the e2e run could not execute in this sandbox: the harness boots every project's `bun --watch` server, exceeding the 128 inotify-instance cap (`ProcessFdQuotaExceeded`). Run on a normal dev machine.
+- [X] T044 [P] Run `bun run check && bun run typecheck` (Biome + tsc across the three project references)
+- [~] T045 Execute the manual quickstart.md verification for all seven stories (incl. backward compatibility of a pre-existing current game with no `activePlayerId`) — manual step; not executed in this non-interactive environment.
 
 ---
 

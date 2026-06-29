@@ -84,13 +84,15 @@ export function createGame(players: NewPlayerInput[], opts: CreateGameOptions = 
   assertValidPlayers(players);
   const now = opts.now ?? defaultNow;
   const idGen = opts.idGen ?? defaultIdGen;
+  const built = players.map((p, i) => buildPlayer(p, (i + 1) as PlayerPosition, idGen));
   return {
     id: idGen(),
     status: 'in-progress',
     startedAt: now(),
     endedAt: null,
-    players: players.map((p, i) => buildPlayer(p, (i + 1) as PlayerPosition, idGen)),
+    players: built,
     globalLocks: { red: false, yellow: false, green: false, blue: false },
     actionLog: [],
+    activePlayerId: built[0]?.id,
   };
 }

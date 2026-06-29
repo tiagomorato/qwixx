@@ -13,6 +13,7 @@ export type ScoreboardProps = {
   game: GameState;
   player: PlayerState;
   showTotal?: boolean;
+  isActive?: boolean;
   onMark: (color: Color, cellIndex: number) => void;
   onLock: (color: Color) => void;
   onPenalty: () => void;
@@ -22,6 +23,7 @@ export function Scoreboard({
   game,
   player,
   showTotal = true,
+  isActive = false,
   onMark,
   onLock,
   onPenalty,
@@ -30,9 +32,16 @@ export function Scoreboard({
   const completed = game.status === 'completed';
 
   return (
-    <section className={styles.board} aria-label={`Scoreboard for ${player.name}`}>
+    <section
+      className={`${styles.board} ${isActive ? styles.active : ''}`}
+      aria-label={`Scoreboard for ${player.name}`}
+      aria-current={isActive ? 'true' : undefined}
+    >
       <header className={styles.header}>
-        <h2 className={styles.name}>{player.name}</h2>
+        <h2 className={styles.name}>
+          {player.name}
+          {isActive ? <span className={styles.turnBadge}>● Turn</span> : null}
+        </h2>
         <div className={styles.score}>
           <span className={styles.total} aria-label={showTotal ? `Total ${total}` : 'Total hidden'}>
             {showTotal ? total : '–'}
@@ -49,6 +58,7 @@ export function Scoreboard({
             game={game}
             playerId={player.id}
             row={row}
+            showScore={showTotal}
             onMark={onMark}
             onLock={onLock}
           />

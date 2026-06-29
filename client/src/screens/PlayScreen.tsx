@@ -1,8 +1,11 @@
 import { formatElapsed, gameShouldEnd } from '@qwixx/shared';
 import { useEffect, useState } from 'react';
 import { Scoreboard } from '../components/Scoreboard.tsx';
+import { ThemeToggle } from '../components/ThemeToggle.tsx';
+import { Toast } from '../components/Toast.tsx';
 import { UndoButton } from '../components/UndoButton.tsx';
 import { useGameStore } from '../store/gameStore.ts';
+import { onUndoNotice } from '../store/persistence.ts';
 import styles from './PlayScreen.module.css';
 
 export type PlayScreenProps = {
@@ -56,10 +59,14 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
   const markCell = useGameStore((s) => s.markCell);
   const lockRow = useGameStore((s) => s.lockRow);
   const takePenalty = useGameStore((s) => s.takePenalty);
+  const advanceTurn = useGameStore((s) => s.advanceTurn);
   const finalize = useGameStore((s) => s.finalize);
   const [showTotals, setShowTotals] = useState(true);
+  const [toast, setToast] = useState<string | null>(null);
   const fullscreen = useFullscreen();
   const now = useNow(1000);
+
+  useEffect(() => onUndoNotice((notice) => setToast(notice.message)), []);
 
   if (!game) return null;
 
@@ -84,7 +91,16 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
               {elapsed}
             </span>
           ) : null}
+          <button
+            type="button"
+            className={styles.nextButton}
+            onClick={advanceTurn}
+            disabled={game.status === 'completed'}
+          >
+            Next player
+          </button>
           <UndoButton />
+          <ThemeToggle />
           {fullscreen.supported ? (
             <button
               type="button"
@@ -119,19 +135,21 @@ export function PlayScreen({ onExitToHome, onOpenHistory }: PlayScreenProps) {
           </button>
         </output>
       ) : null}
-      <div className={styles.boards}>
+      <div className={styles.boards} data-players={game.players.length}>
         {game.players.map((player) => (
           <Scoreboard
             key={player.id}
             game={game}
             player={player}
             showTotal={showTotals}
+            isActive={player.id === game.activePlayerId}
             onMark={(color, cellIndex) => markCell(player.id, color, cellIndex)}
             onLock={(color) => lockRow(player.id, color)}
             onPenalty={() => takePenalty(player.id)}
           />
         ))}
       </div>
+      <Toast message={toast} onDismiss={() => setToast(null)} />
     </section>
   );
 }

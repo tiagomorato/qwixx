@@ -1,0 +1,36 @@
+.toggle {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1.5px solid var(--qx-divider);
+  border-radius: var(--qx-radius-btn);
+  background: var(--qx-surface-card);
+}
+
+.option {
+  padding: 6px 10px;
+  border: none;
+  border-radius: var(--qx-radius-sm);
+  background: transparent;
+  color: var(--qx-text-muted);
+  font-weight: 600;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  transition: background-color var(--qx-dur-base) var(--qx-ease-out), color var(--qx-dur-base)
+    var(--qx-ease-out);
+}
+
+.option[aria-pressed="true"] {
+  background: var(--qx-accent);
+  color: #fff;
+}
+
+.option:hover:not([aria-pressed="true"]) {
+  color: var(--qx-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .option {
+    transition: none;
+  }
+}

@@ -5,7 +5,7 @@ import { HistoryScreen } from './screens/HistoryScreen.tsx';
 import { HomeScreen } from './screens/HomeScreen.tsx';
 import { PlayScreen } from './screens/PlayScreen.tsx';
 import { useGameStore } from './store/gameStore.ts';
-import { startPersistence, startRealtime } from './store/persistence.ts';
+import { startPersistence, startRealtime, startUndoNotices } from './store/persistence.ts';
 
 export type Screen = 'home' | 'play' | 'final' | 'history';
 
@@ -51,6 +51,8 @@ export function App() {
   useEffect(() => startPersistence(), []);
 
   useEffect(() => startRealtime(), []);
+
+  useEffect(() => startUndoNotices(), []);
 
   useEffect(() => {
     if (!hydrated) return;

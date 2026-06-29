@@ -59,6 +59,15 @@
   --qx-cell-size: 2.4rem;
   --qx-tap-min: 44px;
   --qx-focus-ring: 0 0 0 3px var(--qx-accent-soft);
+
+  --qx-screen-pad: var(--qx-space-lg);
+}
+
+/* Tighten the outer screen padding on phones so the boards get maximum width. */
+@media (max-width: 540px) {
+  :root {
+    --qx-screen-pad: 10px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

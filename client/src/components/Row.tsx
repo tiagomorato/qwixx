@@ -25,11 +25,12 @@ export function Row({ game, playerId, row, onMark, onLock }: RowProps) {
         {
           '--row-tint': `var(--qx-color-${color}-bg)`,
           '--label-fg': `var(--qx-color-${color}-fg)`,
+          '--label-strong': `var(--qx-color-${color}-border)`,
         } as React.CSSProperties
       }
     >
-      <span className={styles.label} aria-hidden="true">
-        {color}
+      <span className={styles.letter} aria-hidden="true">
+        {color.charAt(0).toUpperCase()}
       </span>
       {cells.map((cell, idx) => {
         const markable = isCellMarkable(game, playerId, color, idx);

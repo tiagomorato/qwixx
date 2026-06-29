@@ -1,19 +1,24 @@
 .row {
-  display: grid;
-  grid-template-columns: 2.4rem repeat(12, minmax(0, 1fr));
-  gap: 5px;
-  align-items: center;
-  padding: 7px 9px;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  padding: 5px 6px;
   border-radius: var(--qx-radius-row);
   background: var(--row-tint);
 }
 
-.label {
-  text-transform: uppercase;
-  font-size: 0.64rem;
+/* Single-letter color chip replacing the old color word. Keeps colour identity
+   for colour-blind players and marks the row's starting end, while taking far
+   less horizontal space so the 11 number tiles get maximum width. */
+.letter {
+  flex: 0 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 7px;
+  background: var(--label-strong);
+  color: #fff;
   font-weight: 800;
-  letter-spacing: 0.04em;
-  color: var(--label-fg);
-  text-align: center;
-  white-space: nowrap;
+  font-size: 0.82rem;
+  line-height: 1;
 }

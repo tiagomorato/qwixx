@@ -73,8 +73,26 @@
 .rows {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 7px;
   margin-top: 14px;
+}
+
+/* Compact the cards on phones so rows get maximum width. */
+@media (max-width: 540px) {
+  .board {
+    padding: 12px 11px 12px;
+    border-radius: var(--qx-radius-md);
+  }
+  .name {
+    font-size: 1.2rem;
+  }
+  .total {
+    font-size: 1.5rem;
+    padding: 2px 9px;
+  }
+  .rows {
+    margin-top: 10px;
+  }
 }
 
 @keyframes boardIn {

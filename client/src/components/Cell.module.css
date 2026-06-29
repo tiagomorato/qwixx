@@ -1,31 +1,36 @@
+/* Number tile. Fluid: stretches evenly edge-to-edge so 11 tiles fill the row
+   with no fixed width and no overflow. Tall rounded-rectangle tap target. */
 .cell {
-  width: 100%;
+  flex: 1 1 0;
   min-width: 0;
-  aspect-ratio: 1;
-  border: 1.5px solid var(--qx-cell-border-neutral);
-  border-radius: var(--qx-radius-cell);
+  height: 38px;
+  border: none;
+  border-radius: 9px;
   background: var(--qx-surface-card);
   color: var(--cell-fg);
   font-family: var(--qx-font);
-  font-weight: 600;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
-  font-size: clamp(0.7rem, 1.5vw, 0.92rem);
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
-    var(--qx-ease-out), background-color var(--qx-dur-base) var(--qx-ease-out);
-}
-
-.cell:hover:not(:disabled) {
-  transform: translateY(-1px) scale(1.06);
   box-shadow: var(--qx-shadow-sm);
+  transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)
+    var(--qx-ease-out);
 }
 
+/* Press feedback — clear scale-down on tap. */
 .cell:active:not(:disabled) {
-  transform: translateY(1px) scale(0.93);
+  transform: scale(0.86);
   box-shadow: var(--qx-shadow-press);
+}
+
+/* Crossed off: no tile, just a bold ✕ in the row's strong colour. */
+.marked {
+  background: transparent;
+  box-shadow: none;
 }
 
 /* The ✕ that replaces a number when its cell is crossed off. */
@@ -33,27 +38,36 @@
   position: absolute;
   font-family: var(--qx-font-display);
   font-weight: 900;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   line-height: 1;
   color: var(--cell-border);
 }
 
+/* Passed / skipped: a number you can no longer mark. Dimmed, no tile. */
 .disabled {
+  background: transparent;
+  box-shadow: none;
   opacity: 0.4;
-  cursor: not-allowed;
+  cursor: default;
 }
 
-/* Lock cell (last column of each row). */
+/* Lock cell — small dashed rounded square in the row colour at the row's end. */
 .lockCell {
-  background: rgba(255, 255, 255, 0.5);
+  flex: 0 0 24px;
+  height: 24px;
+  align-self: center;
+  background: transparent;
   border: 1.5px dashed var(--cell-border);
+  border-radius: 7px;
+  box-shadow: none;
   color: var(--cell-border);
+  font-size: 0;
 }
 
 .lockX {
   font-family: var(--qx-font-display);
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1;
   color: var(--cell-border);
 }
@@ -66,7 +80,7 @@
 .ring {
   position: absolute;
   inset: -3px;
-  border-radius: 10px;
+  border-radius: 9px;
   box-shadow: 0 0 0 2.5px currentColor;
   pointer-events: none;
 }
@@ -75,7 +89,6 @@
   .cell {
     transition: none;
   }
-  .cell:hover:not(:disabled),
   .cell:active:not(:disabled) {
     transform: none;
   }

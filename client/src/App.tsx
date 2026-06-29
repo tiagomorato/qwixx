@@ -62,7 +62,7 @@ export function App() {
   }, [game, hydrated, screen]);
 
   return (
-    <main style={{ padding: 'var(--qx-space-lg)' }}>
+    <main style={{ padding: 'var(--qx-screen-pad)' }}>
       {screen === 'home' ? (
         <HomeScreen
           hasCurrentGame={Boolean(game)}

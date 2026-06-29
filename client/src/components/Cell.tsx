@@ -31,6 +31,7 @@ export function Cell({
 }: CellProps) {
   const classes = [styles.cell];
   if (isLockCell) classes.push(styles.lockCell);
+  if (marked) classes.push(styles.marked);
   if (disabled) classes.push(styles.disabled);
 
   return (

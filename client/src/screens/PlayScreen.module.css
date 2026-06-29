@@ -146,6 +146,31 @@
   font-size: 1.1rem;
   font-variant-numeric: tabular-nums;
   color: var(--qx-text);
+  background: var(--qx-surface-muted);
+  padding: 3px 10px;
+  border-radius: var(--qx-radius-pill);
+  white-space: nowrap;
+}
+
+/* Compact the header on phones so the timer pill and Undo button stay legible
+   and never get clipped at 375px. The toolbar scrolls horizontally if needed. */
+@media (max-width: 540px) {
+  .toolbar {
+    padding: 9px 11px;
+    gap: 8px;
+  }
+  .title {
+    font-size: 1.3rem;
+  }
+  .clock {
+    font-size: 0.95rem;
+    padding: 2px 8px;
+  }
+  .button {
+    padding: 7px 11px;
+    font-size: 0.82rem;
+    min-height: 36px;
+  }
 }
 
 /* On narrow screens keep the whole toolbar on a single line; let it scroll

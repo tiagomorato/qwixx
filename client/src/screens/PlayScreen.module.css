@@ -201,8 +201,8 @@
   white-space: nowrap;
 }
 
-/* Compact the header on phones so the timer pill and Undo button stay legible
-   and never get clipped at 375px. The toolbar scrolls horizontally if needed. */
+/* Compact the header on phones so the timer pill and action buttons stay
+   legible and never get clipped at 375px. */
 @media (max-width: 540px) {
   .toolbar {
     padding: 9px 11px;
@@ -220,27 +220,30 @@
     font-size: 0.82rem;
     min-height: 36px;
   }
+  /* Purely decorative; drop it on phones to reclaim space for controls. */
+  .dots {
+    display: none;
+  }
 }
 
-/* On narrow screens keep the whole toolbar on a single line; let it scroll
-   horizontally instead of wrapping the actions onto extra rows. */
+/* On narrow screens wrap the toolbar so every control stays reachable: the
+   title and timer sit on the first line and the action buttons flow onto their
+   own row(s) below, rather than scrolling out of sight with no affordance. */
 @media (max-width: 720px) {
   .toolbar {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 10px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
   .actions {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 8px;
+    width: 100%;
+    margin-left: 0;
   }
   .title,
-  .dots,
   .clock,
-  .actions,
-  .button {
-    flex: none;
+  .button,
+  .nextButton {
     white-space: nowrap;
   }
 }

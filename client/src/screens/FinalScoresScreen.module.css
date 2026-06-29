@@ -56,6 +56,27 @@
   border-bottom: 0;
 }
 
+/* On phones the 7-column table can't fit; drop the per-color breakdown so the
+   ranking essentials — player, penalties, and the headline Total — stay on
+   screen without horizontal scrolling. The full breakdown remains on wider
+   screens and via "Share results". */
+@media (max-width: 560px) {
+  .table th:nth-child(n + 2):nth-child(-n + 5),
+  .table td:nth-child(n + 2):nth-child(-n + 5) {
+    display: none;
+  }
+  .table th,
+  .table td {
+    padding: var(--qx-space-sm);
+  }
+  /* Make the surviving Total column read as the headline number. */
+  .table th:last-child,
+  .table td:last-child {
+    text-align: right;
+    font-weight: 800;
+  }
+}
+
 .table th {
   font-weight: 700;
   font-size: 0.75rem;

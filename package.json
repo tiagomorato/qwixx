@@ -12,7 +12,11 @@
     "test:perf": "bun test tests/perf",
     "check": "biome check .",
     "check:fix": "biome check --write .",
-    "typecheck": "tsc -p shared/tsconfig.json && tsc -p server/tsconfig.json && tsc -p client/tsconfig.json"
+    "typecheck": "tsc -p shared/tsconfig.json && tsc -p server/tsconfig.json && tsc -p client/tsconfig.json",
+    "docker:up": "docker compose up --build -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f server",
+    "docker:build": "docker compose build"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.10.1",

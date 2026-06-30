@@ -35,8 +35,19 @@ export async function dispatch(req: Request): Promise<Response> {
 
 if (import.meta.main) {
   await import('./routes/register.ts');
+  const { serveStatic } = await import('./http/static.ts');
+  const { CLIENT_DIST } = await import('./paths.ts');
   // idleTimeout is raised to Bun's max so long-lived SSE connections
   // (GET /api/current/stream) aren't closed; heartbeats keep them warm.
-  Bun.serve({ port: PORT, idleTimeout: 255, fetch: dispatch });
+  Bun.serve({
+    port: PORT,
+    idleTimeout: 255,
+    fetch(req) {
+      const { pathname } = new URL(req.url);
+      // API routes go to the router; everything else is the built SPA.
+      if (pathname === '/api' || pathname.startsWith('/api/')) return dispatch(req);
+      return serveStatic(req, CLIENT_DIST);
+    },
+  });
   console.log(`[server] listening on http://localhost:${PORT}`);
 }

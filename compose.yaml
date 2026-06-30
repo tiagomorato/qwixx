@@ -1,0 +1,23 @@
+# Single service: the Bun server serves both the /api routes and the built
+# React client on port 8787. The host ./data folder is bind-mounted into the
+# container so the app and local `bun run dev:server` share one data store.
+# (The container's `bun` user is uid 1000, matching the host, so file
+# ownership stays clean across both.)
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+      QWIXX_DATA_DIR: /data
+    ports:
+      - 8787:8787
+    volumes:
+      - ./data:/data
+    healthcheck:
+      # busybox wget ships in the bun:alpine image; -q -O- keeps it quiet.
+      test: ["CMD", "wget", "-q", "-O-", "http://localhost:8787/api/history"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

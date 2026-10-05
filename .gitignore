@@ -17,3 +17,6 @@ Thumbs.db
 .vscode/
 *.tmp
 *.swp
+
+# Local game data (current game and history)
+data/

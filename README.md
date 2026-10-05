@@ -39,7 +39,7 @@ Built spec-first with [GitHub Spec Kit](https://github.com/github/spec-kit) and 
 |---|---|---|
 | Unit | `bun test` | 78 tests for the game rules, API routes, storage and the SSE hub |
 | Performance | `bun test` | Budget tests for rule evaluation, layout recomputation and API round-trips |
-| End-to-end | Playwright + axe-core | 17 tests in 11 specs, one per user story, each against its own isolated server and data directory, with accessibility audits |
+| End-to-end | Playwright + axe-core | 18 tests in 11 specs, one per user story, each against its own isolated server and data directory, with accessibility and colour-contrast audits in both themes |
 | Static | Biome, `tsc` (strict) | Lint, format and type checks |
 
 All four layers run in [GitHub Actions](.github/workflows/ci.yml) on every push. Biome and the type check also run as a pre-commit hook via lefthook.

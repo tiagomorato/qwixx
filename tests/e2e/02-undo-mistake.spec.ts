@@ -52,7 +52,7 @@ test('US2: undo button disabled when action log empty + axe-core a11y check', as
   const undoBtn = page.getByRole('button', { name: 'Undo last action' });
   await expect(undoBtn).toBeDisabled();
 
-  const results = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
+  const results = await new AxeBuilder({ page }).analyze();
   expect(results.violations).toEqual([]);
 
   await request.delete('/api/current').catch(() => undefined);

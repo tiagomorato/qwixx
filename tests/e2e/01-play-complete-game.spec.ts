@@ -28,9 +28,7 @@ test('US1: start a 3-player game, mark cells, lock a row, take penalty, see fina
   await page.goto('/');
 
   // Accessibility check on the home screen
-  const homeResults = await new AxeBuilder({ page })
-    .disableRules(['color-contrast']) // tokens are intentionally muted dark/light per scheme
-    .analyze();
+  const homeResults = await new AxeBuilder({ page }).analyze();
   expect(homeResults.violations).toEqual([]);
 
   await startGame(page);

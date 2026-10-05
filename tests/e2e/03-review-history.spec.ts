@@ -82,7 +82,7 @@ test('US3: history list lists completed games and detail view shows scoreboards'
   await expect(page.getByRole('heading', { name: 'History' })).toBeVisible();
   await expect(page.getByText('Ada vs Boris').first()).toBeVisible();
 
-  const a11y = await new AxeBuilder({ page }).disableRules(['color-contrast']).analyze();
+  const a11y = await new AxeBuilder({ page }).analyze();
   expect(a11y.violations).toEqual([]);
 
   // Drill into the detail

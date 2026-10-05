@@ -43,6 +43,9 @@ export default defineConfig({
   workers: 32,
   reporter: process.env.CI ? 'github' : 'list',
   use: {
+    // Screens fade in on mount. Reduced motion (which the app honours) makes axe
+    // audit the settled colours instead of a half-faded frame.
+    contextOptions: { reducedMotion: 'reduce' },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },

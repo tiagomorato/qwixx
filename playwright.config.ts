@@ -53,7 +53,8 @@ export default defineConfig({
   })),
   webServer: MATRIX.flatMap(({ apiPort, vitePort, dataDir }) => [
     {
-      command: 'bun run dev:server',
+      // No --watch: 66 watching servers exhaust the inotify instance limit.
+      command: 'bun run server/src/index.ts',
       url: `http://localhost:${apiPort}/api/current`,
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,

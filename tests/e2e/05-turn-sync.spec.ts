@@ -4,7 +4,8 @@ const NAMES = ['Ana', 'Beto', 'Cora'];
 
 async function startThreePlayerGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: '3', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '3', exact: true }).click();
   for (let i = 0; i < NAMES.length; i += 1) {
     await page.getByLabel(`Player ${i + 1}`).fill(NAMES[i] ?? '');
@@ -27,11 +28,14 @@ test('US2: advancing the turn on one device updates the active highlight on the 
   const b = await ctxB.newPage();
 
   await startThreePlayerGame(a);
-  // Let the debounced PUT flush so the second device can load the game.
-  await a.waitForTimeout(600);
+  // Wait until the game has reached the server instead of a fixed delay.
+  await expect
+    .poll(
+      async () => (await (await a.request.get('/api/current')).json()).game?.players?.length ?? 0,
+    )
+    .toBe(3);
 
   await b.goto('/');
-  await b.waitForLoadState('networkidle');
   await expect(b.getByRole('region', { name: 'Scoreboard for Ana' })).toBeVisible();
 
   // First player is active on both devices.

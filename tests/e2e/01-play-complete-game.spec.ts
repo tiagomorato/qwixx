@@ -5,7 +5,8 @@ const NAMES = ['Ana', 'Beto', 'Cora'];
 
 async function startGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: 'Start new game' })).toBeVisible();
   await page.getByRole('button', { name: 'Start new game' }).click();
   // Default count is 2; need to click 3
   await page.getByRole('button', { name: '3', exact: true }).click();
@@ -60,17 +61,18 @@ test('US1: start a 3-player game, mark cells, lock a row, take penalty, see fina
   // The game does not auto-finalize; an "End game" button appears instead.
   const endGame = page.getByRole('button', { name: 'End game' });
   await expect(endGame).toBeVisible();
+  // Wait for the server to confirm the finalize instead of a fixed delay.
+  const finalized = page.waitForResponse(
+    (res) => res.url().endsWith('/api/current/finalize') && res.request().method() === 'POST',
+  );
   await endGame.click();
 
   // Game should transition to final scores screen
   await expect(page.getByRole('heading', { name: 'Final scores' })).toBeVisible();
-
-  // Wait for persistence to flush
-  await page.waitForTimeout(500);
+  await finalized;
 
   // After reload, game should resume (in final state since it was finalized)
   await page.reload();
-  await page.waitForLoadState('networkidle');
   await expect(page.getByRole('heading', { name: 'Final scores' })).toBeVisible();
 
   // Cleanup
@@ -83,10 +85,15 @@ test('US1: resume an in-progress game after reload', async ({ page, request }) =
   await anaBoard.getByRole('button', { name: 'red 5' }).click();
   await expect(anaBoard.getByLabel('Total 1')).toBeVisible();
 
-  // Wait for debounced save
-  await page.waitForTimeout(500);
+  // Wait until the debounced save has reached the server instead of a fixed delay.
+  await expect
+    .poll(async () => {
+      const { game } = await (await request.get('/api/current')).json();
+      const red = game?.players?.[0]?.rows?.find((r: { color: string }) => r.color === 'red');
+      return red?.cells?.find((c: { value: number }) => c.value === 5)?.marked ?? false;
+    })
+    .toBe(true);
   await page.reload();
-  await page.waitForLoadState('networkidle');
 
   const resumedBoard = page.getByRole('region', { name: 'Scoreboard for Ana' });
   await expect(resumedBoard).toBeVisible();

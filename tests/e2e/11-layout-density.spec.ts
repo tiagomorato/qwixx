@@ -4,7 +4,8 @@ const NAMES = ['Ana', 'Beto', 'Cora', 'Dia', 'Eli', 'Fin'];
 
 async function startSixPlayerGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: '6', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '6', exact: true }).click();
   for (let i = 0; i < NAMES.length; i += 1) {
     await page.getByLabel(`Player ${i + 1}`).fill(NAMES[i] ?? '');

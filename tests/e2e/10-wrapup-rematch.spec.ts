@@ -2,7 +2,8 @@ import { type Locator, type Page, expect, test } from '@playwright/test';
 
 async function startTwoPlayerGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: '2', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '2', exact: true }).click();
   await page.getByLabel('Player 1').fill('Ana');
   await page.getByLabel('Player 2').fill('Beto');

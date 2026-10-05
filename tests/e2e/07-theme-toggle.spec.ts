@@ -3,7 +3,8 @@ import { type Page, expect, test } from '@playwright/test';
 
 async function startTwoPlayerGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: '2', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '2', exact: true }).click();
   await page.getByLabel('Player 1').fill('Ana');
   await page.getByLabel('Player 2').fill('Beto');
@@ -34,10 +35,13 @@ test('US4: theme choice applies immediately, overrides system, persists, and Sys
   await page.getByRole('button', { name: 'Dark' }).click();
   expect(await themeAttr(page)).toBe('dark');
 
-  // Persists across a reload.
+  // Persists across a reload. Wait for the game to reach the server first,
+  // otherwise the reload lands on the setup screen, which has no theme toggle.
+  await expect
+    .poll(async () => (await (await request.get('/api/current')).json()).game?.players?.length ?? 0)
+    .toBe(2);
   await page.reload();
-  await page.waitForLoadState('networkidle');
-  expect(await themeAttr(page)).toBe('dark');
+  await expect.poll(() => themeAttr(page)).toBe('dark');
 
   // System removes the explicit override and follows the (dark) OS preference.
   await page.getByRole('button', { name: 'System' }).click();

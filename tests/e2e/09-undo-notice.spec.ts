@@ -2,7 +2,8 @@ import { type Page, expect, test } from '@playwright/test';
 
 async function startTwoPlayerGame(page: Page): Promise<void> {
   await page.goto('/');
-  await page.waitForLoadState('networkidle');
+  // Not 'networkidle': the live-sync EventSource keeps a connection open.
+  await expect(page.getByRole('button', { name: '2', exact: true })).toBeVisible();
   await page.getByRole('button', { name: '2', exact: true }).click();
   await page.getByLabel('Player 1').fill('Ana');
   await page.getByLabel('Player 2').fill('Beto');
@@ -24,9 +25,13 @@ test('US5: an undo on one device shows a matching undo notice on both', async ({
   const b = await ctxB.newPage();
 
   await startTwoPlayerGame(a);
-  await a.waitForTimeout(600);
+  // Wait until the game has reached the server instead of a fixed delay.
+  await expect
+    .poll(
+      async () => (await (await a.request.get('/api/current')).json()).game?.players?.length ?? 0,
+    )
+    .toBe(2);
   await b.goto('/');
-  await b.waitForLoadState('networkidle');
   await expect(b.getByRole('region', { name: 'Scoreboard for Ana' })).toBeVisible();
 
   // A marks a cell; wait for it to sync to B.

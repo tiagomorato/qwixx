@@ -8,7 +8,7 @@
   height: var(--qx-cell-h, 38px);
   border: none;
   border-radius: 9px;
-  background: var(--qx-surface-card);
+  background: var(--qx-cell-bg);
   color: var(--cell-fg);
   font-family: var(--qx-font);
   font-weight: 700;

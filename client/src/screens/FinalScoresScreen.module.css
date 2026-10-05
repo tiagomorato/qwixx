@@ -104,7 +104,7 @@
   margin-right: var(--qx-space-sm);
   padding: 2px var(--qx-space-sm);
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   font-family: var(--qx-font);
   font-size: 0.6875rem;
   font-weight: 700;
@@ -135,7 +135,7 @@
 .primary {
   border: 2px solid var(--qx-accent);
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   box-shadow: 0 4px 14px var(--qx-accent-soft);
 }
 

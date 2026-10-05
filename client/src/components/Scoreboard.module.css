@@ -41,7 +41,7 @@
   padding: 2px 8px;
   vertical-align: middle;
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   font-family: var(--qx-font);
   font-size: 0.6rem;
   font-weight: 800;

@@ -79,7 +79,7 @@
   border: 1.5px solid var(--qx-accent);
   border-radius: var(--qx-radius-btn);
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   min-height: 38px;
   font-weight: 700;
   font-size: 0.88rem;
@@ -126,7 +126,7 @@
   border: 2px solid var(--qx-accent);
   border-radius: var(--qx-radius-md);
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   min-height: var(--qx-tap-min);
   font-weight: 700;
   transition: transform var(--qx-dur-fast) var(--qx-ease-out), box-shadow var(--qx-dur-fast)

@@ -103,7 +103,7 @@
 .countButton[aria-pressed="true"] {
   border-color: var(--qx-accent);
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   box-shadow: 0 4px 12px var(--qx-accent-soft);
   animation: pop 220ms var(--qx-ease-spring);
 }
@@ -249,7 +249,7 @@
 
 .primary {
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
   box-shadow: 0 4px 14px var(--qx-accent-soft);
 }
 

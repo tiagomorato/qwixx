@@ -18,6 +18,9 @@
   --qx-surface: #fbfaf7;
   --qx-surface-muted: #f1eee7;
   --qx-surface-card: #fff;
+  /* Number tiles sit on the pastel row tints, which are the same in both themes,
+     so the tiles stay light too. A dark tile under the dark row text is unreadable. */
+  --qx-cell-bg: #fff;
   --qx-cell-border-neutral: rgba(20, 20, 30, 0.08);
   --qx-text: #1a1a1c;
   --qx-text-muted: #5a5a62;
@@ -27,6 +30,7 @@
 
   --qx-accent: #4338ca;
   --qx-accent-strong: #312e81;
+  --qx-on-accent: #fff;
   --qx-accent-soft: rgba(67, 56, 202, 0.12);
 
   --qx-space-xs: 0.25rem;
@@ -86,6 +90,7 @@
     --qx-divider: #2e2e36;
     --qx-accent: #818cf8;
     --qx-accent-strong: #a5b4fc;
+    --qx-on-accent: #14141a;
     --qx-accent-soft: rgba(129, 140, 248, 0.18);
     --qx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
     --qx-shadow-elev: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.45);
@@ -102,6 +107,7 @@
   --qx-divider: #2e2e36;
   --qx-accent: #818cf8;
   --qx-accent-strong: #a5b4fc;
+  --qx-on-accent: #14141a;
   --qx-accent-soft: rgba(129, 140, 248, 0.18);
   --qx-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
   --qx-shadow-elev: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 28px rgba(0, 0, 0, 0.45);
@@ -119,6 +125,7 @@
   --qx-divider: #e2dfd6;
   --qx-accent: #4338ca;
   --qx-accent-strong: #312e81;
+  --qx-on-accent: #fff;
   --qx-accent-soft: rgba(67, 56, 202, 0.12);
   --qx-shadow-sm: 0 1px 2px rgba(20, 20, 30, 0.06), 0 2px 6px rgba(20, 20, 30, 0.05);
   --qx-shadow-elev: 0 2px 4px rgba(20, 20, 30, 0.06), 0 12px 28px rgba(20, 20, 30, 0.08);

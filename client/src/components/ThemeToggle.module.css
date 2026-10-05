@@ -22,7 +22,7 @@
 
 .option[aria-pressed="true"] {
   background: var(--qx-accent);
-  color: #fff;
+  color: var(--qx-on-accent);
 }
 
 .option:hover:not([aria-pressed="true"]) {

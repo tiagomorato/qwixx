@@ -6,7 +6,7 @@ This is the developer onboarding for working on this feature. It assumes Bun ≥
 
 ```bash
 # Clone the repo and switch to the feature branch
-git checkout 001-qwixx-scoreboard-web-app
+git checkout main
 
 # Install dependencies (Bun workspaces)
 bun install

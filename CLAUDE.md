@@ -1,5 +1,5 @@
 <!-- SPECKIT START -->
-Most recent feature — UI/UX enhancements (per-row scores, turn tracking, haptics, theme toggle, penalty guard, undo toast, share/rematch, layout/motion polish) on branch `003-ux-enhancements`: [specs/003-ux-enhancements/plan.md](specs/003-ux-enhancements/plan.md)
+Most recent feature — UI/UX enhancements (per-row scores, turn tracking, haptics, theme toggle, penalty guard, undo toast, share/rematch, layout/motion polish) (on `main`): [specs/003-ux-enhancements/plan.md](specs/003-ux-enhancements/plan.md)
 
 Related artifacts:
 - Spec: [specs/003-ux-enhancements/spec.md](specs/003-ux-enhancements/spec.md)
@@ -13,5 +13,5 @@ Previous feature — manual per-color score entry: [specs/002-manual-score-entry
 
 Foundation feature (001 — Qwixx scoreboard): [specs/001-qwixx-scoreboard/plan.md](specs/001-qwixx-scoreboard/plan.md)
 
-All feature work now lives on the single branch `001-qwixx-scoreboard-web-app` (the GitHub default); other branches have been consolidated and removed.
+All feature work lives on `main`.
 <!-- SPECKIT END -->

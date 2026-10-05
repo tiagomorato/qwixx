@@ -5,7 +5,12 @@ import { HistoryScreen } from './screens/HistoryScreen.tsx';
 import { HomeScreen } from './screens/HomeScreen.tsx';
 import { PlayScreen } from './screens/PlayScreen.tsx';
 import { useGameStore } from './store/gameStore.ts';
-import { startPersistence, startRealtime, startUndoNotices } from './store/persistence.ts';
+import {
+  applyRemoteGame,
+  startPersistence,
+  startRealtime,
+  startUndoNotices,
+} from './store/persistence.ts';
 
 export type Screen = 'home' | 'play' | 'final' | 'history';
 
@@ -23,7 +28,10 @@ export function App() {
       .then((existing) => {
         if (cancelled) return;
         if (existing) {
-          hydrate(existing);
+          // Loaded from the server, so it must not be echoed back. A PUT here would
+          // make this device ignore a later remote state equal to this one (e.g.
+          // another device undoing back to it) as the echo of its own write.
+          applyRemoteGame(existing);
           setScreen(existing.status === 'completed' ? 'final' : 'play');
           return;
         }

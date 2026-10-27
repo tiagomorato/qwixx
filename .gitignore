@@ -20,3 +20,6 @@ Thumbs.db
 
 # Local game data (current game and history)
 data/
+
+# Claude Code session data
+.claude/projects/
